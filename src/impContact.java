@@ -11,7 +11,7 @@ import ma02_resources.participants.Contact;
  *
  * @author rafas
  */
-public class impContact implements Contact{
+public class ImpContact implements Contact{
     
     private String street;
     private String city;

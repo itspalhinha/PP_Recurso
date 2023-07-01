@@ -1,4 +1,5 @@
 
+import java.util.Objects;
 import ma02_resources.participants.Contact;
 import ma02_resources.participants.Instituition;
 import ma02_resources.participants.Participant;
@@ -14,40 +15,62 @@ import ma02_resources.participants.Participant;
  */
 public class ImpParticipant implements Participant{
     
-    private String name;
+    private String name, email;
+    private Contact contact;
+    private Instituition instituition;
 
-    public ImpParticipant() {
-        
+    public ImpParticipant(String name, String email, Contact contact, Instituition instituition) {
+        this.name = name;
+        this.email = email;
+        this.contact = contact;
+        this.instituition = instituition;
     }
     
     @Override
     public String getName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.name;
     }
 
     @Override
     public String getEmail() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.email;
     }
 
     @Override
     public Contact getContact() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.contact;
     }
 
     @Override
     public Instituition getInstituition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.instituition;
     }
 
     @Override
     public void setInstituition(Instituition instn) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.instituition = instn;
     }
 
     @Override
     public void setContact(Contact cntct) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.contact = cntct;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Contact)) {
+            return false;
+        }
+        final Participant other = (Participant) obj;
+        return this.email.equals(other.getEmail());
+    }
+    
+    
     
 }
