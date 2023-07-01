@@ -19,7 +19,7 @@ public class ImpStudent extends ImpParticipant implements Student{
     
     @Override
     public int getNumber() {
-        return this.numberStudent;
+        return this.number;
     }
     
 }
