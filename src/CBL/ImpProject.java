@@ -30,6 +30,7 @@ public class ImpProject implements Project{
     private int maximumNumberOfStudents;
     private int maximumNumberOfPartners;
     private int maximumNumberOfFacilitators;
+    private Task[] task;
 
     @Override
     public String getName() {
@@ -122,13 +123,13 @@ public class ImpProject implements Project{
     }
 
     @Override
-    public Task getTask(String string) {
+    public Task getTask(String title) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Task[] getTasks() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.task;
     }
 
     @Override
