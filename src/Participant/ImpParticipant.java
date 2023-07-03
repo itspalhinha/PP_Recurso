@@ -15,7 +15,7 @@ import ma02_resources.participants.Participant;
  *
  * @author rafas
  */
-public class ImpParticipant implements Participant{
+public abstract class ImpParticipant implements Participant{
     
     private String name, email;
     private Contact contact;

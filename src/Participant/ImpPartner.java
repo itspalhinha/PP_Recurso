@@ -10,6 +10,7 @@ import ma02_resources.participants.Partner;
 
 /**
  *
+<<<<<<< HEAD
  * @author ROGER
  */
 public class ImpPartner extends ImpParticipant implements Partner{
@@ -33,6 +34,5 @@ public class ImpPartner extends ImpParticipant implements Partner{
     @Override
     public String getWebsite() {
         return this.webSite;
-    }
-    
+        }
 }
