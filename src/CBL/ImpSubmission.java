@@ -18,6 +18,7 @@ public class ImpSubmission implements Submission{
     private Student student;
     private String text;
 
+
     public ImpSubmission(LocalDateTime date, Student student, String text) {
         this.date = date;
         this.student = student;
@@ -47,5 +48,6 @@ public class ImpSubmission implements Submission{
         }
         return date.compareTo(sbmsn.getDate());
     }
+    
     
 }

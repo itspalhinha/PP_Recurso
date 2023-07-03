@@ -36,6 +36,7 @@ public class ImpProject implements Project {
     private int maximumNumberOfFacilitators;
     private Task[] task;
     private Participant[] participants;
+    private String[] tags;
 
     @Override
     public String getName() {
@@ -183,13 +184,17 @@ public class ImpProject implements Project {
 
     @Override
     public String[] getTags() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.tags;
     }
 
     @Override
-    public boolean hasTag(String string
-    ) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean hasTag(String string) {
+        for (String s : this.tags) {
+            if (s != null && s.equals(string)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
