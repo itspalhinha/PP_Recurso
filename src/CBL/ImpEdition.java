@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Objects;
+import ma02_resources.participants.Participant;
 import ma02_resources.project.Edition;
 import ma02_resources.project.Project;
 import ma02_resources.project.Status;
@@ -129,20 +130,67 @@ public class ImpEdition implements Edition{
         throw new IllegalArgumentException("Project name is null or the project dont exist");
         
     }
-    /*Retorna um array com todos os projetos*/
+    /*Cria um array com todos os projetos*/
     @Override
     public Project[] getProjects() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int counter = 0;
+        Project[] tempProj = new Project[numberOfprojects];
+        
+        for (int i = 0; i < this.numberOfprojects; i++){
+            tempProj[counter] = this.projects[i];
+            counter++;
+        }
+        return tempProj;
     }
     /*Retorna todos os projetos com um tag especifico*/
     @Override
-    public Project[] getProjectsByTag(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Project[] getProjectsByTag(String tag) {
+        int counter = 0;
+        Project[] tempProjTags = new Project[numberOfprojects];
+        for(int i = 0; i < numberOfprojects; i++){
+            if(projects[i].hasTag(tag)){
+                tempProjTags[counter] = projects[i];
+                counter++;
+            }
+        }
+        if(counter == 0){
+            return null;
+        }
+        if(counter != numberOfprojects){
+            Project[] fullArray = new Project[counter];
+            for(int i = 0; i < counter; i++){
+                fullArray[i] = tempProjTags[i];
+                return fullArray;
+            }
+        }
+        return tempProjTags;
     }
+    
     /*Retorna todos os projetos que tem um respetivo participante*/
     @Override
     public Project[] getProjectsOf(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Project[] temp = new Project[this.numberOfprojects];
+        Participant participant;
+
+        int counter = 0;
+        for (int i = 0; i < numberOfprojects; i++) {
+            try {
+                projects[i].getParticipant(string);
+                //if it didnt throw an exception, the project will be added to the array that will be later returned
+                temp[counter++] = projects[i];
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+
+        if (counter != numberOfprojects) {
+            Project[] trimmedTemp = new Project[counter];
+
+            for (int i = 0; i < counter; i++) {
+                trimmedTemp[i] = temp[i];
+            }
+            return trimmedTemp;
+        }
+        return temp;
     }
 
     @Override
