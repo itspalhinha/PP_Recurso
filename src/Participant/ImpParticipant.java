@@ -1,3 +1,5 @@
+package Participant;
+
 
 import java.util.Objects;
 import ma02_resources.participants.Contact;

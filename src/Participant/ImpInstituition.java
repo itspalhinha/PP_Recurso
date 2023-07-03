@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package pp_recurso;
+package Participant;
 
 import ma02_resources.participants.Contact;
 import ma02_resources.participants.Instituition;
