@@ -4,7 +4,6 @@
  */
 package CBL;
 
-import java.util.Objects;
 import ma02_resources.participants.Facilitator;
 import ma02_resources.participants.Participant;
 import ma02_resources.participants.Partner;
@@ -29,15 +28,18 @@ public class ImpProject implements Project {
     private int numberOfPartners;
     private int numberOfFacilitators;
     private int numberOfTasks;
+    private int numberOfTags;
     private int maximumNumberOfTasks;
     private int maximumNumberOfParticipants;
     private int maximumNumberOfStudents;
     private int maximumNumberOfPartners;
     private int maximumNumberOfFacilitators;
-    private Task[] task;
+    private Task[] tasks;
     private Participant[] participants;
     private String[] tags;
 
+    
+    
     @Override
     public String getName() {
         return this.name;
@@ -154,11 +156,14 @@ public class ImpProject implements Project {
             throw new IllegalArgumentException("Participant not found!");
         }
 
+        //partivipant to be removed
         Participant removedParticipant = participants[pos];
 
         for (i = pos; i < numberOfParticipants; i++) {
             participants[i] = participants[i + 1];
         }
+
+        //decremment on number of the type of the removedParticipant
         if (removedParticipant instanceof Facilitator) {
             numberOfFacilitators--;
         } else if (removedParticipant instanceof Student) {
@@ -197,21 +202,75 @@ public class ImpProject implements Project {
         return false;
     }
 
+    public void addTags(String t) throws IllegalArgumentException {
+        if (t == null) {
+            throw new IllegalArgumentException("Argument is null");
+        }
+
+        if (hasTag(t)) {
+            throw new IllegalArgumentException("Tag already in Array");
+        }
+
+        if (numberOfTags == tags.length) {
+            reallocTags();
+        }
+        tags[numberOfTags++] = t;
+
+    }
+
+    private void reallocTags() {
+        String[] temp = new String[tags.length * 2];
+        int i = 0;
+        for (String t : tags) {
+            temp[i++] = t;
+        }
+        tags = temp;
+    }
+
+    
+     private boolean hasTask(Task task) {
+        for (int i=0; i<numberOfTasks; i++) {
+            if (tasks[i].equals(task)) {
+                return true;
+            }
+        }
+        return false;
+    }
+     
     @Override
     public void addTask(Task task) throws IllegalNumberOfTasks, TaskAlreadyInProject {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (hasTask(task)) {
+            throw new TaskAlreadyInProject("Task already in Project!");
+        }
+        if (numberOfTasks == maximumNumberOfTasks) {
+            throw new IllegalNumberOfTasks("Maximum Tasks reached in project!");
+        }
+        
+
+        tasks[numberOfTasks++] = task;
+
     }
 
     @Override
     public Task getTask(String title) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        for (int i = 0; i < numberOfTasks; i++) {
+
+            if (tasks[i].getTitle().equals(title)) {
+                return tasks[i];
+            }
+        }
+        throw new IllegalArgumentException("Task not found!");
     }
 
     @Override
     public Task[] getTasks() {
+        Task[] temp = new Task[numberOfTasks];
 
-        return null;
-
+        for (int i = 0; i < numberOfTasks; i++) {
+            temp[i] = tasks[i];
+        }
+        return temp;
     }
 
     @Override
@@ -220,8 +279,8 @@ public class ImpProject implements Project {
             return false;
         }
 
-        for (Task t : task) {
-            if (t.getNumberOfSubmissions() < 1) {
+        for (int i = 0; i < numberOfTasks; i++) {
+            if (tasks[i].getNumberOfSubmissions() < 1) {
                 return false;
             }
         }
@@ -229,8 +288,7 @@ public class ImpProject implements Project {
     }
 
     @Override
-    public boolean equals(Object obj
-    ) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -240,8 +298,8 @@ public class ImpProject implements Project {
         if (!(obj instanceof Project)) {
             return false;
         }
-        final ImpProject other = (ImpProject) obj;
-        return this.name.equals(this.getName());
+        final Project other = (Project) obj;
+        return this.name.equals(other.getName());
     }
 
 }
