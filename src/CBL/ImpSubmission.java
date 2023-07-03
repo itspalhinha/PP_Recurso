@@ -31,7 +31,6 @@ public class ImpSubmission implements Submission{
     * Description of the submission
     */
     private String text;
-
     
 
     /*
@@ -95,5 +94,6 @@ public class ImpSubmission implements Submission{
         }
         return date.compareTo(sbmsn.getDate());
     }
+    
     
 }

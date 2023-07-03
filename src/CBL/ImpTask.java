@@ -193,14 +193,11 @@ public class ImpTask implements Task{
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Task)) {
             return false;
         }
         final ImpTask other = (ImpTask) obj;
-        if (!Objects.equals(this.title, other.title)) {
-            return false;
-        }
-        return true;
+        return this.title.equals(this.getTitle());
     }
     
     
