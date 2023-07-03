@@ -19,7 +19,18 @@ public class ImpTask implements Task{
     private int duration;
     private String title;
     private String description;
+    private Submission[] submission;
     private int numberOfSubmissions;
+
+    public ImpTask(LocalDate start, LocalDate end, int duration, String title, String description) {
+        this.start = start;
+        this.end = end;
+        this.duration = duration;
+        this.title = title;
+        this.description = description;
+    }
+    
+    
 
     @Override
     public LocalDate getStart() {
@@ -48,7 +59,7 @@ public class ImpTask implements Task{
 
     @Override
     public Submission[] getSubmissions() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.submission;
     }
 
     @Override
