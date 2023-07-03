@@ -4,7 +4,6 @@
  */
 package CBL;
 
-import java.util.Objects;
 import ma02_resources.participants.Facilitator;
 import ma02_resources.participants.Participant;
 import ma02_resources.participants.Partner;
@@ -29,6 +28,7 @@ public class ImpProject implements Project {
     private int numberOfPartners;
     private int numberOfFacilitators;
     private int numberOfTasks;
+    private int numberOfTags;
     private int maximumNumberOfTasks;
     private int maximumNumberOfParticipants;
     private int maximumNumberOfStudents;
@@ -38,6 +38,8 @@ public class ImpProject implements Project {
     private Participant[] participants;
     private String[] tags;
 
+    
+    
     @Override
     public String getName() {
         return this.name;
@@ -154,11 +156,14 @@ public class ImpProject implements Project {
             throw new IllegalArgumentException("Participant not found!");
         }
 
+        //partivipant to be removed
         Participant removedParticipant = participants[pos];
 
         for (i = pos; i < numberOfParticipants; i++) {
             participants[i] = participants[i + 1];
         }
+
+        //decremment on number of the type of the removedParticipant
         if (removedParticipant instanceof Facilitator) {
             numberOfFacilitators--;
         } else if (removedParticipant instanceof Student) {
@@ -206,16 +211,44 @@ public class ImpProject implements Project {
             throw new IllegalArgumentException("Tag already in Array");
         }
 
-//        if (numberOfTags == tags.length) {
-//            reallocTags();
-//        }
-//            tags[numberOfTags++] = t;
+        if (numberOfTags == tags.length) {
+            reallocTags();
+        }
+        tags[numberOfTags++] = t;
 
     }
+
+    private void reallocTags() {
+        String[] temp = new String[tags.length * 2];
+        int i = 0;
+        for (String t : tags) {
+            temp[i++] = t;
+        }
+        tags = temp;
+    }
+
     
+     private boolean hasTask(Task task) {
+        for (int i=0; i<numberOfTasks; i++) {
+            if (tasks[i].equals(task)) {
+                return true;
+            }
+        }
+        return false;
+    }
+     
     @Override
     public void addTask(Task task) throws IllegalNumberOfTasks, TaskAlreadyInProject {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (hasTask(task)) {
+            throw new TaskAlreadyInProject("Task already in Project!");
+        }
+        if (numberOfTasks == maximumNumberOfTasks) {
+            throw new IllegalNumberOfTasks("Maximum Tasks reached in project!");
+        }
+        
+
+        tasks[numberOfTasks++] = task;
+
     }
 
     @Override
@@ -233,8 +266,8 @@ public class ImpProject implements Project {
     @Override
     public Task[] getTasks() {
         Task[] temp = new Task[numberOfTasks];
-        
-        for (int i=0; i<numberOfTasks; i++){
+
+        for (int i = 0; i < numberOfTasks; i++) {
             temp[i] = tasks[i];
         }
         return temp;
