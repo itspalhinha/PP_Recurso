@@ -42,7 +42,10 @@ public class ImpSubmission implements Submission{
 
     @Override
     public int compareTo(Submission sbmsn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this == sbmsn){
+            return 0;
+        }
+        return date.compareTo(sbmsn.getDate());
     }
     
 }

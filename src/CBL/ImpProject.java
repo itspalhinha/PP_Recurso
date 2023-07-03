@@ -134,7 +134,15 @@ public class ImpProject implements Project{
 
     @Override
     public boolean isCompleted() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.numberOfTasks != this.maximumNumberOfTasks){
+            return false;
+        }
+        for(Task t : task){
+            if(t.getNumberOfSubmissions() < 1){
+                return false;
+            }
+        }
+        return true;
     }
 
     

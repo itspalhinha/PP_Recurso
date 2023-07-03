@@ -5,6 +5,7 @@
 package CBL;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import ma02_resources.project.Submission;
 import ma02_resources.project.Task;
 
@@ -100,7 +101,30 @@ public class ImpTask implements Task{
 
     @Override
     public int compareTo(Task task) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this == task){
+            return 0;
+        }
+        return this.start.compareTo(task.getStart());
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ImpTask other = (ImpTask) obj;
+        if (!Objects.equals(this.title, other.title)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
 }
