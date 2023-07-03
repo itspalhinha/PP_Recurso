@@ -17,7 +17,7 @@ public class ImpStudent extends ImpParticipant implements Student{
     private static int counter = 0;
     private int number;
 
-    public ImpStudent(String name, String email, Contact contact, Instituition instituition) {
+    public ImpStudent( String name, String email, Contact contact, Instituition instituition) {
         super(name, email, contact, instituition);
         this.number = ++counter;
     }
