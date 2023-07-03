@@ -31,7 +31,7 @@ public class ImpProject implements Project{
     private int maximumNumberOfPartners;
     private int maximumNumberOfFacilitators;
     private Task[] task;
-
+    
     @Override
     public String getName() {
         return this.name;
