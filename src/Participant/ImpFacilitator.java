@@ -17,6 +17,7 @@ import ma02_resources.participants.Instituition;
 public class ImpFacilitator extends ImpParticipant implements Facilitator{
 
     private String areaOfExpertise;
+    private int i;
 
     public ImpFacilitator(String areaOfExpertise, String name, String email, Contact contact, Instituition instituition) {
         super(name, email, contact, instituition);
