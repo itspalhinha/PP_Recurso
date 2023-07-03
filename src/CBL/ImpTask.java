@@ -59,12 +59,33 @@ public class ImpTask implements Task{
 
     @Override
     public Submission[] getSubmissions() {
-        return this.submission;
+        Submission tempSubmission[] = new Submission[numberOfSubmissions];
+        for(int i = 0; i < numberOfSubmissions; i++){
+            tempSubmission[i] = submission[i];
+        }
+        return tempSubmission;
     }
 
     @Override
     public int getNumberOfSubmissions() {
         return this.numberOfSubmissions;
+    }
+    
+    private boolean existsSubmission(Submission subm){
+        for(int i = 0; i < this.submission.length; i++){
+            if(submission[i] != null && submission[i].equals(subm)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private void realloc(){
+        Submission[] tempSubm = new Submission[this.submission.length*2];
+        for(int i = 0; i < this.submission.length; i++){
+            tempSubm[i] = this.submission[i];
+        }
+        this.submission = tempSubm;
     }
 
     @Override
