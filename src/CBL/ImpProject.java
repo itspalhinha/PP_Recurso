@@ -34,7 +34,7 @@ public class ImpProject implements Project {
     private int maximumNumberOfStudents;
     private int maximumNumberOfPartners;
     private int maximumNumberOfFacilitators;
-    private Task[] task;
+    private Task[] tasks;
     private Participant[] participants;
 
     @Override
@@ -192,6 +192,22 @@ public class ImpProject implements Project {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public void addTags(String t) throws IllegalArgumentException {
+        if (t == null) {
+            throw new IllegalArgumentException("Argument is null");
+        }
+
+        if (hasTag(t)) {
+            throw new IllegalArgumentException("Tag already in Array");
+        }
+
+//        if (numberOfTags == tags.length) {
+//            reallocTags();
+//        }
+//            tags[numberOfTags++] = t;
+
+    }
+    
     @Override
     public void addTask(Task task) throws IllegalNumberOfTasks, TaskAlreadyInProject {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -199,14 +215,24 @@ public class ImpProject implements Project {
 
     @Override
     public Task getTask(String title) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        for (int i = 0; i < numberOfTasks; i++) {
+
+            if (tasks[i].getTitle().equals(title)) {
+                return tasks[i];
+            }
+        }
+        throw new IllegalArgumentException("Task not found!");
     }
 
     @Override
     public Task[] getTasks() {
-
-        return null;
-
+        Task[] temp = new Task[numberOfTasks];
+        
+        for (int i=0; i<numberOfTasks; i++){
+            temp[i] = tasks[i];
+        }
+        return temp;
     }
 
     @Override
@@ -215,8 +241,8 @@ public class ImpProject implements Project {
             return false;
         }
 
-        for (Task t : task) {
-            if (t.getNumberOfSubmissions() < 1) {
+        for (int i = 0; i < numberOfTasks; i++) {
+            if (tasks[i].getNumberOfSubmissions() < 1) {
                 return false;
             }
         }
@@ -224,8 +250,7 @@ public class ImpProject implements Project {
     }
 
     @Override
-    public boolean equals(Object obj
-    ) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -235,8 +260,8 @@ public class ImpProject implements Project {
         if (!(obj instanceof Project)) {
             return false;
         }
-        final ImpProject other = (ImpProject) obj;
-        return this.name.equals(this.getName());
+        final Project other = (Project) obj;
+        return this.name.equals(other.getName());
     }
 
 }
