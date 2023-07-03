@@ -45,7 +45,7 @@ public class ImpSubmission implements Submission{
         if(this == sbmsn){
             return 0;
         }
-        return date.compareTo(sbmsn.getDate());
+        return this.date.compareTo(sbmsn.getDate());
     }
     
 }
