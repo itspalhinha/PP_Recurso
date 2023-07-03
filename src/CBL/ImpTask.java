@@ -95,8 +95,12 @@ public class ImpTask implements Task{
     }
 
     @Override
-    public void extendDeadline(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void extendDeadline(int days) {
+        if(days < 0){
+            throw new IllegalArgumentException("Negative Value");
+        }
+        LocalDate tempDays = end.plusDays(days);
+        this.end = tempDays;
     }
 
     @Override
