@@ -4,6 +4,7 @@
  */
 package CBL;
 
+import java.util.Objects;
 import ma02_resources.participants.Participant;
 import ma02_resources.project.Project;
 import ma02_resources.project.Task;
@@ -134,5 +135,23 @@ public class ImpProject implements Project{
     public boolean isCompleted() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Project)) {
+            return false;
+        }
+        final ImpProject other = (ImpProject) obj;
+        return this.name.equals(this.getName());
+    }
+    
+    
     
 }

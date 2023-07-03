@@ -66,7 +66,7 @@ public abstract class ImpParticipant implements Participant{
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof Contact)) {
+        if (!(obj instanceof Participant)) {
             return false;
         }
         final Participant other = (Participant) obj;

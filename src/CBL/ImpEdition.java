@@ -7,6 +7,7 @@ package CBL;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.Objects;
 import ma02_resources.project.Edition;
 import ma02_resources.project.Project;
 import ma02_resources.project.Status;
@@ -67,22 +68,66 @@ public class ImpEdition implements Edition{
         return this.end;
     }
     
-    
+    private boolean existsProject(Project proj){
+        for(int i = 0; i < this.projects.length; i++){
+            if(projects[i] != null && projects[i].equals(proj)){
+                return true;
+            }
+        }
+        return false;
+    }
+    private void realloc(){
+        Project[] tempProj = new Project[this.projects.length*2];
+        for(int i = 0; i < this.projects.length; i++){
+            tempProj[i] = this.projects[i];
+        }
+        this.projects = tempProj;
+    }
     
     /*Adiciona um projeto numa edição*/
     @Override
-    public void addProject(String string, String string1, String[] strings) throws IOException, ParseException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void addProject(String name, String description, String[] tags) throws IOException, ParseException {
+        if(name == null || description == null || tags == null){
+            throw new IllegalArgumentException("Illegal (param) is null");
+        }
+        if(numberOfprojects == projects.length){
+            realloc();
+            /*try{
+            
+            }catch(IOException ex){
+                throw new IOException("Project template not found");  
+            }catch(ParseException ex){
+                throw new ParseException("Project template is not valid");
+            }*/
+        }else{
+            /*try{
+            
+            }catch(IOException ex){
+                throw new IOException("Project template not found");  
+            }catch(ParseException ex){
+                throw new ParseException("Project template is not valid");
+            }*/
+        }
+        
+        
     }
+    
     /*Remove um projeto de uma edição encontrando o projeto atraves do seu nome*/
     @Override
     public void removeProject(String string) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
     /*Tipo um find para encontrar o projeto atraves do nome dado no parametro?*/
     @Override
-    public Project getProject(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Project getProject(String name) {
+        for(int i = 0; i < numberOfprojects; i++){
+            if(projects[i].getName().equals(name)){
+                return projects[i];
+            }
+        }
+        throw new IllegalArgumentException("Project name is null or the project dont exist");
+        
     }
     /*Retorna um array com todos os projetos*/
     @Override
@@ -100,6 +145,22 @@ public class ImpEdition implements Edition{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Edition)) {
+            return false;
+        }
+        final ImpEdition other = (ImpEdition) obj;
+        return this.name.equals(this.getName());
+    }
+
+    
     
 
 }
