@@ -14,6 +14,8 @@ import ma02_resources.project.Task;
  */
 public class ImpTask implements Task{
     
+    private LocalDate start;
+    private LocalDate end;
     private int duration;
     private String title;
     private String description;
@@ -21,12 +23,12 @@ public class ImpTask implements Task{
 
     @Override
     public LocalDate getStart() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return start;
     }
 
     @Override
     public LocalDate getEnd() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return end;
     }
 
     @Override
