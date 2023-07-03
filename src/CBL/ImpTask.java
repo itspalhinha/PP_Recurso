@@ -91,7 +91,17 @@ public class ImpTask implements Task{
 
     @Override
     public void addSubmission(Submission sbmsn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(sbmsn == null){
+            throw new IllegalArgumentException("Null value for submission");
+        }
+        if(numberOfSubmissions == this.submission.length){
+            realloc();
+            this.submission[numberOfSubmissions] = sbmsn;
+            numberOfSubmissions++;
+        }else{
+            this.submission[numberOfSubmissions] = sbmsn;
+            numberOfSubmissions++;
+        }
     }
 
     @Override
