@@ -5,7 +5,10 @@
 package CBL;
 
 import java.util.Objects;
+import ma02_resources.participants.Facilitator;
 import ma02_resources.participants.Participant;
+import ma02_resources.participants.Partner;
+import ma02_resources.participants.Student;
 import ma02_resources.project.Project;
 import ma02_resources.project.Task;
 import ma02_resources.project.exceptions.IllegalNumberOfParticipantType;
@@ -17,7 +20,8 @@ import ma02_resources.project.exceptions.TaskAlreadyInProject;
  *
  * @author ROGER
  */
-public class ImpProject implements Project{
+public class ImpProject implements Project {
+
     private String name;
     private String description;
     private int numberOfParticipants;
@@ -31,7 +35,8 @@ public class ImpProject implements Project{
     private int maximumNumberOfPartners;
     private int maximumNumberOfFacilitators;
     private Task[] task;
-    
+    private Participant[] participants;
+
     @Override
     public String getName() {
         return this.name;
@@ -92,19 +97,88 @@ public class ImpProject implements Project{
         return this.maximumNumberOfFacilitators;
     }
 
+    private boolean hasParticipant(Participant p) {
+        for (int i = 0; i < numberOfParticipants; i++) {
+            if (participants[i].equals(p)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void addParticipant(Participant p) throws IllegalNumberOfParticipantType, ParticipantAlreadyInProject {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //check if participant already exists in this Project
+        if (hasParticipant(p)) {
+            throw new ParticipantAlreadyInProject("Participant already in Project!");
+        }
+
+        //check the type of participant to compare to the maximum ammount of participants of that type and incremment on the apropriaete type
+        if (p instanceof Student) {
+            if (numberOfStudents == maximumNumberOfStudents) {
+                throw new IllegalNumberOfParticipantType("Maximum Students for Project already reached!");
+            }
+            numberOfStudents++;
+        } else if (p instanceof Partner) {
+            if (numberOfPartners == maximumNumberOfPartners) {
+                throw new IllegalNumberOfParticipantType("Maximum Partners for Project already reached!");
+            }
+            numberOfPartners++;
+        } else if (p instanceof Facilitator) {
+            if (numberOfFacilitators == maximumNumberOfFacilitators) {
+                throw new IllegalNumberOfParticipantType("Maximum Facilitators for Project already reached!");
+            }
+            numberOfFacilitators++;
+        }
+
+        participants[numberOfParticipants++] = p;
+
     }
 
     @Override
     public Participant removeParticipant(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        int pos = -1, i = 0;
+
+        //check for the participant index in participants array
+        while (pos == -1 && i < numberOfParticipants) {
+            if (participants[i].getEmail().equals(string)) {
+                pos = i;
+            } else {
+                i++;
+            }
+        }
+        // if didn't find a participant with the email given, throw IllegalArgumentException
+        if (pos == -1) {
+            throw new IllegalArgumentException("Participant not found!");
+        }
+
+        Participant removedParticipant = participants[pos];
+
+        for (i = pos; i < numberOfParticipants; i++) {
+            participants[i] = participants[i + 1];
+        }
+        if (removedParticipant instanceof Facilitator) {
+            numberOfFacilitators--;
+        } else if (removedParticipant instanceof Student) {
+            numberOfStudents--;
+        } else if (removedParticipant instanceof Partner) {
+            numberOfPartners--;
+        }
+        participants[--numberOfParticipants] = null;
+
+        return removedParticipant;
+
     }
 
     @Override
     public Participant getParticipant(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for (int i = 0; i < numberOfParticipants; i++) {
+            if (participants[i].getEmail().equals(string)) {
+                return participants[i];
+            }
+        }
+        throw new IllegalArgumentException("No Participant found!");
     }
 
     @Override
@@ -113,7 +187,8 @@ public class ImpProject implements Project{
     }
 
     @Override
-    public boolean hasTag(String string) {
+    public boolean hasTag(String string
+    ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -129,25 +204,28 @@ public class ImpProject implements Project{
 
     @Override
     public Task[] getTasks() {
-        return this.task;
+
+        return null;
+
     }
 
     @Override
     public boolean isCompleted() {
-        if(this.numberOfTasks != this.maximumNumberOfTasks){
+        if (this.numberOfTasks != this.maximumNumberOfTasks) {
             return false;
         }
-        for(Task t : task){
-            if(t.getNumberOfSubmissions() < 1){
+
+        for (Task t : task) {
+            if (t.getNumberOfSubmissions() < 1) {
                 return false;
             }
         }
         return true;
     }
 
-    
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj
+    ) {
         if (this == obj) {
             return true;
         }
@@ -160,7 +238,5 @@ public class ImpProject implements Project{
         final ImpProject other = (ImpProject) obj;
         return this.name.equals(this.getName());
     }
-    
-    
-    
+
 }
