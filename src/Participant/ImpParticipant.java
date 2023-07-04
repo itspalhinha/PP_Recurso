@@ -1,3 +1,12 @@
+/*
+ * Nome: Rafael Filipe Silva Medina Coronel
+ * Número: 8190348
+ * Turma: LSIRCT1
+ *
+ * Nome: Roger Seiji Hernandez Nakauchi
+ * Número: 8210005
+ * Turma: LSIRCT1
+ */
 package Participant;
 
 
@@ -6,21 +15,37 @@ import ma02_resources.participants.Contact;
 import ma02_resources.participants.Instituition;
 import ma02_resources.participants.Participant;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 /**
  *
  * @author rafas
  */
 public abstract class ImpParticipant implements Participant{
     
-    private String name, email;
+    /*
+     * Variable that defines name
+     */
+    private String name;
+    /*
+     * Variable that defines email
+     */
+    private String email;
+    /*
+     * Variable that defines contact
+     */
     private Contact contact;
+    /*
+     * Variable that defines an Institution
+     */
     private Instituition instituition;
 
+    /*
+     * This is the constructor method for Participant
+     *
+     * @param name Participant's name
+     * @param email Participant's email
+     * @param contact Participant's contact
+     * @param instituition Participant's institution
+     */
     public ImpParticipant(String name, String email, Contact contact, Instituition instituition) {
         this.name = name;
         this.email = email;
@@ -28,31 +53,49 @@ public abstract class ImpParticipant implements Participant{
         this.instituition = instituition;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return this.name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getEmail() {
         return this.email;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Contact getContact() {
         return this.contact;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Instituition getInstituition() {
         return this.instituition;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setInstituition(Instituition instn) {
         this.instituition = instn;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setContact(Contact cntct) {
         this.contact = cntct;

@@ -48,6 +48,26 @@ public class ImpContact implements Contact{
      */
     private String phone;
 
+    /*
+     * This is the constructor for Contract
+     *
+     * @param street Street address
+     * @param city City
+     * @param state State
+     * @param zipCode Zip Code
+     * @param country Country
+     * @param phone Phone
+     */
+    public ImpContact(String street, String city, String state, String zipCode, String country, String phone) {
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.country = country;
+        this.phone = phone;
+    }
+    
+
     /**
      * {@inheritDoc}
      */
