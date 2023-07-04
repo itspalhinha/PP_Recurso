@@ -12,7 +12,7 @@ import ma02_resources.participants.Student;
  * @author David Santos
  */
 public class Evaluation {
-    
+
     /**
      * Variable that defines the self evaluation and the heteroevaluation
      */
@@ -28,6 +28,10 @@ public class Evaluation {
 
     public Evaluation(float selfEvaluation, Student student) {
         this.selfEvaluation = selfEvaluation;
+        this.student = student;
+    }
+
+    public Evaluation(Student student) {
         this.student = student;
     }
 
@@ -68,6 +72,5 @@ public class Evaluation {
     public void setFacilitator(Facilitator facilitator) {
         this.facilitator = facilitator;
     }
-    
-    
+
 }

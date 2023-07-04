@@ -92,17 +92,12 @@ public class ImpProject implements Project {
      */
     private String[] tags;
 
-    
     /**
      * Array variable that stores the evaluation of the Students in project
      */
     private Evaluation[] evaluations;
     private int numberOfEvaluations;
-    
-    
-    
-    
-    
+
     /**
      * This is the constructor method of Project. It is used to create a project
      * object based on the Project Template. All the information not found in
@@ -131,8 +126,7 @@ public class ImpProject implements Project {
         this.participants = new Participant[(int) maximumNumberOfParticipants];
         this.tags = new String[2];
         this.evaluations = new Evaluation[maximumNumberOfStudents];
-        
-        
+
         for (String tag : tags) {
             this.addTags(tag);
         }
@@ -141,12 +135,13 @@ public class ImpProject implements Project {
 
     /**
      * Getter method for number of evaluations
-     * @return 
+     *
+     * @return
      */
     public int getNumberOfEvaluations() {
         return numberOfEvaluations;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -274,6 +269,8 @@ public class ImpProject implements Project {
                 throw new IllegalNumberOfParticipantType("Maximum Students for Project already reached!");
             }
             numberOfStudents++;
+            // evaluations[numberOfEvaluations++] = new Evaluation((Student)p);
+
         } else if (p instanceof Partner) {
             if (numberOfPartners == maximumNumberOfPartners) {
                 throw new IllegalNumberOfParticipantType("Maximum Partners for Project already reached!");
@@ -288,6 +285,30 @@ public class ImpProject implements Project {
 
         participants[numberOfParticipants++] = p;
 
+    }
+
+    private Student[] getStudents() {
+        Student[] temp = new Student[numberOfStudents];
+        int counter = 0;
+        for (int i = 0; i < numberOfParticipants; i++) {
+            if (participants[i] instanceof Student) {
+                temp[counter++] = (Student) participants[i];
+            }
+
+        }
+        return temp;
+    }
+
+    public void addSelfEvaluation(Student student, double selfEvaluation) {
+
+        //check if Student has an evaluation assigned
+        boolean found = false;
+        Student[] students = getStudents();
+        int i=0;
+        while (!found && i < students.length) {
+            
+            
+        }
     }
 
     /**
@@ -328,7 +349,7 @@ public class ImpProject implements Project {
             numberOfFacilitators--;
         } else if (removedParticipant instanceof Student) {
             numberOfStudents--;
-            
+
             //for (int i=0; i<)
         } else if (removedParticipant instanceof Partner) {
             numberOfPartners--;
