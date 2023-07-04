@@ -21,80 +21,163 @@ import ma02_resources.project.exceptions.TaskAlreadyInProject;
  */
 public class ImpProject implements Project {
 
+    /*
+     * Variable that defines Project's name 
+     */
     private String name;
+    /*
+     * Variable that defines Project's description
+     */
     private String description;
+    /*
+     * Variable that defines number of participants
+     */
     private int numberOfParticipants;
+    /*
+     * Variable that defines number of students
+     */
     private int numberOfStudents;
+    /*
+     * Variable that defines number of partners
+     */
     private int numberOfPartners;
+    /*
+     * Variable that defines number of facilitators
+     */
     private int numberOfFacilitators;
+    /*
+     * Variable that defines number of tasks
+     */
     private int numberOfTasks;
+    /*
+     * Variable that defines number of tags
+     */
     private int numberOfTags;
+    /*
+     * Variable that defines maximum number of tasks
+     */
     private int maximumNumberOfTasks;
+    /*
+     * Variable that defines maximum number of participants
+     */
     private int maximumNumberOfParticipants;
+    /*
+     * Variable that defines maximum number of students
+     */
     private int maximumNumberOfStudents;
+    /*
+     * Variable that defines maximum number of partners
+     */
     private int maximumNumberOfPartners;
+    /*
+     * Variable that defines maximum number of facilitators
+     */
     private int maximumNumberOfFacilitators;
+    /*
+     * Array variable that stores tasks
+     */
     private Task[] tasks;
+    /*
+     * Array variable that stores participants
+     */
     private Participant[] participants;
+    /*
+     * Array variable that stores tags
+     */
     private String[] tags;
 
     
-    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return this.name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getDescription() {
         return this.description;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getNumberOfParticipants() {
         return this.numberOfParticipants;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getNumberOfStudents() {
         return this.numberOfStudents;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getNumberOfPartners() {
         return this.numberOfPartners;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getNumberOfFacilitators() {
         return this.numberOfFacilitators;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getNumberOfTasks() {
         return this.numberOfTasks;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getMaximumNumberOfTasks() {
         return this.maximumNumberOfTasks;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getMaximumNumberOfParticipants() {
         return this.maximumNumberOfParticipants;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getMaximumNumberOfStudents() {
         return this.maximumNumberOfStudents;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getMaximumNumberOfPartners() {
         return this.maximumNumberOfPartners;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getMaximumNumberOfFacilitators() {
         return this.maximumNumberOfFacilitators;
@@ -109,6 +192,15 @@ public class ImpProject implements Project {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * This method adds participant to the project checking if the participant
+     * to be added already exists and if the participant's list is full
+     * 
+     * @throws IllegalNumberOfParticipantType if list is full
+     * 
+     */
     @Override
     public void addParticipant(Participant p) throws IllegalNumberOfParticipantType, ParticipantAlreadyInProject {
         //check if participant already exists in this Project
@@ -138,6 +230,10 @@ public class ImpProject implements Project {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     */
     @Override
     public Participant removeParticipant(String string) {
 
@@ -177,6 +273,10 @@ public class ImpProject implements Project {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     */
     @Override
     public Participant getParticipant(String string) {
         for (int i = 0; i < numberOfParticipants; i++) {
@@ -187,11 +287,19 @@ public class ImpProject implements Project {
         throw new IllegalArgumentException("No Participant found!");
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     */
     @Override
     public String[] getTags() {
         return this.tags;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     */
     @Override
     public boolean hasTag(String string) {
         for (String s : this.tags) {
@@ -202,6 +310,14 @@ public class ImpProject implements Project {
         return false;
     }
 
+    /*
+     * This method adds a tag to the tag's list only if it is not null or if it
+     * does not already exist on the list
+     *
+     * @param t Tag to be added
+     * @throws IllegalArgumentException if the tag is null or empty or already
+     * exist in array
+     */
     public void addTags(String t) throws IllegalArgumentException {
         if (t == null) {
             throw new IllegalArgumentException("Argument is null");
@@ -227,7 +343,13 @@ public class ImpProject implements Project {
         tags = temp;
     }
 
-    
+    /*
+     * This method verifies if a given task exists in the task list
+     * 
+     * @param task Task to be verified
+     * @return true if exists
+     * @return false if does not exist
+     */
      private boolean hasTask(Task task) {
         for (int i=0; i<numberOfTasks; i++) {
             if (tasks[i].equals(task)) {
@@ -237,6 +359,15 @@ public class ImpProject implements Project {
         return false;
     }
      
+    /**
+     * This method adds task to the Task list checking if task already exists
+     * and the maximum number of tasks
+     * 
+     * @param task Task to be added
+     * @throws IllegalNumberOfTasks if the maximum number of tasks reached in
+     * project
+     * @throws TaskAlreadyInProject if the task is already in the project
+     */ 
     @Override
     public void addTask(Task task) throws IllegalNumberOfTasks, TaskAlreadyInProject {
         if (hasTask(task)) {
@@ -251,6 +382,9 @@ public class ImpProject implements Project {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Task getTask(String title) {
 
@@ -263,6 +397,9 @@ public class ImpProject implements Project {
         throw new IllegalArgumentException("Task not found!");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Task[] getTasks() {
         Task[] temp = new Task[numberOfTasks];
@@ -273,6 +410,9 @@ public class ImpProject implements Project {
         return temp;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isCompleted() {
         if (this.numberOfTasks != this.maximumNumberOfTasks) {

@@ -215,14 +215,21 @@ public class ImpEdition implements Edition{
     }
     
     /*Remove um projeto de uma edição encontrando o projeto atraves do seu nome
-     * This method removes a project from the edition
+     * This method removes a project from the edition identifying by the name
+     * 
+     * @param string The Project's name
      */
     @Override
     public void removeProject(String string) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    /*Tipo um find para encontrar o projeto atraves do nome dado no parametro?*/
+    /*Tipo um find para encontrar o projeto atraves do nome dado no parametro?
+     * This method searches for a project in the Porject's list
+     *
+     * @param name Project's name
+     * @throws IllegalArgumentException if it does not find a project
+     */
     @Override
     public Project getProject(String name) {
         for(int i = 0; i < numberOfprojects; i++){
@@ -233,7 +240,13 @@ public class ImpEdition implements Edition{
         throw new IllegalArgumentException("Project name is null or the project dont exist");
         
     }
-    /*Cria um array com todos os projetos*/
+    /*
+     *
+     * {@inheritDoc}
+     *
+     *Cria um array com todos os projetos
+     * This method lists all the projects
+     */
     @Override
     public Project[] getProjects() {
         int counter = 0;
@@ -245,7 +258,14 @@ public class ImpEdition implements Edition{
         }
         return tempProj;
     }
-    /*Retorna todos os projetos com um tag especifico*/
+    /*
+     *
+     * {@inheritDoc}
+     *
+     *Retorna todos os projetos com um tag especifico
+     * 
+     * @param tag Return all projects with an especific tag
+     */
     @Override
     public Project[] getProjectsByTag(String tag) {
         int counter = 0;
@@ -269,7 +289,12 @@ public class ImpEdition implements Edition{
         return tempProjTags;
     }
     
-    /*Retorna todos os projetos que tem um respetivo participante*/
+    /* 
+     * {@inheritDoc}
+     * 
+     * *Retorna todos os projetos que tem um respetivo participante
+     * @param string Return all projects with an participant
+     */
     @Override
     public Project[] getProjectsOf(String string) {
         Project[] temp = new Project[this.numberOfprojects];
