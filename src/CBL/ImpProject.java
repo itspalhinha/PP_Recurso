@@ -120,9 +120,7 @@ public class ImpProject implements Project {
             this.addTags(tag);
         }
 
-    }
-
-    
+    }    
 
     
     /**
@@ -376,6 +374,10 @@ public class ImpProject implements Project {
 
     }
 
+    /*
+     * This method adds space to the tag list duplicating the current lenght of 
+     * the list
+     */
     private void reallocTags() {
         String[] temp = new String[tags.length * 2];
         int i = 0;
