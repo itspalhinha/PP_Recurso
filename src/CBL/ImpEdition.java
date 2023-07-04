@@ -298,7 +298,6 @@ public class ImpEdition implements Edition{
     @Override
     public Project[] getProjectsOf(String string) {
         Project[] temp = new Project[this.numberOfprojects];
-        Participant participant;
 
         int counter = 0;
         for (int i = 0; i < numberOfprojects; i++) {
