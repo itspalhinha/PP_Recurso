@@ -4,6 +4,7 @@
  */
 package CBL;
 
+import Exceptions.AlreadyExistsInArray;
 import ma02_resources.participants.Facilitator;
 import ma02_resources.participants.Participant;
 import ma02_resources.participants.Partner;
@@ -37,6 +38,43 @@ public class ImpProject implements Project {
     private Task[] tasks;
     private Participant[] participants;
     private String[] tags;
+
+    /**
+     * This is the constructor method of Project. It is used to create a project
+     * object based on the Project Template. All the information not found in
+     * the project template is retrieved from the parameters of this method.
+     *
+     * @param name Name of the project.
+     * @param description Description of the project.
+     * @param maximumNumberOfFacilitators Max number of facilitators in a
+     * project.
+     * @param maximumNumberOfStudents Max number of students in a project.
+     * @param maximumNumberOfPartners Max number of partners in a project.
+     * @param maximumNumberOfTasks Max number of tasks in a project.
+     * @param tags Tags associated with the project.
+     */
+    public ImpProject(String name, String description, int maximumNumberOfFacilitators, int maximumNumberOfStudents, int maximumNumberOfPartners, int maximumNumberOfTasks, String[] tags) {
+
+        this.name = name;
+        this.description = description;
+        this.numberOfFacilitators = this.numberOfStudents = this.numberOfPartners = this.numberOfParticipants = this.numberOfTasks = this.numberOfTags = 0;
+        //The limits variables need to be created based  on the arguments
+        this.maximumNumberOfTasks = maximumNumberOfTasks;
+        this.maximumNumberOfStudents = maximumNumberOfStudents;
+        this.maximumNumberOfPartners = maximumNumberOfPartners;
+        this.maximumNumberOfFacilitators = maximumNumberOfFacilitators;
+        this.maximumNumberOfParticipants = this.maximumNumberOfStudents + this.maximumNumberOfPartners + this.maximumNumberOfFacilitators;
+        this.tasks = new Task[maximumNumberOfTasks];
+        this.participants = new Participant[(int) maximumNumberOfParticipants];
+        this.tags = new String[2];
+
+        for(String tag : tags) {
+            this.addTags(tag);
+        }
+
+    }
+
+    
 
     
     
