@@ -299,16 +299,19 @@ public class ImpProject implements Project {
         return temp;
     }
 
-    public void addSelfEvaluation(Student student, double selfEvaluation) {
+    public void addSelfEvaluation(Student student, float selfEvaluation) {
 
-        //check if Student has an evaluation assigned
-        boolean found = false;
         Student[] students = getStudents();
-        int i=0;
-        while (!found && i < students.length) {
-            
-            
+        for (int i = 0; i < students.length; i++){
+            if(students[i].equals(student)){
+                evaluations[numberOfEvaluations].setSelfEvaluation(selfEvaluation);
+                numberOfEvaluations++;
+            }else{
+                throw new IllegalArgumentException("Student not found!");
+            }
         }
+        
+        
     }
 
     /**
