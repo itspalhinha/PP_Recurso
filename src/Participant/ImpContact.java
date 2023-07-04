@@ -1,3 +1,12 @@
+/*
+ * Nome: Rafael Filipe Silva Medina Coronel
+ * Número: 8190348
+ * Turma: LSIRCT1
+ *
+ * Nome: Roger Seiji Hernandez Nakauchi
+ * Número: 8210005
+ * Turma: LSIRCT1
+ */
 package Participant;
 
 
@@ -14,40 +23,77 @@ import ma02_resources.participants.Contact;
  * @author rafas
  */
 public class ImpContact implements Contact{
-    
+    /*
+     * Variable that defines street
+     */
     private String street;
+    /*
+     * Variable that defines city
+     */
     private String city;
+    /*
+     * Variable that defines state
+     */
     private String state;
+    /*
+     * Variable that defines zip code
+     */
     private String zipCode;
+    /*
+     * Variable that defines country
+     */
     private String country;
+    /*
+     * Variable that defines phone
+     */
     private String phone;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getStreet() {
         return this.street;
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCity() {
         return this.city;
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getState() {
         return this.state;
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getZipCode() {
         return this.zipCode;
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCountry() {
         return this.country;
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getPhone() {
         return this.phone;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
