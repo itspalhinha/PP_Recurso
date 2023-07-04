@@ -1,6 +1,11 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Nome: Rafael Filipe Silva Medina Coronel
+ * Número: 8190348
+ * Turma: LSIRCT1
+ *
+ * Nome: Roger Seiji Hernandez Nakauchi
+ * Número: 8210005
+ * Turma: LSIRCT1
  */
 package CBL;
 
