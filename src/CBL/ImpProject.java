@@ -99,18 +99,18 @@ public class ImpProject implements Project {
     private int numberOfEvaluations;
 
     /**
-     * This is the constructor method of Project. It is used to create a project
-     * object based on the Project Template. All the information not found in
-     * the project template is retrieved from the parameters of this method.
-     *
-     * @param name Name of the project.
-     * @param description Description of the project.
-     * @param maximumNumberOfFacilitators Max number of facilitators in a
-     * project.
-     * @param maximumNumberOfStudents Max number of students in a project.
-     * @param maximumNumberOfPartners Max number of partners in a project.
-     * @param maximumNumberOfTasks Max number of tasks in a project.
-     * @param tags Tags associated with the project.
+     * This is the constructor function for the Project class. It is used to
+     * create a project object based on the Project Template. Any information 
+     * not found in the project template is retrieved from the parameters of 
+     * this function.
+
+     * @param name: The name of the project.
+     * @param description: The description of the project.
+     * @param maximumNumberOfFacilitators: The maximum number of facilitators allowed in the project.
+     * @param maximumNumberOfStudents: The maximum number of students allowed in the project.
+     * @param maximumNumberOfPartners: The maximum number of partners allowed in the project.
+     * @param maximumNumberOfTasks: The maximum number of tasks allowed in the project.
+     * @param tags: The tags associated with the project.
      */
     public ImpProject(String name, String description, int maximumNumberOfFacilitators, int maximumNumberOfStudents, int maximumNumberOfPartners, int maximumNumberOfTasks, String[] tags) {
 
@@ -250,8 +250,8 @@ public class ImpProject implements Project {
     /**
      * {@inheritDoc}
      *
-     * This method adds participant to the project checking if the participant
-     * to be added already exists and if the participant's list is full
+     * This function includes a participant in the project by verifying if the
+     * participant already exists and if the participant's list has reached its maximum capacity.
      *
      * @throws IllegalNumberOfParticipantType if list is full
      *
@@ -308,16 +308,32 @@ public class ImpProject implements Project {
      *
      * @param student Student to be evaluated
      * @param selfEvaluation Note atributed from the student
+     * @throws IllegalArgumentException if grade is not valid and if Student
+     * is not in the Project
      */
-    public void addSelfEvaluation(Student student, float selfEvaluation) {
-        Student[] students = getStudents();
-        for (int i = 0; i < students.length; i++){
-            if(students[i].equals(student)){
-                evaluations[numberOfEvaluations].setSelfEvaluation(selfEvaluation);
-                numberOfEvaluations++;
-            }else{
-                throw new IllegalArgumentException("Student not found!");
+
+    public void addSelfEvaluation(Student student, float selfEvaluation) throws IllegalArgumentException{
+        if (selfEvaluation < 0f || selfEvaluation > 20f){
+            throw new IllegalArgumentException("Grade not valid!");
+        }
+        
+        if (!hasParticipant(student)){
+            throw new IllegalArgumentException("Student not in Project!");
+        }
+        
+        
+        boolean found = false;
+        int i = 0;
+        while (!found && i < numberOfEvaluations) {
+            if (evaluations[i].getStudent().equals(student)) {
+                evaluations[i].setSelfEvaluation(selfEvaluation);
+                found = true;
             }
+            i++;
+        }
+        
+        if (!found){
+            evaluations[numberOfEvaluations++] = new Evaluation(selfEvaluation,student);
         }
     }
 
@@ -408,11 +424,11 @@ public class ImpProject implements Project {
     }
 
     /*
-     * This method adds a tag to the tag's list only if it is not null or if it
-     * does not already exist on the list
+     * This method appends a tag to the list of tags solely if it is non-null
+     * or if it is not already present in the list.
      *
      * @param t Tag to be added
-     * @throws IllegalArgumentException if the tag is null or empty or already
+     * @throws IllegalArgumentException if the tag is null, empty or already
      * exist in array
      */
     public void addTags(String t) throws IllegalArgumentException {
@@ -432,8 +448,8 @@ public class ImpProject implements Project {
     }
 
     /*
-     * This method adds space to the tag list duplicating the current lenght of 
-     * the list
+     * This method extends the tag list by duplicating its current length, 
+     * adding extra space.
      */
     private void reallocTags() {
         String[] temp = new String[tags.length * 2];
@@ -445,7 +461,7 @@ public class ImpProject implements Project {
     }
 
     /*
-     * This method verifies if a given task exists in the task list
+     * This method checks whether a specified task exists in the list of tasks
      * 
      * @param task Task to be verified
      * @return true if exists
