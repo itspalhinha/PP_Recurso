@@ -298,6 +298,41 @@ public class ImpProject implements Project {
         }
         return temp;
     }
+    private Facilitator[] getFacilitator(){
+        Facilitator[] temp = new Facilitator[numberOfFacilitators];
+        int counter = 0;
+        for(int i = 0; i < numberOfParticipants; i++){
+            if(participants[i] instanceof Facilitator){
+                temp[counter++] = (Facilitator) participants[i];
+            }
+        }
+        return temp;
+    }
+    
+    public void addHeteroEvaluation(Student student, Facilitator facilitator, float heteroEvaluation) throws IllegalArgumentException{
+        if(heteroEvaluation < 0f || heteroEvaluation > 20f){
+            throw new IllegalArgumentException("Grade not valid");
+        }
+        if(!hasParticipant(facilitator)){
+            throw new IllegalArgumentException("Facilitator doesnt exist in the project");
+        }
+        if(!hasParticipant(student)){
+            throw new IllegalArgumentException("Student doesnt exist in the project");
+        }
+        
+        boolean found = false;
+        int i = 0;
+        while (!found && i < numberOfEvaluations){
+            if(evaluations[i].getStudent().equals(student)){
+                evaluations[i].setHeteroevaluation(heteroEvaluation);
+                found = true;
+            }
+            i++;
+        }
+        if(!found){
+            evaluations[numberOfEvaluations++] = new Evaluation(student, heteroEvaluation, facilitator);
+        }
+    }
 
     public void addSelfEvaluation(Student student, float selfEvaluation) throws IllegalArgumentException{
         if (selfEvaluation < 0f || selfEvaluation > 20f){
