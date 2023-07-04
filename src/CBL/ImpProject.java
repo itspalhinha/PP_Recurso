@@ -287,6 +287,10 @@ public class ImpProject implements Project {
 
     }
 
+    /*
+     * This method checks the list of Participants and creates a list with
+     * only Students
+     */
     private Student[] getStudents() {
         Student[] temp = new Student[numberOfStudents];
         int counter = 0;
@@ -299,6 +303,12 @@ public class ImpProject implements Project {
         return temp;
     }
 
+    /*
+     * This method permits to atribute a note for a student
+     *
+     * @param student Student to be evaluated
+     * @param selfEvaluation Note atributed from the student
+     */
     public void addSelfEvaluation(Student student, double selfEvaluation) {
 
         //check if Student has an evaluation assigned
@@ -316,7 +326,7 @@ public class ImpProject implements Project {
      *
      * This method remove participant from the list by the name
      *
-     * @param string Name of the participant to be removed
+     * @param string Participant's name to be removed
      * @throws IllegalArgumentException if the participant is not found
      */
     @Override
@@ -337,7 +347,7 @@ public class ImpProject implements Project {
             throw new IllegalArgumentException("Participant not found!");
         }
 
-        //partivipant to be removed
+        //participant to be removed
         Participant removedParticipant = participants[pos];
 
         for (i = pos; i < numberOfParticipants; i++) {
