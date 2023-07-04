@@ -9,14 +9,23 @@
  */
 package CBL;
 
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import ma02_resources.participants.Participant;
 import ma02_resources.project.Edition;
 import ma02_resources.project.Project;
 import ma02_resources.project.Status;
+import ma02_resources.project.exceptions.IllegalNumberOfTasks;
+import ma02_resources.project.exceptions.TaskAlreadyInProject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 /**
  *
@@ -194,21 +203,99 @@ public class ImpEdition implements Edition{
         }
         if(numberOfprojects == projects.length){
             realloc();
-            /*try{
-            
-            }catch(IOException ex){
-                throw new IOException("Project template not found");  
-            }catch(ParseException ex){
-                throw new ParseException("Project template is not valid");
-            }*/
+            try{
+                Reader read = new FileReader(this.projectTemplate);
+                JSONParser parser = new JSONParser();
+                JSONObject obj;
+                
+                obj = (JSONObject) parser.parse(read);
+                
+                long number_of_facilitators = (long) obj.get("number_of_facilitators");
+                long number_of_students = (long) obj.get("number_of_students");
+                long number_of_partners = (long) obj.get("number_of_partners");
+                
+                //Create a json array
+                
+                JSONArray taskArray = (JSONArray) obj.get("tasks");
+                
+                Project newPj = new ImpProject(name, description, (int)number_of_facilitators, (int)number_of_students, (int)number_of_partners, taskArray.size(), tags);
+                
+                if(existsProject(newPj)){
+                    throw new IllegalArgumentException("Project already exists in edition");
+                }
+                
+                for(int i = 0; i < taskArray.size(); i++){
+                    JSONObject aTask = (JSONObject) taskArray.get(i);
+                String title = (String) aTask.get("title");
+                String taskDescription = (String) aTask.get("description");
+                long start_at = (long) aTask.get("start_at");
+                long duration = (long) aTask.get("duration");
+
+                //calculate the start and the  end days
+                LocalDate taskStart = this.start.plusDays(start_at);
+                LocalDate taskEnd = this.start.plusDays(duration);
+                // create task
+
+                try {
+                    //add to the new project
+                    newPj.addTask(new ImpTask(title, taskDescription, taskStart, taskEnd, (int) duration));
+                } catch (IllegalNumberOfTasks | TaskAlreadyInProject ex) {
+                    Logger.getLogger(ImpEdition.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                }
+                
+                projects[numberOfprojects++] = newPj;
+                
+            } catch (org.json.simple.parser.ParseException ex) {
+                Logger.getLogger(ImpEdition.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }else{
-            /*try{
-            
-            }catch(IOException ex){
-                throw new IOException("Project template not found");  
-            }catch(ParseException ex){
-                throw new ParseException("Project template is not valid");
-            }*/
+            try{
+                Reader read = new FileReader(this.projectTemplate);
+                JSONParser parser = new JSONParser();
+                JSONObject obj;
+                
+                obj = (JSONObject) parser.parse(read);
+                
+                long number_of_facilitators = (long) obj.get("number_of_facilitators");
+                long number_of_students = (long) obj.get("number_of_students");
+                long number_of_partners = (long) obj.get("number_of_partners");
+                
+                //Create a json array
+                
+                JSONArray taskArray = (JSONArray) obj.get("tasks");
+                
+                Project newPj = new ImpProject(name, description, (int)number_of_facilitators, (int)number_of_students, (int)number_of_partners, taskArray.size(), tags);
+                
+                if(existsProject(newPj)){
+                    throw new IllegalArgumentException("Project already exists in edition");
+                }
+                
+                for(int i = 0; i < taskArray.size(); i++){
+                    JSONObject aTask = (JSONObject) taskArray.get(i);
+                String title = (String) aTask.get("title");
+                String taskDescription = (String) aTask.get("description");
+                long start_at = (long) aTask.get("start_at");
+                long duration = (long) aTask.get("duration");
+
+                //calculate the start and the  end days
+                LocalDate taskStart = this.start.plusDays(start_at);
+                LocalDate taskEnd = this.start.plusDays(duration);
+                // create task
+
+                try {
+                    //add to the new project
+                    newPj.addTask(new ImpTask(title, taskDescription, taskStart, taskEnd, (int) duration));
+                } catch (IllegalNumberOfTasks | TaskAlreadyInProject ex) {
+                    Logger.getLogger(ImpEdition.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                }
+                
+                projects[numberOfprojects++] = newPj;
+                
+            } catch (org.json.simple.parser.ParseException ex) {
+                Logger.getLogger(ImpEdition.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         
@@ -221,7 +308,29 @@ public class ImpEdition implements Edition{
      */
     @Override
     public void removeProject(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (string == null) {
+            throw new IllegalArgumentException("Null argument!");
+        }
+        String[] tags = {"null"};
+        Project project = new ImpProject(string, null, 0, 0, 0, 0, tags);
+
+        int pos = -1, i = 0;
+
+        while (pos == -1 && i < numberOfprojects) {
+
+            if (projects[i].equals(project)) {
+                pos = i;
+            } else {
+                i++;
+            }
+        }
+        if (pos == -1) {
+            throw new IllegalArgumentException("No project found with that argument!");
+        }
+        for (i = pos; i < numberOfprojects; i++) {
+            projects[i] = projects[i + 1];
+        }
+        projects[--numberOfprojects] = null;
     }
     
     /*Tipo um find para encontrar o projeto atraves do nome dado no parametro?
