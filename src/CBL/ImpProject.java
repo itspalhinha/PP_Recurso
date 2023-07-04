@@ -233,6 +233,10 @@ public class ImpProject implements Project {
     /**
      * {@inheritDoc}
      * 
+     * This method remove participant from the list by the name
+     * 
+     * @param string Name of the participant to be removed
+     * @throws IllegalArgumentException if the participant is not found
      */
     @Override
     public Participant removeParticipant(String string) {
