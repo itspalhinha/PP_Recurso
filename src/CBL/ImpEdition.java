@@ -27,47 +27,45 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-/**
- *
- * @author rafas
- */
+
 public class ImpEdition implements Edition{
     
     /*
-     * Variable that defines Edition's name 
+     * Nome da edição 
      */
     private String name;
     /*
-     * Variable that defines Edition's status
+     * Status da edição 
      */
     private Status status;
     /*
-     * Variable that defines Edition's start and end date 
+     * Data de início e término da edição 
      */
     private LocalDate start, end;
     /*
-     * Project template defined by the user 
+     * Template do projeto definido pelo usuário 
      */
     private String projectTemplate;
     /*
-     * List of projects
+     * List de projetos
      */
     private Project projects[];
     /*
-     * Variable that defines how many Editions are in the list
+     * Número de projetos atualmente na edição
      */
     private int numberOfprojects;
     /*
-     * Default structure of project when one is not chosen
+     * Template de projeto padrão
      */
     private static final String defaultProjTemp = "src/Files/project_template.json";
 
     /*
-     * This is the constructor method for Edition
+     * Construtor que cria uma instância de ImpEdition com nome, data de início e
+     * data de término especificados
      *
-     * @param name Edition's name
-     * @param start Edition's start date
-     * @param end Edition's end dtae
+     * @param name Nome da edição
+     * @param start Data de início
+     * @param end Data de término
      */
     public ImpEdition(String name, LocalDate start, LocalDate end) {
         this.name = name;
@@ -81,13 +79,14 @@ public class ImpEdition implements Edition{
     }
 
     /*
-     * This is the constructor method for Edition
+     * Construtor que cria uma instância de ImpEdition com nome, status, data de início
+     * e término, e template de projeto especificados
      * 
-     * @param name Edition's name
-     * @param status Edition's status
-     * @param start Edition's start date
-     * @param end Edition's end date
-     * @param projectTemplate Project template defined by the user
+     * @param name Nome da edição
+     * @param status Status da edição
+     * @param start Data de início
+     * @param end Data de término
+     * @param projectTemplate Template de projeto definido pelo usuário
      */
     public ImpEdition(String name, Status status, LocalDate start, LocalDate end, String projectTemplate) {
         this.name = name;
@@ -104,7 +103,8 @@ public class ImpEdition implements Edition{
     
     
     /**
-     * {@inheritDoc}
+     * Obtém o nome da edição
+     * @return Nome da edição
      */
     @Override
     public String getName() {
@@ -112,7 +112,8 @@ public class ImpEdition implements Edition{
     }
     
     /**
-     * {@inheritDoc}
+     * Obtém data de início da edição
+     * @return Data de início da edição
      */
     @Override
     public LocalDate getStart() {
@@ -120,7 +121,8 @@ public class ImpEdition implements Edition{
     }
     
     /**
-     * {@inheritDoc}
+     * Obtém o template de projeto da edição
+     * @return Template de projeto da edição
      */
     @Override
     public String getProjectTemplate() {
@@ -128,7 +130,8 @@ public class ImpEdition implements Edition{
     }
     
     /**
-     * {@inheritDoc}
+     * Obtém status da edição
+     * @return Status da edição
      */
     @Override
     public Status getStatus() {
@@ -136,7 +139,8 @@ public class ImpEdition implements Edition{
     }
     
     /**
-     * {@inheritDoc}
+     * Define o status da edição
+     * @param status Novo status da edição
      */
     @Override
     public void setStatus(Status status) {
@@ -144,7 +148,8 @@ public class ImpEdition implements Edition{
     }
     
     /**
-     * {@inheritDoc}
+     * Obtém o número de projetos na edição
+     * @return Número de projetos na edição
      */
     @Override
     public int getNumberOfProjects() {
@@ -152,7 +157,8 @@ public class ImpEdition implements Edition{
     }
     
     /**
-     * {@inheritDoc}
+     * Obtém a data de término da edição
+     * @return Data de término da edição
      */
     @Override
     public LocalDate getEnd() {
@@ -160,11 +166,11 @@ public class ImpEdition implements Edition{
     }
     
     /*
-     * This method searches for a project int the list
+     * Essa função pesquisa por um projeto na lista
      *
-     * @param proj Project to be searched
-     * @return true if it finds a project
-     * @return false if it does not find a project
+     * @param proj Projeto a ser verificado
+     * @return true se o projeto já existe
+     * @return false se não encontra o projeto
      */
     private boolean existsProject(Project proj){
         for(int i = 0; i < this.projects.length; i++){
@@ -176,7 +182,7 @@ public class ImpEdition implements Edition{
     }
     
     /*
-     * This method adds space to the Projects list
+     * Essa função adiciona espaço na lista de projetos
      */
     private void realloc(){
         Project[] tempProj = new Project[this.projects.length*2];
@@ -187,14 +193,13 @@ public class ImpEdition implements Edition{
     }
     
     /*
-     * This method adds a project to be edition. The project is created from the
-     * template
+     * Essa função adiciona um novo projeto à edição com base no template de projeto fornecido
      *
-     * @param name The Project's name
-     * @param description The Project's description
-     * @param tags The Project's tags
-     * @throws IOException if the project template is not found
-     * @throws ParseException if the project template is not valid
+     * @param name Nome do projeto
+     * @param description Descrição do projeto
+     * @param tags Tags do projeto
+     * @throws IOException lançada se o template de projeto não for encontrado
+     * @throws ParseException lançada se o template de projeto não for válido
      */
     @Override
     public void addProject(String name, String description, String[] tags) throws IOException, ParseException {
@@ -301,10 +306,9 @@ public class ImpEdition implements Edition{
         
     }
     
-    /*Remove um projeto de uma edição encontrando o projeto atraves do seu nome
-     * This method removes a project from the edition identifying by the name
+    /* Essa função remove um projeto da edição com base em seu nome
      * 
-     * @param string The Project's name
+     * @param string Nome do projeto a ser removido
      */
     @Override
     public void removeProject(String string) {
@@ -333,11 +337,9 @@ public class ImpEdition implements Edition{
         projects[--numberOfprojects] = null;
     }
     
-    /*Tipo um find para encontrar o projeto atraves do nome dado no parametro?
-     * This method searches for a project in the Porject's list
-     *
-     * @param name Project's name
-     * @throws IllegalArgumentException if it does not find a project
+    /* Obtém um projeto da edição com base no seu nome
+     * @param name Nome do projeto a ser obtido
+     * @throws IllegalArgumentException lançada se não existir projeto
      */
     @Override
     public Project getProject(String name) {
@@ -350,11 +352,7 @@ public class ImpEdition implements Edition{
         
     }
     /*
-     *
-     * {@inheritDoc}
-     *
-     *Cria um array com todos os projetos
-     * This method lists all the projects
+     * Essa função lista todos os projetos
      */
     @Override
     public Project[] getProjects() {
@@ -368,12 +366,9 @@ public class ImpEdition implements Edition{
         return tempProj;
     }
     /*
-     *
-     * {@inheritDoc}
-     *
-     *Retorna todos os projetos com um tag especifico
-     * 
-     * @param tag Return all projects with an especific tag
+     * Obtém todos os projetos com uma tag específica 
+     * @param tag Especifíca a tag
+     * @return o projeto com a tag correspondente
      */
     @Override
     public Project[] getProjectsByTag(String tag) {
@@ -399,10 +394,9 @@ public class ImpEdition implements Edition{
     }
     
     /* 
-     * {@inheritDoc}
-     * 
-     * *Retorna todos os projetos que tem um respetivo participante
-     * @param string Return all projects with an participant
+     * Obtém todos os projetos com um participante específico
+     * @param string Participante específico
+     * @return todos os projetos com um participante
      */
     @Override
     public Project[] getProjectsOf(String string) {
@@ -429,6 +423,11 @@ public class ImpEdition implements Edition{
         return temp;
     }
 
+    /*
+     * Verifica se a edição é igual a outro objeto
+     * @param obj Objeto a ser comparado
+     * @return Retorna true se a edição for igual ao objeto, caso contrário, retorna false
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

@@ -13,50 +13,42 @@ package Participant;
 import java.util.Objects;
 import ma02_resources.participants.Contact;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
-/**
- *
- * @author rafas
- */
 public class ImpContact implements Contact{
     /*
-     * Variable that defines street
+     * Define a rua
      */
     private String street;
     /*
-     * Variable that defines city
+     * Define a cidade
      */
     private String city;
     /*
-     * Variable that defines state
+     * Define o estado
      */
     private String state;
     /*
-     * Variable that defines zip code
+     * Define o código postal
      */
     private String zipCode;
     /*
-     * Variable that defines country
+     * Define o país
      */
     private String country;
     /*
-     * Variable that defines phone
+     * Define o telefone
      */
     private String phone;
 
     /*
-     * This is the constructor for Contract
+     * Este é o construtor para Contrato
      *
-     * @param street Street address
-     * @param city City
-     * @param state State
-     * @param zipCode Zip Code
-     * @param country Country
-     * @param phone Phone
+     * @param street Rua
+     * @param city Cidade
+     * @param state Estado
+     * @param zipCode Código postal
+     * @param country País
+     * @param phone Telefone
      */
     public ImpContact(String street, String city, String state, String zipCode, String country, String phone) {
         this.street = street;
@@ -69,42 +61,48 @@ public class ImpContact implements Contact{
     
 
     /**
-     * {@inheritDoc}
+     * Obtém a rua do contrato
+     * @return Rua do contrato
      */
     @Override
     public String getStreet() {
         return this.street;
     }
     /**
-     * {@inheritDoc}
+     * Obtém a cidade do contrato
+     * @return Cidade do contrato
      */
     @Override
     public String getCity() {
         return this.city;
     }
     /**
-     * {@inheritDoc}
+     * Obtém o estado do contrato
+     * @return Estado do contrato
      */
     @Override
     public String getState() {
         return this.state;
     }
     /**
-     * {@inheritDoc}
+     * Obtém o código postal do contrato
+     * @return Código postal do contrato
      */
     @Override
     public String getZipCode() {
         return this.zipCode;
     }
     /**
-     * {@inheritDoc}
+     * Obtém o país do contrato
+     * @return País do contrato
      */
     @Override
     public String getCountry() {
         return this.country;
     }
     /**
-     * {@inheritDoc}
+     * Obtém o telefone do contrato
+     * @return Telefone do contrato
      */
     @Override
     public String getPhone() {
@@ -112,7 +110,9 @@ public class ImpContact implements Contact{
     }
 
     /**
-     * {@inheritDoc}
+     * Esse método verifica se um objeto é igual ao contrato atual
+     * @param obj Objeto a ser comparado
+     * @return true se o objeto for igual, false caso contrário
      */
     @Override
     public boolean equals(Object obj) {

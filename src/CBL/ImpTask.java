@@ -14,49 +14,46 @@ import java.util.Objects;
 import ma02_resources.project.Submission;
 import ma02_resources.project.Task;
 
-/**
- *
- * @author ROGER
- */
+
 public class ImpTask implements Task{
     
     /*
-    * Variable that define Task start
+    * Define o início da tarefa
     */
     private LocalDate start;
     /*
-    * Variable that define Task end
+    * Define o fim da tarefa
     */
     private LocalDate end;
     /*
-    * Variable that define Task duration
+    * Define a duração da tarefa
     */
     private int duration;
     /*
-    * Variable that define Task title
+    * Define o título da tarefa
     */
     private String title;
     /*
-    * Variable that define Task description
+    * Define a descrição da tarefa
     */
     private String description;
     /*
-    * Array that stores submissions
+    * Array que armazena as submissões
     */
     private Submission[] submission;
     /*
-    * Variable that define Task number of submissions
+    * Define o número de submissões da tarefa
     */
     private int numberOfSubmissions;
     
     /*
-    * This is the constructor method for Task
+    * Esse é um dos métodos construtores para a tarefa
     *
-    * @param start Task start date
-    * @param end Task end date
-    * @param duration Task duration
-    * @param title Task title
-    * @param description Task description
+    * @param start Data de nício da tarefa
+    * @param end Data de término da tarefa
+    * @param duration Duração da tarefa
+    * @param title Título da tarefa
+    * @param description Descrição da tarefa
     */
     public ImpTask(LocalDate start, LocalDate end, int duration, String title, String description) {
         this.start = start;
@@ -66,6 +63,15 @@ public class ImpTask implements Task{
         this.description = description;
     }
 
+    /*
+     * Esse é um dos métodos construtores para a tarefa
+     *
+     * @param title Título da tarefa
+     * @param description Descrição da tarefa
+     * @param start Data de início da tarefa
+     * @param end Data de término da tarefa
+     * @para duration Duração da tarefa
+     */
     ImpTask(String title, String description, LocalDate start, LocalDate end, int duration) {
         this.start = start;
         this.end = end;
@@ -76,7 +82,8 @@ public class ImpTask implements Task{
     
     
     /**
-     * {@inheritDoc}
+     * Obtém a data de início da tarefa
+     * @return Data de início da tarefa
      */
     @Override
     public LocalDate getStart() {
@@ -84,7 +91,8 @@ public class ImpTask implements Task{
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém data de término da tarefa
+     * @return Data de término da tarefa
      */
     @Override
     public LocalDate getEnd() {
@@ -92,7 +100,8 @@ public class ImpTask implements Task{
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém a duração da tarefa
+     * @return Duração da tarefa
      */
     @Override
     public int getDuration() {
@@ -100,7 +109,8 @@ public class ImpTask implements Task{
     }
     
     /**
-     * {@inheritDoc}
+     * Obtém o título da tarefa
+     * @return Título da tarefa
      */
     @Override
     public String getTitle() {
@@ -108,7 +118,8 @@ public class ImpTask implements Task{
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém a descrição da tarefa
+     * @return Descrição da tarefa
      */
     @Override
     public String getDescription() {
@@ -116,7 +127,8 @@ public class ImpTask implements Task{
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém o array com as submissões da tarefa
+     * @return Array com as submissões da tarefa
      */
     @Override
     public Submission[] getSubmissions() {
@@ -128,7 +140,8 @@ public class ImpTask implements Task{
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém o número de submissões da tarefa
+     * @return Número de submissões da tarefa
      */
     @Override
     public int getNumberOfSubmissions() {
@@ -136,11 +149,10 @@ public class ImpTask implements Task{
     }
     
     /*
-    * This method checks if a submission exists in the list
+    * Este método verifica se uma submissão existe na lista
     *
-    * @param sbmsn
-    * @return true if submission exists
-    * @return false if submission does not exist
+    * @param sbmsn SUbmissão a ser verificada
+    * @return true se a submissão existir, false caso contrário
     */
     private boolean existsSubmission(Submission sbmsn){
         for(int i = 0; i < this.submission.length; i++){
@@ -152,7 +164,7 @@ public class ImpTask implements Task{
     }
     
     /*
-    * This method adds more space on Submission list
+    * Esse método adiciona mais espaço na lista de submissões
     */
     private void realloc(){
         Submission[] tempSubm = new Submission[this.submission.length*2];
@@ -162,8 +174,9 @@ public class ImpTask implements Task{
         this.submission = tempSubm;
     }
 
-    /**
-     * {@inheritDoc}
+    /** 
+     * Esse método adiciona uma submissão na lista de submissões da tarefa
+     * @param sbmsn Submissão a ser adicionada
      */
     @Override
     public void addSubmission(Submission sbmsn) {
@@ -181,7 +194,8 @@ public class ImpTask implements Task{
     }
 
     /**
-     * {@inheritDoc}
+     * Esse método estende o prazo da tarefa adicionando uma quantidade de dias
+     * @param days Quantidade de dias a serem adicionados ao prazo
      */
     @Override
     public void extendDeadline(int days) {
@@ -193,7 +207,8 @@ public class ImpTask implements Task{
     }
 
     /**
-     * {@inheritDoc}
+     * Esse método compara a tarefa atual com outra tarefa
+     * @return 0 se as tarefas começarem no mesmo dia
      */
     @Override
     public int compareTo(Task task) {
@@ -203,6 +218,11 @@ public class ImpTask implements Task{
         return this.start.compareTo(task.getStart());
     }
 
+    /*
+     * Verifica se o objeto atual é igual ao objeto fornecido
+     * @param obj Objeto a ser comparado
+     * @return true se os objetos forem iguais, false caso contrário
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

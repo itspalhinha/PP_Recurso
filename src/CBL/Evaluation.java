@@ -1,34 +1,36 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Nome: Rafael Filipe Silva Medina Coronel
+ * Número: 8190348
+ * Turma: LSIRCT1
+ *
+ * Nome: Roger Seiji Hernandez Nakauchi
+ * Número: 8210005
+ * Turma: LSIRCT1
  */
 package CBL;
 
 import ma02_resources.participants.Facilitator;
 import ma02_resources.participants.Student;
 
-/**
- *
- * @author David Santos
- */
+
 public class Evaluation {
 
     /**
-     * Variable that defines the self evaluation and the heteroevaluation
+     * Variáveis que definem a autoavaliação e a heteroavaliação
      */
     private float selfEvaluation, heteroevaluation;
     /**
-     * Variable that stores the Student being evaluated
+     * Variável que armazena o aluno que está sendo avaliado
      */
     private Student student;
     /**
-     * Variable that stores the Facilitator that evaluated the Student
+     * Variável que armazena o facilitador que avaliou o aluno
      */
     private Facilitator facilitator;
 
     
     /*
-     * This is one of the constructor method for Evaluation
+     * Este é um dos construtores do objeto Avaliacao
      */
     public Evaluation(float selfEvaluation, Student student) {
         this.selfEvaluation = selfEvaluation;
@@ -36,14 +38,14 @@ public class Evaluation {
     }
 
     /*
-     * This is one of the constructor method for Evaluation
+     * Este é um dos construtores do objeto Avaliacao
      */
     public Evaluation(Student student) {
         this.student = student;
     }
 
     /*
-     * This is one of the constructor method for Evaluation
+     * Este é um dos construtores do objeto Avaliacao
      */
     public Evaluation(Student student, float heteroevaluation, Facilitator facilitator) {
         this.heteroevaluation = heteroevaluation;
@@ -52,56 +54,56 @@ public class Evaluation {
     }
 
     /**
-     * {@inheritDoc}
+     * Retorna a autoavaliação do aluno
      */
     public float getSelfEvaluation() {
         return selfEvaluation;
     }
 
     /**
-     * {@inheritDoc}
+     * Define a autoavaliação do aluno
      */
     public void setSelfEvaluation(float selfEvaluation) {
         this.selfEvaluation = selfEvaluation;
     }
 
     /**
-     * {@inheritDoc}
+     * Retorna a heteroavaliação do aluno
      */
     public float getHeteroevaluation() {
         return heteroevaluation;
     }
 
     /**
-     * {@inheritDoc}
+     * Define a heteroavaliação do aluno
      */
     public void setHeteroevaluation(float heteroevaluation) {
         this.heteroevaluation = heteroevaluation;
     }
 
     /**
-     * {@inheritDoc}
+     * Retorna o aluno sendo avaliado
      */
     public Student getStudent() {
         return student;
     }
 
     /**
-     * {@inheritDoc}
+     * Define o aluno sendo avaliado
      */
     public void setStudent(Student student) {
         this.student = student;
     }
 
     /**
-     * {@inheritDoc}
+     * Retorna o facilitador que avaliou o aluno
      */
     public Facilitator getFacilitator() {
         return facilitator;
     }
 
     /**
-     * {@inheritDoc}
+     * Define o facilitador que avaliou o aluno
      */
     public void setFacilitator(Facilitator facilitator) {
         this.facilitator = facilitator;
