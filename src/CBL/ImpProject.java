@@ -620,11 +620,6 @@ public class ImpProject implements Project {
     public JSONObject toJsonObj() {
         JSONObject jsonObject = new JSONObject();
 
-    /*
-     * Verifica se o objeto atual é igual ao objeto fornecido
-     * @param obj Objeto a ser comparado
-     * @return true se os objetos forem iguais, false caso contrário
-     */
         jsonObject.put("name", name);
         jsonObject.put("description", description);
         jsonObject.put("numberOfFacilitators", numberOfFacilitators);
@@ -703,6 +698,11 @@ public class ImpProject implements Project {
         return project;
     }
     
+    /*
+     * Verifica se o objeto atual é igual ao objeto fornecido
+     * @param obj Objeto a ser comparado
+     * @return true se os objetos forem iguais, false caso contrário
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

@@ -49,7 +49,7 @@ public class ImpFacilitator extends ImpParticipant implements Facilitator{
     }
 
     /**
-     * {@inheritDoc}
+     * Define a área de especialização do facilitador
      */
     @Override
     public void setAreaOfExpertise(String areaOfExpertise) {
