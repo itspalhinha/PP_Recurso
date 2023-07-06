@@ -9,10 +9,7 @@
  */
 package Exceptions;
 
-/**
- *
- * @author rafas
- */
+
 public class AlreadyExistsInArray extends Exception{
     public AlreadyExistsInArray(String message) {
         super(message);

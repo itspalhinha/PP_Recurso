@@ -19,21 +19,21 @@ import org.json.simple.JSONObject;
 public class ImpStudent extends ImpParticipant implements Student{
     
     /*
-     * Variable that increases Student's number
+     * Variável que aumenta o número de estudantes
      */
     private static int counter = 0;
     /*
-     * Variable that defines Student's number
+     * Variável que define o número de estudantes
      */
     private int number;
 
     /*
-     * This is the constructor method for Student
+     * Este é um método construtor para Student
      *
-     * @param name Student name
-     * @param email Student email
-     * @param email Student contact
-     * @param email Student institution
+     * @param name Nome do estudante
+     * @param email Email do estudante
+     * @param email Contato do estudante
+     * @param email Instituição do estudante
      */
     public ImpStudent( String name, String email, Contact contact, Instituition instituition) {
         super(name, email, contact, instituition);
@@ -71,7 +71,10 @@ public class ImpStudent extends ImpParticipant implements Student{
         return csvBuilder.toString();
     }
 
-    
+    /*
+     * Obtém o número de estudantes
+     * @return Número de estudantes
+     */
     @Override
     public int getNumber() {
         return this.number;

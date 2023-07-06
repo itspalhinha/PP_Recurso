@@ -1,6 +1,11 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Nome: Rafael Filipe Silva Medina Coronel
+ * Número: 8190348
+ * Turma: LSIRCT1
+ *
+ * Nome: Roger Seiji Hernandez Nakauchi
+ * Número: 8210005
+ * Turma: LSIRCT1
  */
 package CBL;
 
@@ -24,25 +29,38 @@ import org.json.simple.parser.ParseException;
 
 /**
  *
- * @author rafas
+ * Classe que implementa a interface CBLInterface e representa a implementação
+ * do CBL (Curso Base de Lógica)
  */
 public class ImpCBL implements CBLinterface {
 
     private Edition[] editions;
     private int numOfEditions;
 
+    /**
+     * Construtor que cria uma instância de ImpCBL com um tamanho inicial
+     * especificado para o array de edições
+     *
+     * @param size Tamanho inicial do array de edições
+     */
     public ImpCBL(int size) {
         this.editions = new Edition[size];
         this.numOfEditions = 0;
     }
 
+    /**
+     * Construtor que cria uma instância de ImpCBL com um tamanho inicial padrão
+     * para o array de edições (1)
+     */
     public ImpCBL() {
+
         this.editions = new Edition[1];
         this.numOfEditions = 0;
     }
 
     /**
-     * Função para realocar o tamanho do array destinado a edições
+     * Função para realocar o tamanho do array destinado a edições, caso esteja
+     * cheio
      */
     public void realloc() {
         Edition[] tempEdition = new Edition[this.editions.length * 2];
@@ -69,6 +87,12 @@ public class ImpCBL implements CBLinterface {
         return false;
     }
 
+    /**
+     * Função que adiciona uma nova edição ao CBL
+     *
+     * @param edition Edição a ser adicionada
+     * @throws EditionAlreadyExist Lançada se a edição já existe no CBL
+     */
     @Override
     public void addEdition(Edition edition) throws EditionAlreadyExist {
         if (this.numOfEditions == editions.length) {
@@ -81,6 +105,13 @@ public class ImpCBL implements CBLinterface {
         numOfEditions++;
     }
 
+    /**
+     * Remove uma edição do CBL com base no nome da edição
+     *
+     * @param name Nome da edição a ser removida
+     * @return Retorna a edição removida
+     * @throws EditionDontExist Lançada se a edição não existe no CBL
+     */
     @Override
     public Edition removeEdition(String name) throws EditionDontExist {
         Edition removed = null;
@@ -101,6 +132,11 @@ public class ImpCBL implements CBLinterface {
         return removed;
     }
 
+    /*
+     * Obtém uma edição do CBL com base no nome da edição
+     * @param name Nome da edição a ser obtida
+     * @return Retorna a edição encontrada ou null se não existir
+     */
     @Override
     public Edition getEdition(String name) {
         for (int i = 0; i < this.numOfEditions; i++) {
@@ -195,6 +231,22 @@ public class ImpCBL implements CBLinterface {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    /*
+    @Override
+public Edition getEdition(String name) {
+for (int i = 0; i < this.numOfEditions; i++) {
+if (editions[i].getName().equals(name)) {
+return editions[i];
+}
+}
+return null;
+}
+     */
+    /**
+     * Ativa uma edição do CBL com base no nome da edição
+     *
+     * @param name Nome da edição a ser ativada
+     */
     @Override
     public boolean importDataJSON(String filePath) {
         return false;
@@ -205,6 +257,16 @@ public class ImpCBL implements CBLinterface {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    /*
+    @Override
+public void activateEdition(String name) {
+for (int i = 0; i < this.numOfEditions; i++) {
+if (editions[i].getName().equals(name)) {
+editions[i].activate();
+}
+}
+}
+     */
     @Override
     public boolean exportCSV(String filePath) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -237,7 +299,7 @@ public class ImpCBL implements CBLinterface {
     }
 
     public void exportToCSV(String filename) {
-                try {
+        try {
             FileWriter writer = new FileWriter(filename);
 
             // Write header
@@ -253,24 +315,24 @@ public class ImpCBL implements CBLinterface {
                 writer.write(edition.getStatus().toString() + ";");
                 writer.write(edition.getStart() + ";");
                 writer.write(edition.getEnd() + ";");
-                writer.write(edition.getProjectTemplate()+ ";");
-                writer.write(edition.getNumberOfProjects()+ ";");
+                writer.write(edition.getProjectTemplate() + ";");
+                writer.write(edition.getNumberOfProjects() + ";");
 
                 for (int j = 0; j < edition.getNumberOfProjects(); j++) {
                     Project project = edition.getProject(edition.getProjects()[j].getName());
 
                     writer.write(project.getName() + ";");
                     writer.write(project.getDescription() + ";");
-                    String tags ="";
-                    for (int a=0; a<project.getTags().length;a++){
+                    String tags = "";
+                    for (int a = 0; a < project.getTags().length; a++) {
                         tags += " " + project.getTags()[a];
                     }
                     writer.write(tags + ";");
-                    writer.write(project.getNumberOfParticipants()+ "/" + project.getMaximumNumberOfParticipants() + ";");
-                    writer.write(project.getNumberOfFacilitators()+ "/" + project.getMaximumNumberOfFacilitators() + ";");
-                    writer.write(project.getNumberOfStudents()+ "/" + project.getMaximumNumberOfStudents() + ";");
-                    writer.write(project.getNumberOfPartners()+ "/" + project.getMaximumNumberOfPartners() + ";");
-                    writer.write(project.getNumberOfTasks()+ "/" + project.getMaximumNumberOfTasks() + ";");
+                    writer.write(project.getNumberOfParticipants() + "/" + project.getMaximumNumberOfParticipants() + ";");
+                    writer.write(project.getNumberOfFacilitators() + "/" + project.getMaximumNumberOfFacilitators() + ";");
+                    writer.write(project.getNumberOfStudents() + "/" + project.getMaximumNumberOfStudents() + ";");
+                    writer.write(project.getNumberOfPartners() + "/" + project.getMaximumNumberOfPartners() + ";");
+                    writer.write(project.getNumberOfTasks() + "/" + project.getMaximumNumberOfTasks() + ";");
 
                     for (int k = 0; k < project.getNumberOfTasks(); k++) {
                         Task task = project.getTask(project.getTasks()[k].getTitle());
@@ -278,8 +340,8 @@ public class ImpCBL implements CBLinterface {
                         writer.write(task.getDescription() + ";");
                         writer.write(task.getStart() + ";");
                         writer.write(task.getEnd() + ";");
-                        writer.write(task.getNumberOfSubmissions()+ ";");
-                        
+                        writer.write(task.getNumberOfSubmissions() + ";");
+
                         Submission[] submissions = task.getSubmissions();
                         for (int l = 0; l < task.getNumberOfSubmissions(); l++) {
 
