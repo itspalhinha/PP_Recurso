@@ -242,7 +242,6 @@ return null;
     public boolean importDataCSV(String filePath) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-<<<<<<< HEAD
     /*
     @Override
 public void activateEdition(String name) {
@@ -254,7 +253,6 @@ editions[i].activate();
 }
     */
     
-=======
 
     @Override
     public boolean exportCSV(String filePath) {
@@ -287,6 +285,4 @@ editions[i].activate();
         return participantProjects;
     }
 
-
->>>>>>> 8801e3c40a307620edba7043871a6c16c231cc20
 }

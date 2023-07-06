@@ -220,13 +220,11 @@ public class ImpTask implements Task{
         return this.start.compareTo(task.getStart());
     }
 
-<<<<<<< HEAD
     /*
      * Verifica se o objeto atual é igual ao objeto fornecido
      * @param obj Objeto a ser comparado
      * @return true se os objetos forem iguais, false caso contrário
      */
-=======
     //metodos JSON
     public JSONObject toJsonObj() {
         JSONObject jsonObject = new JSONObject();
@@ -267,12 +265,6 @@ public class ImpTask implements Task{
     
     //metodos CSV
      
-
-
-
-    
->>>>>>> 8801e3c40a307620edba7043871a6c16c231cc20
-    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

@@ -27,18 +27,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-<<<<<<< HEAD
 
 public class ImpEdition implements Edition{
-    
-=======
-/**
- *
- * @author rafas
- */
-public class ImpEdition implements Edition {
 
->>>>>>> 8801e3c40a307620edba7043871a6c16c231cc20
     /*
      * Nome da edição 
      */
@@ -308,7 +299,6 @@ public class ImpEdition implements Edition {
         }
 
     }
-<<<<<<< HEAD
     
     /* Essa função remove um projeto da edição com base em seu nome
 =======
@@ -343,7 +333,6 @@ public class ImpEdition implements Edition {
         }
         projects[--numberOfprojects] = null;
     }
-<<<<<<< HEAD
     
     /* Obtém um projeto da edição com base no seu nome
      * @param name Nome do projeto a ser obtido
@@ -440,13 +429,12 @@ public class ImpEdition implements Edition {
         return temp;
     }
 
-<<<<<<< HEAD
     /*
      * Verifica se a edição é igual a outro objeto
      * @param obj Objeto a ser comparado
      * @return Retorna true se a edição for igual ao objeto, caso contrário, retorna false
      */
-=======
+
     public static Edition fromJsonObj(JSONObject jsonObject) {
 
         String name = (String) jsonObject.get("name");
@@ -493,8 +481,6 @@ public class ImpEdition implements Edition {
         projects[numberOfprojects++] = p;
     }
 
->>>>>>> 8801e3c40a307620edba7043871a6c16c231cc20
-    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
