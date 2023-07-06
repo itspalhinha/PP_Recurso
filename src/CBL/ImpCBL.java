@@ -140,12 +140,46 @@ public class ImpCBL implements CBLinterface{
 
     @Override
     public int getNumberOfEditions() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.numOfEditions;
     }
 
     @Override
     public Edition[] getEditionsByParticipant(Participant p) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int counter = 0;
+
+        Edition[] temp = new Edition[numOfEditions];
+        boolean hasP = false;
+        for (int i = 0; i < numOfEditions; i++) {
+            hasP = false;
+            for (Project project : editions[i].getProjects()) {
+                if (!hasP) {
+                    try {
+                        Participant participant = project.getParticipant(p.getEmail());
+                        if (participant != null) {
+                            hasP = true;
+                        }
+
+                    } catch (IllegalArgumentException e) {
+                    }
+                }
+            }
+            if (hasP) {
+                temp[counter++] = editions[i];
+            }
+        }
+        if (counter == 0) {
+            throw new NullPointerException("User does not participate in any of the editions");
+        }
+        //limit the array to just the not null positions
+        if (counter != numOfEditions) {
+            Edition[] editionsByParticipant = new Edition[counter];
+
+            for (int i = 0; i < counter; i++) {
+                editionsByParticipant[i] = temp[i];
+            }
+            return editionsByParticipant;
+        }
+        return temp;
     }
 
     @Override
