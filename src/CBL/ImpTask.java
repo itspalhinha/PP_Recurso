@@ -60,15 +60,7 @@ public class ImpTask implements Task{
     * @param title Task title
     * @param description Task description
     */
-    public ImpTask(LocalDate start, LocalDate end, int duration, String title, String description) {
-        this.start = start;
-        this.end = end;
-        this.duration = duration;
-        this.title = title;
-        this.description = description;
-    }
-
-    ImpTask(String title, String description, LocalDate start, LocalDate end, int duration) {
+    public ImpTask(String title, String description, LocalDate start, LocalDate end, int duration) {
         this.start = start;
         this.end = end;
         this.duration = duration;
