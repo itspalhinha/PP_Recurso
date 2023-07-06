@@ -1,11 +1,11 @@
 /*
- * Nome: Carolina Bonito Queiroga De Almeida
- * Número: 8180091 
- * Turna: LSIRCT1
+ * Nome: Rafael Filipe Silva Medina Coronel
+ * Número: 8190348
+ * Turma: LSIRCT1
  *
- * Nome: David Leandro Spencer Conceição dos Santos
- * Número: 8220651
- * Turna: LSIRCT1
+ * Nome: Roger Seiji Hernandez Nakauchi
+ * Número: 8210005
+ * Turma: LSIRCT1
  */
 package Managers;
 
