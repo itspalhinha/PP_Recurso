@@ -11,7 +11,18 @@ package CBL;
 
 import Exceptions.EditionAlreadyExist;
 import Exceptions.EditionDontExist;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalDate;
+import ma02_resources.participants.Participant;
 import ma02_resources.project.Edition;
+import ma02_resources.project.Project;
+import ma02_resources.project.Status;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 /**
@@ -115,6 +126,95 @@ public class ImpCBL implements CBLinterface{
      */
     @Override
     public Edition getEdition(String name) {
+        for(int i = 0; i < this.numOfEditions; i++){
+            if(editions[i].getName().equals(name)){
+                return editions[i];
+	    }
+        }
+        throw new IllegalArgumentException("Edition not found in CBL");
+    }
+
+    @Override
+    public void activateEdition(String name) throws IllegalArgumentException{
+        int pos = -1;
+        Edition edition = new ImpEdition(name, null, null);
+        
+        for(int j = 0; j < numOfEditions; j++){
+            if(this.editions[j] != null && this.editions[j].getStatus() == Status.ACTIVE){
+                pos = j;
+            }
+        }
+        
+        boolean cmp = false;
+        int i = 0;
+        
+        while (!cmp && i < numOfEditions) {
+            if (editions[i].equals(edition)) {
+                if (pos != -1) {
+                    //closed if end Date not happened yet and cancelled if end date not happened
+                    if (editions[pos].getEnd().compareTo(LocalDate.now()) <= 0) {
+                        editions[pos].setStatus(Status.CLOSED);
+                    } else {
+                        editions[pos].setStatus(Status.CANCELED);
+                    }
+                }
+                editions[i].setStatus(Status.ACTIVE);
+
+                cmp = true;
+            }
+            i++;
+        }
+        if (!cmp) {
+            throw new IllegalArgumentException("No edition found!");
+        }
+    }
+
+    @Override
+    public int getNumberOfEditions() {
+        return this.numOfEditions;
+    }
+
+    @Override
+    public Edition[] getEditionsByParticipant(Participant p) {
+        int counter = 0;
+
+        Edition[] temp = new Edition[numOfEditions];
+        boolean hasP = false;
+        for (int i = 0; i < numOfEditions; i++) {
+            hasP = false;
+            for (Project project : editions[i].getProjects()) {
+                if (!hasP) {
+                    try {
+                        Participant participant = project.getParticipant(p.getEmail());
+                        if (participant != null) {
+                            hasP = true;
+                        }
+
+                    } catch (IllegalArgumentException e) {
+                    }
+                }
+            }
+            if (hasP) {
+                temp[counter++] = editions[i];
+            }
+        }
+        if (counter == 0) {
+            throw new NullPointerException("User does not participate in any of the editions");
+        }
+        //limit the array to just the not null positions
+        if (counter != numOfEditions) {
+            Edition[] editionsByParticipant = new Edition[counter];
+
+            for (int i = 0; i < counter; i++) {
+                editionsByParticipant[i] = temp[i];
+            }
+            return editionsByParticipant;
+        }
+        return temp;
+    }
+
+    @Override
+    public boolean exportJSON(String filePath) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     /*
@@ -134,9 +234,15 @@ return null;
      * @param name Nome da edição a ser ativada
      */
     @Override
-    public void activateEdition(String name) {
+    public boolean importDataJSON(String filePath) {
+        return false;
+    }
+
+    @Override
+    public boolean importDataCSV(String filePath) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+<<<<<<< HEAD
     /*
     @Override
 public void activateEdition(String name) {
@@ -148,4 +254,39 @@ editions[i].activate();
 }
     */
     
+=======
+
+    @Override
+    public boolean exportCSV(String filePath) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Edition[] getEditions() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Project[] getProjectsOf(Participant participant) {
+        int projectCount = 0;
+
+        for (int i = 0; i < numOfEditions; i++) {
+            Project[] projects = editions[i].getProjectsOf(participant.getEmail());
+            projectCount += projects.length;
+        }
+
+        Project[] participantProjects = new Project[projectCount];
+        int counter = 0;
+
+        for (int j = 0; j < numOfEditions; j++) {
+            Project[] projects = editions[j].getProjectsOf(participant.getEmail());
+            for (int i = 0; i < projects.length; i++) {
+                participantProjects[counter++] = projects[i];
+            }
+        }
+        return participantProjects;
+    }
+
+
+>>>>>>> 8801e3c40a307620edba7043871a6c16c231cc20
 }

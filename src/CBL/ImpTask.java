@@ -13,6 +13,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 import ma02_resources.project.Submission;
 import ma02_resources.project.Task;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 
 public class ImpTask implements Task{
@@ -218,11 +220,58 @@ public class ImpTask implements Task{
         return this.start.compareTo(task.getStart());
     }
 
+<<<<<<< HEAD
     /*
      * Verifica se o objeto atual é igual ao objeto fornecido
      * @param obj Objeto a ser comparado
      * @return true se os objetos forem iguais, false caso contrário
      */
+=======
+    //metodos JSON
+    public JSONObject toJsonObj() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("title", title);
+        jsonObject.put("description", description);
+        jsonObject.put("start", start.toString());
+        jsonObject.put("end", end.toString());
+        jsonObject.put("duration", duration);
+        jsonObject.put("numberOfSubmissions", numberOfSubmissions);
+
+        JSONArray submissionsArray = new JSONArray();
+        for (int i = 0; i < numberOfSubmissions; i++) {
+            submissionsArray.add(((ImpSubmission) submission[i]).toJsonObj());
+        }
+        jsonObject.put("submissions", submissionsArray);
+
+        return jsonObject;
+    }
+
+    public static Task fromJsonObj(JSONObject jsonObject) {
+        String title = (String) jsonObject.get("title");
+        String description = (String) jsonObject.get("description");
+        LocalDate start = LocalDate.parse((String) jsonObject.get("start"));
+        LocalDate end = LocalDate.parse((String) jsonObject.get("end"));
+        int duration = ((Long) jsonObject.get("duration")).intValue();
+
+        ImpTask task = new ImpTask(title, description, start, end, duration);
+
+        JSONArray submissionsArray = (JSONArray) jsonObject.get("submissions");
+
+        for (int i = 0; i < submissionsArray.size(); i++) {
+            JSONObject submissionJson = (JSONObject) submissionsArray.get(i);
+            task.addSubmission(ImpSubmission.fromJsonObj(submissionJson));
+        }
+
+        return task;
+    }
+    
+    //metodos CSV
+     
+
+
+
+    
+>>>>>>> 8801e3c40a307620edba7043871a6c16c231cc20
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
