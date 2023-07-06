@@ -16,34 +16,30 @@ import ma02_resources.participants.Student;
 import ma02_resources.project.Submission;
 import org.json.simple.JSONObject;
 
-/**
- *
- * @author ROGER
- */
+
 public class ImpSubmission implements Submission{
     
     /*
-    * Variable that defines date of submission
+    * Data da submissão do projeto
     */
     private LocalDateTime date;
     /*
-    * Students that submitted a project
+    * Estudante que fez a submissão do projeto
     */
     private Student student;
     /*
-    * Description of the submission
+    * Descrição da submissão
     */
     private String text;
     
 
     /*
-    * This is one of the constructor methods for Submission. It is used
-    * when we want to import form the JSON file a submission that was
-    * created previously
+    * Este é um dos métodos construtores para a classe Submission, e é usado quando queremos importar
+    * de um arquivo JSON uma submissão que foi criada anteriormente
     *
-    * @param date The submissions date
-    * @param student The student that submitted the project
-    * @param text The description of the project
+    * @param date Data da submissão
+    * @param student Estudante que realizou a submissão
+    * @param text Descrição da submissão
     */
     public ImpSubmission(LocalDateTime date, Student student, String text) {
         this.date = LocalDateTime.now();
@@ -52,10 +48,9 @@ public class ImpSubmission implements Submission{
     }    
     
     /*
-    * This is the constructor method for Submission
-    *
-    * @param student The student that submitted a project
-    * @param text The description of the submit
+    * Este é um dos métodos construtores para a classe Submission
+    * @param student Estudante que efetuou a submissão
+    * @param text Descrição da submissão
     */
     public ImpSubmission(Student student, String text) {
         this.date = date;
@@ -64,7 +59,8 @@ public class ImpSubmission implements Submission{
     }
     
     /**
-     * {@inheritDoc}
+     * Obtém a data de submissão
+     * @return Data de submissão
      */
     @Override
     public LocalDateTime getDate() {
@@ -72,7 +68,8 @@ public class ImpSubmission implements Submission{
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém o estudante que efetuou a submissão
+     * @return Estudante que efetuou a submissão
      */
     @Override
     public Student getStudent() {
@@ -80,7 +77,8 @@ public class ImpSubmission implements Submission{
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém a descrição da submissão
+     * @return Descrição da submissão
      */
     @Override
     public String getText() {
@@ -88,7 +86,8 @@ public class ImpSubmission implements Submission{
     }
 
     /**
-     * {@inheritDoc}
+     * Este método compara a data da submissão atual com a data de outra submissão.
+     * @return 0 se as datas forem iguais
      */
     @Override
     public int compareTo(Submission sbmsn) {

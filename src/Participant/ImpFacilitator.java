@@ -15,32 +15,24 @@ import ma02_resources.participants.Facilitator;
 import ma02_resources.participants.Instituition;
 import org.json.simple.JSONObject;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
-/**
- *
- * @author rafas
- */
 public class ImpFacilitator extends ImpParticipant implements Facilitator{
 
     /*
-     * Area of Facilitator's expertise
+     * Área de especialização do Facilitador
      */
     private String areaOfExpertise;
     private int i;
     private String testing;
 
     /*
-     * This is the constructor method for Facilitator
+     * Este é o construtor para Facilitador
      * 
-     * @param areaOfExpertise Area of Facilitator's expertise
-     * @param name Facilitator's name
-     * @param email Facilitator's email
-     * param contact Facilitator's contact
-     * @param instituition Facilitator's institution
+     * @param areaOfExpertise Área de especialização do Facilitador
+     * @param name Nome do facilitador
+     * @param email Email do facilitador
+     * param contact Contrato do facilitador
+     * @param instituition Instituição do facilitador
      */
     public ImpFacilitator(String areaOfExpertise, String name, String email, Contact contact, Instituition instituition) {
         super(name, email, contact, instituition);
@@ -48,7 +40,8 @@ public class ImpFacilitator extends ImpParticipant implements Facilitator{
     }
         
     /**
-     * {@inheritDoc}
+     * Obtém a área de especialização do facilitador
+     * @return Área de especialização do facilitador
      */
     @Override
     public String getAreaOfExpertise() {
