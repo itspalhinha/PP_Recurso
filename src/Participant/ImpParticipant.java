@@ -16,36 +16,33 @@ import ma02_resources.participants.Instituition;
 import ma02_resources.participants.Participant;
 import org.json.simple.JSONObject;
 
-/**
- *
- * @author rafas
- */
+
 public abstract class ImpParticipant implements Participant{
     
     /*
-     * Variable that defines name
+     * Define o nome do participante
      */
     private String name;
     /*
-     * Variable that defines email
+     * Define o email do participante
      */
     private String email;
     /*
-     * Variable that defines contact
+     * Define o contato do participante
      */
     private Contact contact;
     /*
-     * Variable that defines an Institution
+     * Define uma instituição
      */
     private Instituition instituition;
 
     /*
-     * This is the constructor method for Participant
+     * Método construtor para a classe Participant
      *
-     * @param name Participant's name
-     * @param email Participant's email
-     * @param contact Participant's contact
-     * @param instituition Participant's institution
+     * @param name Nome do participante
+     * @param email Email do participante
+     * @param contact Contato do participante
+     * @param instituition Instituição do participante
      */
     public ImpParticipant(String name, String email, Contact contact, Instituition instituition) {
         this.name = name;
@@ -55,7 +52,8 @@ public abstract class ImpParticipant implements Participant{
     }
     
     /**
-     * {@inheritDoc}
+     * Obtém o nome do participante
+     * @return Nome do participante
      */
     @Override
     public String getName() {
@@ -63,7 +61,8 @@ public abstract class ImpParticipant implements Participant{
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém o email do participante
+     * @return Email do participante
      */
     @Override
     public String getEmail() {
@@ -71,7 +70,8 @@ public abstract class ImpParticipant implements Participant{
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém o contato do participante
+     * @return Contato do participante
      */
     @Override
     public Contact getContact() {
@@ -79,7 +79,8 @@ public abstract class ImpParticipant implements Participant{
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém a instituição do participante
+     * @return Instituição do participante
      */
     @Override
     public Instituition getInstituition() {
@@ -87,7 +88,7 @@ public abstract class ImpParticipant implements Participant{
     }
 
     /**
-     * {@inheritDoc}
+     * Define a instituição do participante
      */
     @Override
     public void setInstituition(Instituition instn) {
@@ -95,7 +96,7 @@ public abstract class ImpParticipant implements Participant{
     }
 
     /**
-     * {@inheritDoc}
+     * Define o contato do participante
      */
     @Override
     public void setContact(Contact cntct) {
@@ -186,7 +187,11 @@ public abstract class ImpParticipant implements Participant{
     }
 
 
-    
+    /*
+     * Verifica se o objeto atual é igual ao objeto fornecido
+     * @param obj Objeto a ser comparado
+     * @return true se os objetos forem iguais, false caso contrário
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

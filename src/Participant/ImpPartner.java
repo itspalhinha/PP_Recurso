@@ -18,23 +18,23 @@ import org.json.simple.JSONObject;
 public class ImpPartner extends ImpParticipant implements Partner{
     
     /*
-     * Variable that defines VAT number
+     * Define o número VAT do parceiro
      */
     private String vat;
     /*
-     * Variable that defines Partiner's website
+     * Define o website do parceiro
      */
     private String webSite;
 
     /*
-     * This is the constructor method for Partner
+     * Método construtor para Partner
      *
-     * @param vat Partners's VAT number
-     * @param website Partner's website
-     * @param name Partner's name
-     * @param email Partner's email
-     * @param email Partner's contact
-     * @param email Partner's institution
+     * @param vat Número VAT do parceiro
+     * @param website Website do parceiro
+     * @param name Nome do parceiro
+     * @param email Email do parceiro
+     * @param email Contato do parceiro
+     * @param email Instituição do parceiro
      */
     public ImpPartner(String vat, String webSite, String name, String email, Contact contact, Instituition instituition) {
         super(name, email, contact, instituition);
@@ -44,7 +44,8 @@ public class ImpPartner extends ImpParticipant implements Partner{
     
     
     /**
-     * {@inheritDoc}
+     * Obtém o número VAT do parceiro
+     * @return Número VAT do parceiro
      */
     @Override
     public String getVat() {
@@ -52,7 +53,8 @@ public class ImpPartner extends ImpParticipant implements Partner{
     }
     
     /**
-     * {@inheritDoc}
+     * Obtém o website do parceiro
+     * @return Website do parceiro
      */
     @Override
     public String getWebsite() {

@@ -18,39 +18,39 @@ import org.json.simple.JSONObject;
 public class ImpInstituition implements Instituition {
 
     /*
-     * Variable that defines name
+     * Nome da instituição
      */
     private String name;
     /*
-     * Variable that defines email
+     * Email da instituição
      */
     private String email;
     /*
-     * Variable that defines website
+     * Website da instituição
      */
     private String website;
     /*
-     * Variable that defines description
+     * Descrição da instituição
      */
     private String description;
     /*
-     * Variable that defines institution type
+     * Define o tipo da instituição
      */
     private InstituitionType type;
     /*
-     * Variable that defines institution's contact
+     * Define o contato da instituição
      */
     private Contact contact;
 
     /*
-     * This is the constructor for Institution
+     * Método construtor para Instituição
      *
-     * @param name Institution's name
-     * @param email Institution's email
-     * @param website Institution's website
-     * @param description Institution's description
-     * @param contact Institution's contact
-     * @param type Institution's type
+     * @param name Nome da instituição
+     * @param email Email da instituição
+     * @param website Website da instituição
+     * @param description Descrição da instituição
+     * @param contact Contato da instituição
+     * @param type Tipo da instituição
      */
     public ImpInstituition(String name, String email, String website, String description, Contact contact, InstituitionType type) {
         this.name = name;
@@ -62,7 +62,8 @@ public class ImpInstituition implements Instituition {
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém o nome da instituição
+     * @return Nome da instituição
      */
     @Override
     public String getName() {
@@ -70,7 +71,8 @@ public class ImpInstituition implements Instituition {
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém o email da instituição
+     * @return Email da instituição
      */
     @Override
     public String getEmail() {
@@ -78,7 +80,8 @@ public class ImpInstituition implements Instituition {
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém o website da instituição
+     * @return Website da instituição
      */
     @Override
     public String getWebsite() {
@@ -86,7 +89,8 @@ public class ImpInstituition implements Instituition {
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém a descrição da instituição
+     * @return Descrição da instituição
      */
     @Override
     public String getDescription() {
@@ -94,7 +98,8 @@ public class ImpInstituition implements Instituition {
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém o contato da instituição
+     * @return Contato da instituição
      */
     @Override
     public Contact getContact() {
@@ -102,7 +107,8 @@ public class ImpInstituition implements Instituition {
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém o tipo da instituição
+     * @return Tipo da instituição
      */
     @Override
     public InstituitionType getType() {
@@ -110,7 +116,8 @@ public class ImpInstituition implements Instituition {
     }
 
     /**
-     * {@inheritDoc}
+     * Obtém o website da instituição
+     * @return Website da instituição
      */
     @Override
     public void setWebsite(String string) {
@@ -118,7 +125,7 @@ public class ImpInstituition implements Instituition {
     }
 
     /**
-     * {@inheritDoc}
+     * Define a descrição da instituição
      */
     @Override
     public void setDescription(String string) {
@@ -126,7 +133,7 @@ public class ImpInstituition implements Instituition {
     }
 
     /**
-     * {@inheritDoc}
+     * Define o contato da instituição
      */
     @Override
     public void setContact(Contact cntct) {
@@ -134,7 +141,7 @@ public class ImpInstituition implements Instituition {
     }
 
     /**
-     * {@inheritDoc}
+     * Define o tipo da instituição
      */
     @Override
     public void setType(InstituitionType it) {
