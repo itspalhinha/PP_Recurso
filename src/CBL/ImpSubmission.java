@@ -9,9 +9,12 @@
  */
 package CBL;
 
+import Participant.ImpParticipant;
+import Participant.ImpStudent;
 import java.time.LocalDateTime;
 import ma02_resources.participants.Student;
 import ma02_resources.project.Submission;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -93,6 +96,33 @@ public class ImpSubmission implements Submission{
             return 0;
         }
         return date.compareTo(sbmsn.getDate());
+    }
+    
+    /**
+     * This method is used to export to a JSON file, information of a submission.
+     * @return A Json Object with the submission's information
+     */
+    public JSONObject toJsonObj() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("text", text);
+        jsonObject.put("date", date.toString());
+        jsonObject.put("student", ((ImpStudent) student).toJsonObj());
+
+        return jsonObject;
+    }
+
+    /**
+     * This method is used to import information about a submission from a JSON
+     * file.
+     * @param jsonObject The JSON Object containing the information to be retrived
+     * @return A submission creted based on the information retrived
+     */
+    public static ImpSubmission fromJsonObj(JSONObject jsonObject) {
+        String text = (String) jsonObject.get("text");
+        LocalDateTime date = LocalDateTime.parse((String) jsonObject.get("date"));
+        Student student = (Student) ImpParticipant.fromJsonObj((JSONObject) jsonObject.get("student"));
+
+        return new ImpSubmission(date, student, text);
     }
     
     

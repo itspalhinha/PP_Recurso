@@ -428,6 +428,51 @@ public class ImpEdition implements Edition{
         }
         return temp;
     }
+    
+    public static Edition fromJsonObj(JSONObject jsonObject) {
+
+        String name = (String) jsonObject.get("name");
+        LocalDate start = LocalDate.parse((String) jsonObject.get("start"));
+        LocalDate end = LocalDate.parse((String) jsonObject.get("end"));
+        Status status = Status.valueOf(((String) jsonObject.get("status")).toUpperCase());
+        String projectTemplate = (String) jsonObject.get("projectTemplate");
+
+        ImpEdition edition = new ImpEdition(name, status, start, end, projectTemplate);
+
+        JSONArray projectsArray = (JSONArray) jsonObject.get("projects");
+
+        for (int i = 0; i < projectsArray.size(); i++) {
+            try {
+
+                JSONObject projectJson = (JSONObject) projectsArray.get(i);
+
+                edition.addProjectFormImport(ImpProject.fromJsonObj(projectJson));
+            } catch (IllegalArgumentException e) {
+
+            }
+        }
+
+        return edition;
+
+    }
+    
+    /**
+     * This method adds 
+     * @param p 
+     */
+    private void addProjectFormImport(Project p) {
+        if (p == null) {
+            throw new IllegalArgumentException();
+        }
+        if (existsProject(p)) {
+            throw new IllegalArgumentException("Project already exists");
+        }
+        if (numberOfprojects == projects.length) {
+            realloc();
+        }
+
+        projects[numberOfprojects++] = p;
+    }
 
     @Override
     public boolean equals(Object obj) {

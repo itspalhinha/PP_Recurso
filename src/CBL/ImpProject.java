@@ -10,6 +10,7 @@
 package CBL;
 
 import Exceptions.AlreadyExistsInArray;
+import Participant.ImpParticipant;
 import ma02_resources.participants.Facilitator;
 import ma02_resources.participants.Participant;
 import ma02_resources.participants.Partner;
@@ -20,6 +21,8 @@ import ma02_resources.project.exceptions.IllegalNumberOfParticipantType;
 import ma02_resources.project.exceptions.IllegalNumberOfTasks;
 import ma02_resources.project.exceptions.ParticipantAlreadyInProject;
 import ma02_resources.project.exceptions.TaskAlreadyInProject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -577,7 +580,93 @@ public class ImpProject implements Project {
         }
         return true;
     }
+    
+    /**
+     * This method is used to export the information about a project to a JSON file.
+     * A JSON object is created containing all the project's data and then it is returned.
+     * @return JSON object of the project
+     */
+    public JSONObject toJsonObj() {
+        JSONObject jsonObject = new JSONObject();
 
+        jsonObject.put("name", name);
+        jsonObject.put("description", description);
+        jsonObject.put("numberOfFacilitators", numberOfFacilitators);
+        jsonObject.put("numberOfStudents", numberOfStudents);
+        jsonObject.put("numberOfPartners", numberOfPartners);
+        jsonObject.put("numberOfParticipants", numberOfParticipants);
+        jsonObject.put("numberOfTasks", numberOfTasks);
+        jsonObject.put("numberOfTags", numberOfTags);
+
+        jsonObject.put("maximumNumberOfFacilitators", maximumNumberOfFacilitators);
+        jsonObject.put("maximumNumberOfStudents", maximumNumberOfStudents);
+        jsonObject.put("maximumNumberOfPartners", maximumNumberOfPartners);
+        jsonObject.put("maximumNumberOfParticipants", maximumNumberOfParticipants);
+        jsonObject.put("maximumNumberOfTasks", maximumNumberOfTasks);
+
+        JSONArray tasksArray = new JSONArray();
+        for (int i = 0; i < numberOfTasks; i++) {
+            tasksArray.add(((ImpTask) tasks[i]).toJsonObj());
+        }
+        jsonObject.put("tasks", tasksArray);
+
+        JSONArray participantsArray = new JSONArray();
+        for (int i = 0; i < numberOfParticipants; i++) {
+            participantsArray.add(((ImpParticipant) participants[i]).toJsonObj());
+        }
+        jsonObject.put("participants", participantsArray);
+
+        JSONArray tagsArray = new JSONArray();
+        for (int i = 0; i < numberOfTags; i++) {
+            tagsArray.add(tags[i]);
+        }
+        jsonObject.put("tags", tagsArray);
+
+        return jsonObject;
+    }
+
+    public static Project fromJsonObj(JSONObject jsonObject) {
+
+        String name = (String) jsonObject.get("name");
+        String description = (String) jsonObject.get("description");
+
+        int maximumNumberOfFacilitators = ((Long) jsonObject.get("maximumNumberOfFacilitators")).intValue();
+        int maximumNumberOfStudents = ((Long) jsonObject.get("maximumNumberOfStudents")).intValue();
+        int maximumNumberOfPartners = ((Long) jsonObject.get("maximumNumberOfPartners")).intValue();
+        int maximumNumberOfTasks = ((Long) jsonObject.get("maximumNumberOfTasks")).intValue();
+
+        JSONArray tagsArray = (JSONArray) jsonObject.get("tags");
+        String[] tags = new String[tagsArray.size()];
+        for (int i = 0; i < tagsArray.size(); i++) {
+            tags[i] = (String) tagsArray.get(i);
+        }
+
+        ImpProject project = new ImpProject(name, description, maximumNumberOfFacilitators, maximumNumberOfStudents, maximumNumberOfPartners, maximumNumberOfTasks, tags);
+
+        JSONArray tasksArray = (JSONArray) jsonObject.get("tasks");
+        for (int i = 0; i < tasksArray.size(); i++) {
+            try {
+                JSONObject taskJson = (JSONObject) tasksArray.get(i);
+                project.addTask(ImpTask.fromJsonObj(taskJson));
+            } catch (IllegalNumberOfTasks | TaskAlreadyInProject ex) {
+
+            }
+        }
+
+        JSONArray participantsArray = (JSONArray) jsonObject.get("participants");
+        for (int i = 0; i < participantsArray.size(); i++) {
+            try {
+                JSONObject participantJson = (JSONObject) participantsArray.get(i);
+                Participant p = ImpParticipant.fromJsonObj(participantJson);
+                project.addParticipant(p);
+            } catch (IllegalNumberOfParticipantType | ParticipantAlreadyInProject ex) {
+
+            }
+        }
+
+        return project;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

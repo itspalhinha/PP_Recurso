@@ -12,6 +12,7 @@ package Participant;
 import ma02_resources.participants.Contact;
 import ma02_resources.participants.Instituition;
 import ma02_resources.participants.InstituitionType;
+import org.json.simple.JSONObject;
 
 
 public class ImpInstituition implements Instituition {
@@ -140,6 +141,89 @@ public class ImpInstituition implements Instituition {
         this.type = it;
     }
 
+    //metodos JSON
+    public JSONObject toJsonObj() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", name);
+        jsonObject.put("email", email);
+        jsonObject.put("website", website);
+        jsonObject.put("description", description);
+        jsonObject.put("contact", ((ImpContact) contact).toJsonObj());
+        
+        //Error if its InstituitionType.UNIVERSITY, the toString given is "universitary", it causes problems when importing
+        if (this.type == InstituitionType.UNIVERSITY){
+            jsonObject.put("type", "University");
+        } else {
+            jsonObject.put("type", type.toString());
+        }
+
+        return jsonObject;
+    }
+
+    public static Instituition fromJsonObj(JSONObject jsonObject) {
+
+        String name = (String) jsonObject.get("name");
+        String email = (String) jsonObject.get("email");
+        String website = (String) jsonObject.get("website");
+        String description = (String) jsonObject.get("description");
+        
+        JSONObject contactJson = (JSONObject) jsonObject.get("contact");
+        Contact contact = ImpContact.fromJsonObj(contactJson);
+        
+        InstituitionType type = InstituitionType.valueOf(((String) jsonObject.get("type")).toUpperCase());
+        
+        Instituition instituition = new ImpInstituition(name, email, website, description, contact, type);
+        
+        return instituition;
+    }
+    
+    //metodos CSV
+    public String toCSV() {
+        StringBuilder csvBuilder = new StringBuilder();
+
+        // Append column headers
+        csvBuilder.append("name,email,website,description,contact,type\n");
+
+        // Append data
+        csvBuilder.append(name).append(",");
+        csvBuilder.append(email).append(",");
+        csvBuilder.append(website).append(",");
+        csvBuilder.append(description).append(",");
+        csvBuilder.append(((ImpContact) contact).toCSV()).append(",");
+
+        if (type == InstituitionType.UNIVERSITY) {
+            csvBuilder.append("University").append(",");
+        } else {
+            csvBuilder.append(type.toString()).append(",");
+        }
+
+        return csvBuilder.toString();
+    }
+    public static Instituition fromCSV(String csvData) {
+        String[] fields = csvData.split(",");
+
+        String name = fields[0];
+        String email = fields[1];
+        String website = fields[2];
+        String description = fields[3];
+        String contactData = fields[4];
+        String typeData = fields[5];
+
+        Contact contact = ImpContact.fromCSV(contactData);
+
+        InstituitionType type;
+        if (typeData.equalsIgnoreCase("University")) {
+            type = InstituitionType.UNIVERSITY;
+        } else {
+            type = InstituitionType.valueOf(typeData.toUpperCase());
+        }
+
+        return new ImpInstituition(name, email, website, description, contact, type);
+    }
+
+
+    
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -154,5 +238,7 @@ public class ImpInstituition implements Instituition {
         final Instituition other = (Instituition) obj;
         return this.name.equals(other.getName());
     }
+
+    
 
 }
