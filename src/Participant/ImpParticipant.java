@@ -104,6 +104,10 @@ public abstract class ImpParticipant implements Participant{
     }
 
     //metodos JSON
+    /*
+     * Converte o objeto Participant em uma representação JSON
+     * @return Objeto JSON que representa o participante
+     */
     public JSONObject toJsonObj() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("typeOfParticiant", this.getClass().getSimpleName());
@@ -115,6 +119,11 @@ public abstract class ImpParticipant implements Participant{
         return jsonObject;
     }
 
+    /*
+     * Converte um objeto JSON em um objeto Participant
+     * @param jsonObject Objeto JSON contendo os dados do participante
+     * @return Objeto Participant
+     */
     public static Participant fromJsonObj(JSONObject jsonObject) {
 
         String name = (String) jsonObject.get("name");
@@ -144,7 +153,12 @@ public abstract class ImpParticipant implements Participant{
             return new ImpParticipant(name, email, contact, instituition) {};
         }
     }
+    
     //metodos CSV
+    /*
+     * Converte o objeto Participant em uma representação CSV
+     * @return Uma string no formato CSV que representa o participante
+     */
     public String toCSV() {
         StringBuilder csvBuilder = new StringBuilder();
 
@@ -160,6 +174,12 @@ public abstract class ImpParticipant implements Participant{
 
         return csvBuilder.toString();
     }
+    
+    /*
+     * Converte uma string CSV em um objeto Participant
+     * @param csvData A string CSV contendo os dados do participante
+     * @return Objeto Participant
+     */
     public static Participant fromCSV(String csvData) {
         String[] fields = csvData.split(",");
 

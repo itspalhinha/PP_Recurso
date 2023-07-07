@@ -30,17 +30,17 @@ import Participant.ImpParticipant;
 public class ParticipantsManager {
 
     /**
-     * Array that stores Participants.
+     * Array que armazena participantes
      */
     private static Participant[] participantsList;
     /**
-     * This counter variable increases the number of participants.
+     * Contador de participantes
      */
     private static int participantsCounter;
 
     
     /**
-     * This is the constructor method for ParticipantsManager.
+     * Método construtor para ParticipantsManager
      */
     public ParticipantsManager() {
         participantsCounter = 0;
@@ -48,15 +48,15 @@ public class ParticipantsManager {
     }
 
     /**
-     * This method is a getter for Participants Manager.
-     * @return How many Participants exist.
+     * Obtém o número de participantes existentes
+     * @return Número de participantes existentes
      */
     public int getParticipantsCounter() {
         return participantsCounter;
     }
 
     /**
-     * This method adds space to the list if it's full.
+     * Adiciona espaço à lista de participantes caso esteja cheia
      * 
      */
     private void realloc() {
@@ -69,11 +69,9 @@ public class ParticipantsManager {
     }
 
     /**
-     * This method checks if Participant exists in array.
-     * 
-     * @param p Participant to be checked.
-     * @return true if exists.
-     * @return false if doensn't exit.
+     * Este método verifica se um participante já existe na lista 
+     * @param p Participante a ser verificado
+     * @return true se existir, false caso contrário
      */
     public boolean hasParticipant(Participant p) {
         for (Participant participant : participantsList) {
@@ -96,11 +94,10 @@ public class ParticipantsManager {
 //    }
     
     /**
-     * This method adds a Participant to the list. It checks if Participant to be added
-     * already exists and if the array is full.
-     * 
-     * @param p Participant to be added.
-     * @throws AlreadyExistsInArray
+     * Essa função adiciona um participante à lista, verificando se o participante já existe e
+     * se o array está cheio 
+     * @param p Participante a ser adicionado
+     * @throws AlreadyExistsInArray se o participante já existir
      */
     public void addParticipant(Participant p) throws AlreadyExistsInArray {
 
@@ -114,10 +111,9 @@ public class ParticipantsManager {
     }
 
     /**
-     * This method removes a Participant from array.
-     * 
-     * @param string Name.
-     * @return The deleted Participant.
+     * Essa função remove um participante da lista
+     * @param string Nome do participante a ser removido
+     * @return O participante removido
      */
     public Participant removeParticipant(String string) {
         Participant deleted = new ImpParticipant(null, string, null, null) {};
@@ -142,11 +138,10 @@ public class ParticipantsManager {
     }
 
     /**
-     * This method gets data of one Participant.
-     * 
-     * @param string Name to be searched.
-     * @return The Participant.
-     * @throws IllegalArgumentException - if not found.
+     * Obtém um participante da lista pelo nome
+     * @param string Nome do participante a ser pesquisado
+     * @return O participante encontrado
+     * @throws IllegalArgumentException se o participante não for encontrado
      */
     public Participant getParticipant(String string) throws IllegalArgumentException {
         Participant p = new ImpParticipant(null, string, null, null) {};
@@ -179,6 +174,12 @@ public class ParticipantsManager {
 //        }
 //        return trimmedTemp;
 //    }
+    
+    
+    /*
+     * Obtém o número de facilitadores
+     * @return Número de facilitadores
+     */
     public int getNumberOfFacilitators() {
         int numberOfFacilitators = 0;
         for (int i = 0; i < participantsCounter; i++) {
@@ -189,6 +190,10 @@ public class ParticipantsManager {
         return numberOfFacilitators;
     }
 
+    /*
+     * Obtém o número de estudantes
+     * @return Número de estudantes
+     */
     public int getNumberOfStudents() {
         int numberOfStudents = 0;
         for (int i = 0; i < participantsCounter; i++) {
@@ -199,6 +204,10 @@ public class ParticipantsManager {
         return numberOfStudents;
     }
 
+    /*
+     * Obtém o número de parceiros
+     * @return Número de parceiros
+     */
     public int getNumberOfPartners() {
         int numberOfPartners = 0;
         for (int i = 0; i < participantsCounter; i++) {
@@ -210,10 +219,8 @@ public class ParticipantsManager {
     }
 
     /**
-     * This method gets data of all Participants, ordered by Facilitatiors, Students
-     * and Partners.
-     * 
-     * @return The list with data.
+     * Obtém os dados de todos os participantes, ordenados por facilitadores, estudantes e parceiros 
+     * @return Çista com os dados
      */
     public Participant[] getParticipants() {
         int counter = 0;
@@ -263,10 +270,9 @@ public class ParticipantsManager {
     }
 
     /**
-     * This method returns All Students.
-     * 
-     * @return A list with all institutions.
-     * @throws NullPointerException - if not found.
+     * Obtém todos os estudantes
+     * @return Um array com todos os estudantes
+     * @throws NullPointerException se não forem encontrados estudantes
      */
     public Student[] getStudents() {
         int counter = 0;
@@ -284,10 +290,9 @@ public class ParticipantsManager {
     }
 
     /**
-     * This method exports data to a JSON file.
-     * 
-     * @param filePath The path where the end file is located.
-     * @return true if successful.
+     * Exporta os dados dos participantes para um arquivo JSON
+     * @param filePath O caminho do arquivo de destino
+     * @return true se a exportação for bem sucedida, false caso contrário
      */
     public boolean export(String filePath) {
         JSONObject jsonObject = new JSONObject();
@@ -314,10 +319,10 @@ public class ParticipantsManager {
     }
 
     /**
-     * This method imports data from JSON file.
+     * Essa função importa dados de um arquivo JSON
      * 
-     * @param filePath The start path where the JSON file is located.
-     * @return true if successful.
+     * @param filePath O caminho do arquivo JSON de origem
+     * @return true se a importação for bem sucedida, false caso contrário
      */
     public boolean importData(String filePath) {
         JSONParser parser = new JSONParser();

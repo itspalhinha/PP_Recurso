@@ -98,8 +98,8 @@ public class ImpSubmission implements Submission{
     }
     
     /**
-     * This method is used to export to a JSON file, information of a submission.
-     * @return A Json Object with the submission's information
+     * Este método converte a submissão em um objeto JSONObject
+     * @return Um objeto JSON com as informações da submissão
      */
     public JSONObject toJsonObj() {
         JSONObject jsonObject = new JSONObject();
@@ -111,10 +111,9 @@ public class ImpSubmission implements Submission{
     }
 
     /**
-     * This method is used to import information about a submission from a JSON
-     * file.
-     * @param jsonObject The JSON Object containing the information to be retrived
-     * @return A submission creted based on the information retrived
+     * Este método converte um objeto JSONObject em um objeto ImpSubmission
+     * @param jsonObject Objeto JSON contendo a informação a ser recuperada
+     * @return Uma submissão criada baseada na informação recuperada
      */
     public static ImpSubmission fromJsonObj(JSONObject jsonObject) {
         String text = (String) jsonObject.get("text");

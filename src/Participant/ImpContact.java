@@ -111,6 +111,10 @@ public class ImpContact implements Contact{
     }
     
     //metodos JSON
+    /*
+     * Converte o objeto Contact em um JSONObject
+     * @return Objeto JSONObject que representa o contato
+     */
     public JSONObject toJsonObj() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("street", street);
@@ -123,6 +127,11 @@ public class ImpContact implements Contact{
         return jsonObject;
     }
 
+    /*
+     * Converte um JSONObject em um objeto Contact
+     * @param jsonObject Objeto JSONObject contendo os dados do contato
+     * @return o objeto Contact criado a partiro do JSONObject
+     */
     public static Contact fromJsonObj(JSONObject jsonObject) {
 
         String street = (String) jsonObject.get("street");
@@ -138,6 +147,10 @@ public class ImpContact implements Contact{
     }
 
     //metodos CSV
+    /*
+     * Converte o objeto Contact em uma representação CSV
+     * @return uma string no formato CSV que representa o contato
+     */
     public String toCSV() {
         StringBuilder csvBuilder = new StringBuilder();
 
@@ -154,6 +167,12 @@ public class ImpContact implements Contact{
 
         return csvBuilder.toString();
     }
+    
+    /*
+     * Converte uma representação CSV em um objeto Contact
+     * @param csvData String contendo os dados CSV contato
+     * @return Objeto Contact criado a partir dos dados CSV
+     */
     public static Contact fromCSV(String csvData) {
         String[] fields = csvData.split(",");
 
