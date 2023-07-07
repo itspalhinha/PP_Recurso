@@ -48,22 +48,6 @@ public class ImpTask implements Task{
     */
     private int numberOfSubmissions;
     
-    /*
-    * Esse é um dos métodos construtores para a tarefa
-    *
-    * @param start Data de nício da tarefa
-    * @param end Data de término da tarefa
-    * @param duration Duração da tarefa
-    * @param title Título da tarefa
-    * @param description Descrição da tarefa
-    */
-    public ImpTask(LocalDate start, LocalDate end, int duration, String title, String description) {
-        this.start = start;
-        this.end = end;
-        this.duration = duration;
-        this.title = title;
-        this.description = description;
-    }
 
     /*
      * Esse é um dos métodos construtores para a tarefa
@@ -74,7 +58,8 @@ public class ImpTask implements Task{
      * @param end Data de término da tarefa
      * @para duration Duração da tarefa
      */
-    ImpTask(String title, String description, LocalDate start, LocalDate end, int duration) {
+    public ImpTask(String title, String description, LocalDate start, LocalDate end, int duration) {
+
         this.start = start;
         this.end = end;
         this.duration = duration;

@@ -13,80 +13,92 @@ import Exceptions.EditionAlreadyExist;
 import Exceptions.EditionDontExist;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import ma02_resources.participants.Participant;
 import ma02_resources.project.Edition;
 import ma02_resources.project.Project;
 import ma02_resources.project.Status;
+import ma02_resources.project.Submission;
+import ma02_resources.project.Task;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-
 /**
  *
- * Classe que implementa a interface CBLInterface e representa a implementação do CBL (Curso Base de Lógica)
+ * Classe que implementa a interface CBLInterface e representa a implementação
+ * do CBL (Curso Base de Lógica)
  */
-public class ImpCBL implements CBLinterface{
-    
-    
+public class ImpCBL implements CBLinterface {
+
     private Edition[] editions;
     private int numOfEditions;
-    
+
     /**
-     * Construtor que cria uma instância de ImpCBL com um tamanho inicial especificado para o array de edições
+     * Construtor que cria uma instância de ImpCBL com um tamanho inicial
+     * especificado para o array de edições
+     *
      * @param size Tamanho inicial do array de edições
      */
-    public ImpCBL(int size){
+    public ImpCBL(int size) {
         this.editions = new Edition[size];
         this.numOfEditions = 0;
     }
-    
+
     /**
-     * Construtor que cria uma instância de ImpCBL com um tamanho inicial padrão para o array de edições (1)
+     * Construtor que cria uma instância de ImpCBL com um tamanho inicial padrão
+     * para o array de edições (1)
      */
-    public ImpCBL(){
+    public ImpCBL() {
+
         this.editions = new Edition[1];
         this.numOfEditions = 0;
     }
+
     /**
-     * Função para realocar o tamanho do array destinado a edições, caso esteja cheio
+     * Função para realocar o tamanho do array destinado a edições, caso esteja
+     * cheio
      */
-    public void realloc(){
+    public void realloc() {
         Edition[] tempEdition = new Edition[this.editions.length * 2];
-        for(int i = 0; i < this.numOfEditions; i++){
+        for (int i = 0; i < this.numOfEditions; i++) {
             tempEdition[i] = editions[i];
         }
         editions = tempEdition;
     }
-    /***
+
+    /**
+     * *
      * Função para procurar uma edição num array de edições
-     * @param edition especificar edição que queremos procurar no array de Edições 
+     *
+     * @param edition especificar edição que queremos procurar no array de
+     * Edições
      * @return retorna true se existir e false se nao existir
      */
-    public boolean existEdition(Edition edition){
-        for(int i = 0; i < this.numOfEditions; i++){
-            if(editions[i] != null && editions[i].equals(edition)){
+    public boolean existEdition(Edition edition) {
+        for (int i = 0; i < this.numOfEditions; i++) {
+            if (editions[i] != null && editions[i].equals(edition)) {
                 return true;
             }
         }
         return false;
     }
-    
 
     /**
      * Função que adiciona uma nova edição ao CBL
+     *
      * @param edition Edição a ser adicionada
      * @throws EditionAlreadyExist Lançada se a edição já existe no CBL
      */
     @Override
     public void addEdition(Edition edition) throws EditionAlreadyExist {
-        if(this.numOfEditions == editions.length){
+        if (this.numOfEditions == editions.length) {
             realloc();
         }
-        if(existEdition(edition)){
+        if (existEdition(edition)) {
             throw new EditionAlreadyExist("Edition Already exist in the CBL");
         }
         this.editions[numOfEditions] = edition;
@@ -95,6 +107,7 @@ public class ImpCBL implements CBLinterface{
 
     /**
      * Remove uma edição do CBL com base no nome da edição
+     *
      * @param name Nome da edição a ser removida
      * @return Retorna a edição removida
      * @throws EditionDontExist Lançada se a edição não existe no CBL
@@ -103,17 +116,17 @@ public class ImpCBL implements CBLinterface{
     public Edition removeEdition(String name) throws EditionDontExist {
         Edition removed = null;
         int exist = 0;
-        for(int i = 0; i < this.numOfEditions; i++){
-            if(editions[i].getName().equals(name)){
+        for (int i = 0; i < this.numOfEditions; i++) {
+            if (editions[i].getName().equals(name)) {
                 removed = this.editions[i];
                 exist = i;
             }
         }
-        if(exist == 0){
+        if (exist == 0) {
             throw new EditionDontExist("Edition dont exist in the CBL");
         }
-        for(int j = exist; j < numOfEditions; j++){
-            editions[j] = editions[j+1];
+        for (int j = exist; j < numOfEditions; j++) {
+            editions[j] = editions[j + 1];
         }
         editions[--numOfEditions] = null;
         return removed;
@@ -126,10 +139,10 @@ public class ImpCBL implements CBLinterface{
      */
     @Override
     public Edition getEdition(String name) {
-        for(int i = 0; i < this.numOfEditions; i++){
-            if(editions[i].getName().equals(name)){
+        for (int i = 0; i < this.numOfEditions; i++) {
+            if (editions[i].getName().equals(name)) {
                 return editions[i];
-	    }
+            }
         }
         throw new IllegalArgumentException("Edition not found in CBL");
     }
@@ -140,23 +153,23 @@ public class ImpCBL implements CBLinterface{
      * @throws IllegalArgumentException se a edição não for encontrada
      */
     @Override
-    public void activateEdition(String name) throws IllegalArgumentException{
+    public void activateEdition(String name) throws IllegalArgumentException {
         int pos = -1;
         Edition edition = new ImpEdition(name, null, null);
-        
-        for(int j = 0; j < numOfEditions; j++){
-            if(this.editions[j] != null && this.editions[j].getStatus() == Status.ACTIVE){
+
+        for (int j = 0; j < numOfEditions; j++) {
+            if (this.editions[j] != null && this.editions[j].getStatus() == Status.ACTIVE) {
                 pos = j;
             }
         }
-        
+
         boolean cmp = false;
         int i = 0;
-        
+
         while (!cmp && i < numOfEditions) {
             if (editions[i].equals(edition)) {
                 if (pos != -1) {
-                    //closed if end Date not happened yet and cancelled if end date not happened
+
                     if (editions[pos].getEnd().compareTo(LocalDate.now()) <= 0) {
                         editions[pos].setStatus(Status.CLOSED);
                     } else {
@@ -245,7 +258,6 @@ public class ImpCBL implements CBLinterface{
     public boolean exportJSON(String filePath) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
     /*
     @Override
 public Edition getEdition(String name) {
@@ -256,10 +268,10 @@ return editions[i];
 }
 return null;
 }
-    */
-
+     */
     /**
      * Ativa uma edição do CBL com base no nome da edição
+     *
      * @param name Nome da edição a ser ativada
      */
     @Override
@@ -279,6 +291,7 @@ return null;
     public boolean importDataCSV(String filePath) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
     /*
     @Override
 public void activateEdition(String name) {
@@ -288,6 +301,7 @@ editions[i].activate();
 }
 }
 }
+<<<<<<< HEAD
     */
     
 
@@ -296,6 +310,8 @@ editions[i].activate();
      * @param filePath Caminhodo arquivo CSV de destino
      * @return True se a exportação for bem sucedida, false caso contrário
      * @throws UnsupportedOperationException se a funcionalidade de exportação de dados não for suportada
+=======
+>>>>>>> bc1febeaf9d4cd27672a30f84dc93822670965fd
      */
     @Override
     public boolean exportCSV(String filePath) {
@@ -336,6 +352,73 @@ editions[i].activate();
             }
         }
         return participantProjects;
+    }
+
+    public void exportToCSV(String filename) {
+        try {
+            FileWriter writer = new FileWriter(filename);
+
+            // Write header
+            writer.write("Edition Name; Status; Start Date; End Date; ProjectTemplate; Number Of Projects;"
+                    + " Project Name; Description; Tags; Number of Participants;Number of Facilitators;Number of Students; Number of Partners; Number of Tasks; "
+                    + "Task Title; Task Description; Start date; End Date; Number of Submissions; "
+                    + "Submission Date; Student Name; Submission Text\n");
+
+            // Write data for each edition, project, task, and submission
+            for (int i = 0; i < numOfEditions; i++) {
+                Edition edition = editions[i];
+                writer.write(edition.getName() + ";");
+                writer.write(edition.getStatus().toString() + ";");
+                writer.write(edition.getStart() + ";");
+                writer.write(edition.getEnd() + ";");
+                writer.write(edition.getProjectTemplate() + ";");
+                writer.write(edition.getNumberOfProjects() + ";");
+
+                for (int j = 0; j < edition.getNumberOfProjects(); j++) {
+                    Project project = edition.getProject(edition.getProjects()[j].getName());
+
+                    writer.write(project.getName() + ";");
+                    writer.write(project.getDescription() + ";");
+                    String tags = "";
+                    for (int a = 0; a < project.getTags().length; a++) {
+                        tags += " " + project.getTags()[a];
+                    }
+                    writer.write(tags + ";");
+                    writer.write(project.getNumberOfParticipants() + "/" + project.getMaximumNumberOfParticipants() + ";");
+                    writer.write(project.getNumberOfFacilitators() + "/" + project.getMaximumNumberOfFacilitators() + ";");
+                    writer.write(project.getNumberOfStudents() + "/" + project.getMaximumNumberOfStudents() + ";");
+                    writer.write(project.getNumberOfPartners() + "/" + project.getMaximumNumberOfPartners() + ";");
+                    writer.write(project.getNumberOfTasks() + "/" + project.getMaximumNumberOfTasks() + ";");
+
+                    for (int k = 0; k < project.getNumberOfTasks(); k++) {
+                        Task task = project.getTask(project.getTasks()[k].getTitle());
+                        writer.write(task.getTitle() + ";");
+                        writer.write(task.getDescription() + ";");
+                        writer.write(task.getStart() + ";");
+                        writer.write(task.getEnd() + ";");
+                        writer.write(task.getNumberOfSubmissions() + ";");
+
+                        Submission[] submissions = task.getSubmissions();
+                        for (int l = 0; l < task.getNumberOfSubmissions(); l++) {
+
+                            writer.write(submissions[l].getDate() + ";");
+                            writer.write(submissions[l].getStudent().getEmail() + ";");
+                            writer.write(submissions[l].getText());
+                            writer.write("\n ;;;;;;;;;;;;;;;;;;;");
+                        }
+                        writer.write("\n ;;;;;;;;;;;;;;");
+                    }
+                    writer.write("\n ;;;;;;");
+                }
+                //proxima linha
+                writer.write("\n");
+            }
+
+            writer.close();
+            System.out.println("CSV file has been exported successfully.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while exporting to CSV: " + e.getMessage());
+        }
     }
 
 }
