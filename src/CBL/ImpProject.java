@@ -613,9 +613,8 @@ public class ImpProject implements Project {
     }
     
     /**
-     * This method is used to export the information about a project to a JSON file.
-     * A JSON object is created containing all the project's data and then it is returned.
-     * @return JSON object of the project
+     * Este método exporta a informação sobre o projeto em um ficheiro JSON
+     * @return Objeto JSON do projeto
      */
     public JSONObject toJsonObj() {
         JSONObject jsonObject = new JSONObject();
@@ -656,6 +655,11 @@ public class ImpProject implements Project {
         return jsonObject;
     }
 
+    /*
+     * Esse método cria um objeto ImpProject a partir de um objeto JSON
+     * @param jsonObject contendo os dados do projeto em formato JSON
+     * @return Objeto ImpProject criado a partir dos dados JSON
+     */
     public static Project fromJsonObj(JSONObject jsonObject) {
 
         String name = (String) jsonObject.get("name");

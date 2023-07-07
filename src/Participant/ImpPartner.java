@@ -62,6 +62,10 @@ public class ImpPartner extends ImpParticipant implements Partner{
     }
     
     //metodos JSON
+    /*
+     * Converte o objeto Participant em uma representação JSON
+     * @return Um objeto JSON que representa o participante
+     */
     public JSONObject toJsonObj() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("typeOfParticipant", this.getClass().getSimpleName());
@@ -75,6 +79,10 @@ public class ImpPartner extends ImpParticipant implements Partner{
     }
     
     //metodos CSV
+    /*
+     * Converte o objeto Participant em uma representação CSV
+     * @return Uma string no formato CSV que representa o participante
+     */
     public String toCSV() {
     StringBuilder csvBuilder = new StringBuilder();
 

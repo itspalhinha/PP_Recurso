@@ -301,12 +301,6 @@ public class ImpEdition implements Edition{
     }
     
     /* Essa função remove um projeto da edição com base em seu nome
-=======
-
-    /*Remove um projeto de uma edição encontrando o projeto atraves do seu nome
-     * This method removes a project from the edition identifying by the name
->>>>>>> 8801e3c40a307620edba7043871a6c16c231cc20
-     * 
      * @param string Nome do projeto a ser removido
      */
     @Override
@@ -337,14 +331,6 @@ public class ImpEdition implements Edition{
     /* Obtém um projeto da edição com base no seu nome
      * @param name Nome do projeto a ser obtido
      * @throws IllegalArgumentException lançada se não existir projeto
-=======
-
-    /*Tipo um find para encontrar o projeto atraves do nome dado no parametro?
-     * This method searches for a project in the Porject's list
-     *
-     * @param name Project's name
-     * @throws IllegalArgumentException if it does not find a project
->>>>>>> 8801e3c40a307620edba7043871a6c16c231cc20
      */
     @Override
     public Project getProject(String name) {
@@ -448,11 +434,10 @@ public class ImpEdition implements Edition{
     }
 
     /*
-     * Verifica se a edição é igual a outro objeto
-     * @param obj Objeto a ser comparado
-     * @return Retorna true se a edição for igual ao objeto, caso contrário, retorna false
+     * Esse método cria uma instância de Edition a partir de um objeto JSON
+     * @param jsonObject Objeto JSON contendo os dados da edição
+     * @return Instância de Edition criada
      */
-
     public static Edition fromJsonObj(JSONObject jsonObject) {
 
         String name = (String) jsonObject.get("name");
@@ -481,9 +466,9 @@ public class ImpEdition implements Edition{
     }
 
     /**
-     * This method adds
-     *
-     * @param p
+     * Este método adiciona um projeto importado à lista de projetos
+     * @param pProjeto a ser adicionado
+     * @throws IllegalArgumentException se o projeto for nulo ou se já existir na lista
      */
     private void addProjectFormImport(Project p) {
         if (p == null) {
@@ -524,6 +509,11 @@ public class ImpEdition implements Edition{
   
     }
 
+    /*
+     * Verifica se o objeto atual é igual ao objeto fornecido
+     * @param obj Objeto a ser comparado
+     * @return true se os objetos forem iguais, false caso contrário
+     */
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

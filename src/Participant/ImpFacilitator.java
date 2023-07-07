@@ -57,6 +57,10 @@ public class ImpFacilitator extends ImpParticipant implements Facilitator{
     }
     
     //metodo JSON
+    /*
+     * Converte o objeto Participant em uma representação JSON
+     * @return Objeto JSON que representa o participante
+     */
     public JSONObject toJsonObj() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("typeOfParticipant", this.getClass().getSimpleName());
@@ -69,6 +73,10 @@ public class ImpFacilitator extends ImpParticipant implements Facilitator{
     }
     
     //metodos CSV
+    /*
+     * Converte o objeto Participant em uma representação CSV
+     * @return Uma string em formato CSV que representao o participante
+     */
     public String toCSV() {
         StringBuilder csvBuilder = new StringBuilder();
 

@@ -151,6 +151,10 @@ public class ImpInstituition implements Instituition {
     
 
     //metodos JSON
+    /*
+     * Converte o objeto Instituition em uma representação JSON
+     * @return Um objeto JSON que represetna a instituição
+     */
     public JSONObject toJsonObj() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", name);
@@ -169,6 +173,11 @@ public class ImpInstituition implements Instituition {
         return jsonObject;
     }
 
+    /*
+     * Converte um objeto JSON em um objeto Instituition
+     * @param jsonObject Objeto JSON contendo os dados da instituição
+     * @return Objeto Instituition
+     */
     public static Instituition fromJsonObj(JSONObject jsonObject) {
 
         String name = (String) jsonObject.get("name");
@@ -187,6 +196,10 @@ public class ImpInstituition implements Instituition {
     }
     
     //metodos CSV
+    /*
+     * Converte o objeto Instituition em uma representação CSV
+     * @return Uma string no formato CSV que representa a instituição
+     */
     public String toCSV() {
         StringBuilder csvBuilder = new StringBuilder();
 
@@ -208,6 +221,12 @@ public class ImpInstituition implements Instituition {
 
         return csvBuilder.toString();
     }
+    
+    /*
+     * Converte uma string CSV em um objeto Instituition
+     * @param csvData String CSV contendo os dados da instituição
+     * @return Objeto Instituition
+     */
     public static Instituition fromCSV(String csvData) {
         String[] fields = csvData.split(",");
 
@@ -232,7 +251,11 @@ public class ImpInstituition implements Instituition {
 
 
     
-    
+    /*
+     * Verifica se um objeto é igual a esta instituição
+     * @param obj Objeto a ser comparado
+     * @return true se os objetos são iguais, false caso contrário
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

@@ -205,12 +205,12 @@ public class ImpTask implements Task{
         return this.start.compareTo(task.getStart());
     }
 
-    /*
-     * Verifica se o objeto atual é igual ao objeto fornecido
-     * @param obj Objeto a ser comparado
-     * @return true se os objetos forem iguais, false caso contrário
-     */
+    
     //metodos JSON
+    /*
+     * Converte a tarefa em um objeto JSONObject
+     * @return O objeto JSONObject que representa a tarefa
+     */
     public JSONObject toJsonObj() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("title", title);
@@ -229,6 +229,11 @@ public class ImpTask implements Task{
         return jsonObject;
     }
 
+    /*
+     * Cria uma tarefa a partir de um objeto JSONObject
+     * @param jsonObject Objeto JSONObject contendo os dados da tarefa
+     * @return A tarefa criada a partir do objeto JSONObject
+     */
     public static Task fromJsonObj(JSONObject jsonObject) {
         String title = (String) jsonObject.get("title");
         String description = (String) jsonObject.get("description");
@@ -250,6 +255,11 @@ public class ImpTask implements Task{
     
     //metodos CSV
      
+    /*
+     * Verifica se o objeto atual é igual ao objeto fornecido
+     * @param obj Objeto a ser comparado
+     * @return true se os objetos forem iguais, false caso contrário
+     */
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

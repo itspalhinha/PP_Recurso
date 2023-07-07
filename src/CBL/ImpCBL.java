@@ -147,6 +147,11 @@ public class ImpCBL implements CBLinterface {
         throw new IllegalArgumentException("Edition not found in CBL");
     }
 
+    /*
+     * Este método ativa a edição com o nome especificado
+     * @param name Nome da edição a ser ativada
+     * @throws IllegalArgumentException se a edição não for encontrada
+     */
     @Override
     public void activateEdition(String name) throws IllegalArgumentException {
         int pos = -1;
@@ -182,11 +187,21 @@ public class ImpCBL implements CBLinterface {
         }
     }
 
+    /*
+     * Obtém o número de edições
+     * @return Número de edições
+     */
     @Override
     public int getNumberOfEditions() {
         return this.numOfEditions;
     }
 
+    /*
+     * Obtém as edições em que o participante especificado está envolvido
+     * @param p Participante para o qual se deseja obter as edições
+     * @return Um array contendo as edições em que o participante está envolvido
+     * @throws NullPointerException se o participante não estiver envolvido em nenhuma das edições
+     */
     @Override
     public Edition[] getEditionsByParticipant(Participant p) {
         int counter = 0;
@@ -226,11 +241,23 @@ public class ImpCBL implements CBLinterface {
         return temp;
     }
 
+    /*
+     * Exporta os dados do sistema para um arquivo JSON
+     * @param filePath Caminho do arquivo JSON de destino
+     * @return true se a exportação for bem sucedida, false caso contrário
+     * @throws UnsupportedOperationException se a operação não for suportada
+     */
+    
+    /*
+     * Exporta os dados do sistema para um arquivo JSON
+     * @param filePath Caminho do arquivo JSON de destino
+     * @return true se a exportação for bem sucedida, false caso contrário
+     * @throws UnsupportedOperationException se a operação não for suportada
+     */
     @Override
     public boolean exportJSON(String filePath) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
     /*
     @Override
 public Edition getEdition(String name) {
@@ -252,6 +279,14 @@ return null;
         return false;
     }
 
+    /*
+     * Importa dados de um arquivo CSV para a classe atual, em que o formato e a estrutura do arquivo
+     * CSV devem ser compatíveis com as necessidades da classe
+     * @param filePath Caminho do arquivo CSV a ser importado
+     * @return True se a importação for bem sucedida, false caso contrário
+     * @throws UnsupportedOperationException se a funcionalidade de importação de dados não for suportada
+     * @throws IOException se ocorrer um erro durante a leitura ou processamento do arquivo CSV
+     */
     @Override
     public boolean importDataCSV(String filePath) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -266,12 +301,28 @@ editions[i].activate();
 }
 }
 }
+<<<<<<< HEAD
+    */
+    
+
+    /*
+     * Exporta os dados da classe atual para um arquivo CSV no caminho especificado
+     * @param filePath Caminhodo arquivo CSV de destino
+     * @return True se a exportação for bem sucedida, false caso contrário
+     * @throws UnsupportedOperationException se a funcionalidade de exportação de dados não for suportada
+=======
+>>>>>>> bc1febeaf9d4cd27672a30f84dc93822670965fd
      */
     @Override
     public boolean exportCSV(String filePath) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    /*
+     * Retorna um array contendo todas as edições disponíveis
+     * @return Um array de objetos Edition contendo todas as edições disponíveis
+     * @throws UnsupportedOperationException se a funcionalidade não for suportada
+     */
     @Override
     public Edition[] getEditions() {
         Edition temp[] = new Edition[numOfEditions];
@@ -283,6 +334,11 @@ editions[i].activate();
         return temp;
     }
 
+    /*
+     * Retorna um array de projetos nos quais o participante especificado está envolvido
+     * @param participant Participante para o qual deseja-se obter os projetos
+     * @return Um array de objetos Project contendo os projetos nos quais o participante está envolvido
+     */
     @Override
     public Project[] getProjectsOf(Participant participant) {
         int projectCount = 0;

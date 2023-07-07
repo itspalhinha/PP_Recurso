@@ -24,16 +24,16 @@ import Participant.ImpInstituition;
 public class InstituitionsManager {
 
     /**
-     * Array variable that stores Institutions.
+     * Array que armazena instituições
      */
     private static Instituition[] instituitionsList;
     /**
-     * This counter variable increases the number of institutions.
+     * Contador de instituições
      */
     private static int instituitionsCounter;
     
     /**
-     * This is the constructor method for Institutions Manager.
+     * Método construtor de InstituitionsManager
      */
     public InstituitionsManager() {
         instituitionsCounter = 0;
@@ -41,15 +41,15 @@ public class InstituitionsManager {
     }
 
     /**
-     * This method is a getter for Institutions Manager.
-     * @return How many Institutions exist.
+     * Obtém o número de instituições existentes
+     * @return Número de instituições existentes
      */
     public int getInstituitionsCounter() {
         return instituitionsCounter;
     }
 
     /**
-     * This method adds space to the list if it's full.
+     * Adiciona mais espaço à lista de instituições caso esteja cheia
      * 
      */
     private void realloc() {
@@ -62,10 +62,9 @@ public class InstituitionsManager {
     }
 
     /**
-     * This method checks if Institution exists in array.
-     * 
-     * @param p Institution to be checked.
-     * @return true if exists.
+     * Verifica se uma instituição existe na lista 
+     * @param p Instituição a ser verificada
+     * @return true se existir, false caso contrário
      */
     public boolean hasInstituition(Instituition p) {
         for (Instituition instituition : instituitionsList) {
@@ -77,11 +76,10 @@ public class InstituitionsManager {
     }
 
     /**
-     * This method adds an institution to the list. It checks if Institution to be added
-     * already exists and if the array is full.
-     * 
-     * @param p Institution to be added.
-     * @throws InstituitionAlreadyExistException
+     * Este método adiciona uma instituição à lista, verificando se a instituição já existe
+     * e se o array está cheio 
+     * @param p Instituição a ser adicionada
+     * @throws InstituitionAlreadyExistException se a instituição já existir
      */
     public void addInstituition(Instituition p) throws InstituitionAlreadyExistException {
 
@@ -96,10 +94,9 @@ public class InstituitionsManager {
 
     
     /**
-     * This method removes an Institution from array.
-     * 
-     * @param string Name.
-     * @return The deleted institution.
+     * Essa função remove uma instituição da lista 
+     * @param string Nome da instituição a ser removida
+     * @return A instituição removida
      */
     public Instituition removeInstituition(String string) {
         Instituition deleted = new ImpInstituition(string, null, null, null, null, null);
@@ -124,11 +121,10 @@ public class InstituitionsManager {
     }
 
     /**
-     * This method gets data of one Institution.
-     * 
-     * @param string Name to be searched.
-     * @return The institution.
-     * @throws IllegalArgumentException - if not found.
+     * Obtém uma instituição da lista pelo nome
+     * @param string Nome a ser pesquisado
+     * @return A instituição encontrada
+     * @throws IllegalArgumentException se a instituição não for encontrada
      */
     public Instituition getInstituition(String string) throws IllegalArgumentException {
         Instituition p = new ImpInstituition(string, null, null, null, null, null);
@@ -144,10 +140,9 @@ public class InstituitionsManager {
     }
 
     /**
-     * This method returns All Institutions.
-     * 
-     * @return A list with all institutions.
-     * @throws NullPointerException - if not found.
+     * Obtém todas as instituições da lista 
+     * @return Um array com todas as instituições
+     * @throws NullPointerException se não houver instituição na lista
      */
     public Instituition[] getInstituitions() throws NullPointerException {
         if (instituitionsCounter > 0){
@@ -165,10 +160,10 @@ public class InstituitionsManager {
     }
 
     /**
-     * This method exports data to a JSON file.
+     * Exporta os dados das instituições para um arquivo JSON
      * 
-     * @param filePath The path where the end file is located.
-     * @return true if successful.
+     * @param filePath O caminho do arquivo JSON de destino
+     * @return true se a exportação for bem sucedida, false caso contrário
      */
     public boolean export(String filePath) {
         JSONObject jsonObject = new JSONObject();
@@ -194,10 +189,9 @@ public class InstituitionsManager {
     }
 
     /**
-     * This method imports data from JSON file.
-     * 
-     * @param filePath The start path where the JSON file is located.
-     * @return true if successful.
+     * Importa dados de um arquivo JSON para a lista de instituições 
+     * @param filePath O caminho do arquivo JSON de origem
+     * @return true se a importação for bem sucedida, false caso contrário
      */
     public boolean importData(String filePath) {
         JSONParser parser = new JSONParser();
