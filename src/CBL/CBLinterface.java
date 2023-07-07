@@ -108,4 +108,6 @@ public interface CBLinterface {
      */
     public Project[] getProjectsOf(Participant participant);
     
+    public Edition[] uncompletedEditions();
+    
 }

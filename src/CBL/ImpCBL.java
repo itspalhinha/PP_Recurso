@@ -274,7 +274,13 @@ editions[i].activate();
 
     @Override
     public Edition[] getEditions() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Edition temp[] = new Edition[numOfEditions];
+
+        for (int i = 0; i < numOfEditions; i++) {
+            temp[i] = editions[i];
+        }
+
+        return temp;
     }
 
     @Override
@@ -363,6 +369,43 @@ editions[i].activate();
         } catch (IOException e) {
             System.out.println("An error occurred while exporting to CSV: " + e.getMessage());
         }
+    }
+
+    @Override
+    public Edition[] uncompletedEditions() {
+        int counter = 0;
+        Edition[] uncompletedEditions = new Edition[numOfEditions];
+        boolean hasIncompleteProject = false;
+
+        for (int i = 0; i < numOfEditions; i++) {
+            hasIncompleteProject = false;
+
+            if (editions[i].getNumberOfProjects() == 0) {
+                hasIncompleteProject = true;
+            } else {
+                Project[] uncompletedProjects = ((ImpEdition) editions[i]).getUncompletedProjects();
+                if (uncompletedProjects != null) {
+                    hasIncompleteProject = true;
+                }
+            }
+            //if it found at least 1 uncompleted project, adds the edition to the uncompletedEditions array
+            if (hasIncompleteProject) {
+                uncompletedEditions[counter++] = editions[i];
+            }
+        }
+        if (counter == 0) {
+            throw new NullPointerException("None of the editions are uncompleted!");
+        }
+        //limit the array to just the not null posicions
+        if (counter != numOfEditions) {
+            Edition[] trimmedUncompleted = new Edition[counter];
+
+            for (int i = 0; i < counter; i++) {
+                trimmedUncompleted[i] = uncompletedEditions[i];
+            }
+            return trimmedUncompleted;
+        }
+        return uncompletedEditions;
     }
 
 }

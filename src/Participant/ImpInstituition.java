@@ -147,6 +147,8 @@ public class ImpInstituition implements Instituition {
     public void setType(InstituitionType it) {
         this.type = it;
     }
+    
+    
 
     //metodos JSON
     public JSONObject toJsonObj() {

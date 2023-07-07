@@ -370,6 +370,24 @@ public class ImpEdition implements Edition{
         }
         return tempProj;
     }
+    
+    public JSONObject toJsonObj() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", name);
+        jsonObject.put("start", start.toString());
+        jsonObject.put("end", end.toString());
+        jsonObject.put("status", status.toString());
+        jsonObject.put("numberOfProjects", numberOfprojects);
+        jsonObject.put("projectTemplate", projectTemplate);
+
+        JSONArray projectsArray = new JSONArray();
+        for (int i = 0; i < numberOfprojects; i++) {
+            projectsArray.add(((ImpProject) projects[i]).toJsonObj());
+        }
+        jsonObject.put("projects", projectsArray);
+
+        return jsonObject;
+    }
 
     /*
      * Obtém todos os projetos com uma tag específica 
@@ -479,6 +497,31 @@ public class ImpEdition implements Edition{
         }
 
         projects[numberOfprojects++] = p;
+    }
+    
+    public Project[] getUncompletedProjects() {
+        int counter =0;
+        Project[] temp = new Project[this.numberOfprojects];
+
+        for (int i = 0; i < numberOfprojects; i++) {
+            if (!projects[i].isCompleted()) {
+                temp[counter++] = projects[i];
+            }
+        }
+        if (counter == 0){
+            return null;
+        }
+        
+        if (counter != numberOfprojects) {
+            Project[] trimmedTemp = new Project[counter];
+
+            for (int i = 0; i < counter; i++) {
+                trimmedTemp[i] = temp[i];
+            }
+            return trimmedTemp;
+        }
+        return temp;
+  
     }
 
     public boolean equals(Object obj) {
