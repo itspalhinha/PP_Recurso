@@ -271,7 +271,7 @@ public class ImpTask implements Task{
             return false;
         }
         final ImpTask other = (ImpTask) obj;
-        return this.title.equals(this.getTitle());
+        return this.title.equals(other.getTitle());
     }
     
     

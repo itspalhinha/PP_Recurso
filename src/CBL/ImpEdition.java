@@ -27,8 +27,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-
-public class ImpEdition implements Edition{
+public class ImpEdition implements Edition {
 
     /*
      * Nome da edição 
@@ -101,6 +100,7 @@ public class ImpEdition implements Edition{
 
     /**
      * Obtém o nome da edição
+     *
      * @return Nome da edição
      */
     @Override
@@ -110,6 +110,7 @@ public class ImpEdition implements Edition{
 
     /**
      * Obtém data de início da edição
+     *
      * @return Data de início da edição
      */
     @Override
@@ -119,6 +120,7 @@ public class ImpEdition implements Edition{
 
     /**
      * Obtém o template de projeto da edição
+     *
      * @return Template de projeto da edição
      */
     @Override
@@ -128,6 +130,7 @@ public class ImpEdition implements Edition{
 
     /**
      * Obtém status da edição
+     *
      * @return Status da edição
      */
     @Override
@@ -137,6 +140,7 @@ public class ImpEdition implements Edition{
 
     /**
      * Define o status da edição
+     *
      * @param status Novo status da edição
      */
     @Override
@@ -146,6 +150,7 @@ public class ImpEdition implements Edition{
 
     /**
      * Obtém o número de projetos na edição
+     *
      * @return Número de projetos na edição
      */
     @Override
@@ -156,9 +161,10 @@ public class ImpEdition implements Edition{
     public void setNumberOfprojects(int numberOfprojects) {
         this.numberOfprojects = numberOfprojects;
     }
-    
+
     /**
      * Obtém a data de término da edição
+     *
      * @return Data de término da edição
      */
     @Override
@@ -209,101 +215,55 @@ public class ImpEdition implements Edition{
         }
         if (numberOfprojects == projects.length) {
             realloc();
-            try {
-                Reader read = new FileReader(this.projectTemplate);
-                JSONParser parser = new JSONParser();
-                JSONObject obj;
-
-                obj = (JSONObject) parser.parse(read);
-
-                long number_of_facilitators = (long) obj.get("number_of_facilitators");
-                long number_of_students = (long) obj.get("number_of_students");
-                long number_of_partners = (long) obj.get("number_of_partners");
-
-                //Create a json array
-                JSONArray taskArray = (JSONArray) obj.get("tasks");
-
-                Project newPj = new ImpProject(name, description, (int) number_of_facilitators, (int) number_of_students, (int) number_of_partners, taskArray.size(), tags);
-
-                if (existsProject(newPj)) {
-                    throw new IllegalArgumentException("Project already exists in edition");
-                }
-
-                for (int i = 0; i < taskArray.size(); i++) {
-                    JSONObject aTask = (JSONObject) taskArray.get(i);
-                    String title = (String) aTask.get("title");
-                    String taskDescription = (String) aTask.get("description");
-                    long start_at = (long) aTask.get("start_at");
-                    long duration = (long) aTask.get("duration");
-
-                    //calculate the start and the  end days
-                    LocalDate taskStart = this.start.plusDays(start_at);
-                    LocalDate taskEnd = this.start.plusDays(duration);
-                    // create task
-
-                    try {
-                        //add to the new project
-                        newPj.addTask(new ImpTask(title, taskDescription, taskStart, taskEnd, (int) duration));
-                    } catch (IllegalNumberOfTasks | TaskAlreadyInProject ex) {
-                        Logger.getLogger(ImpEdition.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-
-                projects[numberOfprojects++] = newPj;
-
-            } catch (org.json.simple.parser.ParseException ex) {
-                Logger.getLogger(ImpEdition.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            try {
-                Reader read = new FileReader(this.projectTemplate);
-                JSONParser parser = new JSONParser();
-                JSONObject obj;
-
-                obj = (JSONObject) parser.parse(read);
-
-                long number_of_facilitators = (long) obj.get("number_of_facilitators");
-                long number_of_students = (long) obj.get("number_of_students");
-                long number_of_partners = (long) obj.get("number_of_partners");
-
-                //Create a json array
-                JSONArray taskArray = (JSONArray) obj.get("tasks");
-
-                Project newPj = new ImpProject(name, description, (int) number_of_facilitators, (int) number_of_students, (int) number_of_partners, taskArray.size(), tags);
-
-                if (existsProject(newPj)) {
-                    throw new IllegalArgumentException("Project already exists in edition");
-                }
-
-                for (int i = 0; i < taskArray.size(); i++) {
-                    JSONObject aTask = (JSONObject) taskArray.get(i);
-                    String title = (String) aTask.get("title");
-                    String taskDescription = (String) aTask.get("description");
-                    long start_at = (long) aTask.get("start_at");
-                    long duration = (long) aTask.get("duration");
-
-                    //calculate the start and the  end days
-                    LocalDate taskStart = this.start.plusDays(start_at);
-                    LocalDate taskEnd = this.start.plusDays(duration);
-                    // create task
-
-                    try {
-                        //add to the new project
-                        newPj.addTask(new ImpTask(title, taskDescription, taskStart, taskEnd, (int) duration));
-                    } catch (IllegalNumberOfTasks | TaskAlreadyInProject ex) {
-                        Logger.getLogger(ImpEdition.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-
-                projects[numberOfprojects++] = newPj;
-
-            } catch (org.json.simple.parser.ParseException ex) {
-                Logger.getLogger(ImpEdition.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
+        try {
+            Reader read = new FileReader(this.projectTemplate);
+            JSONParser parser = new JSONParser();
+            JSONObject obj;
 
+            obj = (JSONObject) parser.parse(read);
+
+            long number_of_facilitators = (long) obj.get("number_of_facilitors");
+            long number_of_students = (long) obj.get("number_of_students");
+            long number_of_partners = (long) obj.get("number_of_partners");
+
+            //Create a json array
+            JSONArray taskArray = (JSONArray) obj.get("tasks");
+
+            Project newPj = new ImpProject(name, description, (int) number_of_facilitators, (int) number_of_students, (int) number_of_partners, taskArray.size(), tags);
+
+            if (existsProject(newPj)) {
+                throw new IllegalArgumentException("Project already exists in edition");
+            }
+
+            for (int i = 0; i < taskArray.size(); i++) {
+                JSONObject aTask = (JSONObject) taskArray.get(i);
+                String title = (String) aTask.get("title");
+                String taskDescription = (String) aTask.get("description");
+                long start_at = (long) aTask.get("start_at");
+                long duration = (long) aTask.get("duration");
+
+                //calculate the start and the  end days
+                LocalDate taskStart = this.start.plusDays(start_at);
+                LocalDate taskEnd = this.start.plusDays(duration);
+                // create task
+
+                try {
+                    //add to the new project
+                    newPj.addTask(new ImpTask(title, taskDescription, taskStart, taskEnd, (int) duration));
+                } catch (IllegalNumberOfTasks | TaskAlreadyInProject ex) {
+                   
+                }
+            }
+
+            projects[numberOfprojects++] = newPj;
+
+       
+
+    }   catch (org.json.simple.parser.ParseException ex) {
+            System.out.println("Parse exception");
+        }
     }
-    
     /* Essa função remove um projeto da edição com base em seu nome
      * @param string Nome do projeto a ser removido
      */
@@ -331,7 +291,7 @@ public class ImpEdition implements Edition{
         }
         projects[--numberOfprojects] = null;
     }
-    
+
     /* Obtém um projeto da edição com base no seu nome
      * @param name Nome do projeto a ser obtido
      * @throws IllegalArgumentException lançada se não existir projeto
@@ -360,7 +320,7 @@ public class ImpEdition implements Edition{
         }
         return tempProj;
     }
-    
+
     public JSONObject toJsonObj() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", name);
@@ -471,8 +431,10 @@ public class ImpEdition implements Edition{
 
     /**
      * Este método adiciona um projeto importado à lista de projetos
+     *
      * @param pProjeto a ser adicionado
-     * @throws IllegalArgumentException se o projeto for nulo ou se já existir na lista
+     * @throws IllegalArgumentException se o projeto for nulo ou se já existir
+     * na lista
      */
     private void addProjectFormImport(Project p) {
         if (p == null) {
@@ -487,9 +449,9 @@ public class ImpEdition implements Edition{
 
         projects[numberOfprojects++] = p;
     }
-    
+
     public Project[] getUncompletedProjects() {
-        int counter =0;
+        int counter = 0;
         Project[] temp = new Project[this.numberOfprojects];
 
         for (int i = 0; i < numberOfprojects; i++) {
@@ -497,10 +459,10 @@ public class ImpEdition implements Edition{
                 temp[counter++] = projects[i];
             }
         }
-        if (counter == 0){
+        if (counter == 0) {
             return null;
         }
-        
+
         if (counter != numberOfprojects) {
             Project[] trimmedTemp = new Project[counter];
 
@@ -510,7 +472,7 @@ public class ImpEdition implements Edition{
             return trimmedTemp;
         }
         return temp;
-  
+
     }
 
     /*
@@ -528,8 +490,8 @@ public class ImpEdition implements Edition{
         if (!(obj instanceof Edition)) {
             return false;
         }
-        final ImpEdition other = (ImpEdition) obj;
-        return this.name.equals(this.getName());
+        final Edition other = (Edition) obj;
+        return this.name.equals(other.getName());
     }
 
 }

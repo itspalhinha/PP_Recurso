@@ -65,21 +65,19 @@ public class Menu {
     private final static String USERNAME = "admin";
     private final static String PASSWORD = "admin";
 
-    
     public Menu(ImpCBL cbl, ParticipantsManager pm, InstituitionsManager im) {
         this.cbl = cbl;
         this.im = im;
         this.pm = pm;
         this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
-    
-    
+
     //motor de arranque xD
-    public void initialize(){
+    public void initialize() {
         int opcao = 0;
-        
+
         int opcao2 = 2;
-        do{
+        do {
             System.out.println(" ╔═════════════════════╗ ");
             System.out.println(" ║      Hello       ║ ");
             System.out.println(" ╠═════════════════════╣ ");
@@ -88,7 +86,7 @@ public class Menu {
             System.out.println(" ║ 0. Exit          ║ ");
             System.out.println(" ╚═════════════════════╝ ");
             System.out.println(" Enter an option: ");
-           try {
+            try {
                 opcao = Integer.parseInt(reader.readLine());
 
                 switch (opcao) {
@@ -124,17 +122,15 @@ public class Menu {
                 System.out.println("║    Input inválido.      ║");
                 System.out.println("╚═════════════════════════════╝");
             }
-        }while(opcao != 0);
-        
+        } while (opcao != 0);
+
     }
-    
-    
-    
+
     //register
-    private boolean register(){
+    private boolean register() {
         int opcao = 0;
-        
-        do{
+
+        do {
             System.out.println(" ╔════════════════════╗ ");
             System.out.println(" ║   Registration  ║ ");
             System.out.println(" ╠════════════════════╣ ");
@@ -144,16 +140,16 @@ public class Menu {
             System.out.println(" ║ 0. Exit         ║ ");
             System.out.println(" ╚════════════════════╝ ");
             System.out.println(" Enter an option: ");
-           try{
-               opcao = Integer.parseInt(reader.readLine());
-           }catch(IOException e){
-               System.out.println("Erro no input");
-           }
-        }while(opcao > 3 || opcao < 0);
-        if(opcao == 0){
+            try {
+                opcao = Integer.parseInt(reader.readLine());
+            } catch (IOException e) {
+                System.out.println("Erro no input");
+            }
+        } while (opcao > 3 || opcao < 0);
+        if (opcao == 0) {
             return false;
         }
-        try{
+        try {
             System.out.println(" ╔══════════════════════════════════╗");
             System.out.println(" ║   Dados de um participante  ║");
             System.out.println(" ╠══════════════════════════════════╣");
@@ -163,25 +159,27 @@ public class Menu {
             String email = reader.readLine();
             System.out.println(" ╚══════════════════════════════════╝");
             Contact contact = assignContact();
-            Participant p = new ImpParticipant(nome, email, contact, null) {};
+            Participant p = new ImpParticipant(nome, email, contact, null) {
+            };
             assignInstituition(p);
-            
-            switch(opcao){
-                case 1: 
+
+            switch (opcao) {
+                case 1:
                     return registerStudent(p);
                 case 2:
                     return registerPartner(p);
-                case 3: 
+                case 3:
                     return registerFacilitator(p);
             }
-            
-        }catch(IOException e){
-               System.out.println("Erro no input");
-           }
-        
+
+        } catch (IOException e) {
+            System.out.println("Erro no input");
+        }
+
         return false;
-    } 
-    private Contact assignContact(){
+    }
+
+    private Contact assignContact() {
         try {
             System.out.print("\nMorada: ");
             String street = reader.readLine();
@@ -203,13 +201,14 @@ public class Menu {
             System.out.println("Error reading imput.");
             Contact contact = assignContact();
             return contact;
-        } 
+        }
     }
-    private Instituition assignInstituition(Participant p){
+
+    private Instituition assignInstituition(Participant p) {
         System.out.println(" ╔══════════════════════════════════╗");
         System.out.println(" ║    Seleçaõ de Instituições   ║");
         System.out.println(" ╠══════════════════════════════════╣");
-        try {           
+        try {
             Instituition[] instituitions = getInstituitionsOutput();
             int i = instituitions.length;
 
@@ -238,9 +237,10 @@ public class Menu {
             System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println("Erro lendo o input.");
-        } 
+        }
         return null;
     }
+
     private Instituition[] getInstituitionsOutput() {
         System.out.println(" ║       Instituições      ║");
         Instituition[] instituitions = this.im.getInstituitions();
@@ -251,26 +251,29 @@ public class Menu {
         }
         return instituitions;
     }
-    /***
+
+    /**
+     * *
      * Metodo para adicionar um participante como estudante
-     * 
+     *
      * @param p representa o participante que se vai registar como estudante
-     * @return retorna true se o participante for registado como student
-     *          e retorna false se o participante ja existir no Participant manager
+     * @return retorna true se o participante for registado como student e
+     * retorna false se o participante ja existir no Participant manager
      */
-    private boolean registerStudent(Participant p){
-        try{
+    private boolean registerStudent(Participant p) {
+        try {
             Student newStudent = new ImpStudent(p.getName(), p.getEmail(), p.getContact(), p.getInstituition());
             pm.addParticipant(newStudent);
             System.out.println("\nEstudante registado!");
             return true;
-        }catch(AlreadyExistsInArray ex){
+        } catch (AlreadyExistsInArray ex) {
             System.out.println(ex.getMessage());
             return false;
         }
     }
-    private boolean registerPartner(Participant p) throws IOException{
-        try{
+
+    private boolean registerPartner(Participant p) throws IOException {
+        try {
             System.out.println("\nIntroduza o seu respetivo VAT: ");
             String vat = reader.readLine();
             System.out.println("\nIntroduza o nome do seu respetivo WEBSITE: ");
@@ -287,15 +290,16 @@ public class Menu {
             return false;
         }
     }
-    private boolean registerFacilitator(Participant p){
-        try{
+
+    private boolean registerFacilitator(Participant p) {
+        try {
             System.out.println("\nIntroduza sua area de atuação: ");
             String areaAtuacao = reader.readLine();
             Facilitator newFacilitator = new ImpFacilitator(areaAtuacao, p.getName(), p.getEmail(), p.getContact(), p.getInstituition());
             pm.addParticipant(p);
             System.out.println("\nFacilitador registado!");
             return true;
-        }catch (IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error reading input.\n\n");
             return false;
         } catch (AlreadyExistsInArray ex) {
@@ -303,17 +307,15 @@ public class Menu {
             return false;
         }
     }
-    
-    
-    
+
     //login
-    private boolean login(){
+    private boolean login() {
         int count = 0;
-        do{
-            try{
+        do {
+            try {
                 System.out.print("\nIntroduza seu email: ");
                 String email = reader.readLine();
-                if(email.equals(USERNAME)){
+                if (email.equals(USERNAME)) {
                     System.out.print("\nPassword: ");
                     String password = reader.readLine();
                     adminMenu();
@@ -324,7 +326,7 @@ public class Menu {
                         loggedInParticipant = null;
                         return true;
                     }
-                }else{
+                } else {
                     loggedInParticipant = pm.getParticipant(email);
                     System.out.println("Login com sucesso. Bem-vindo, " + loggedInParticipant.getName() + "!\n\n");
                     return true;
@@ -333,103 +335,106 @@ public class Menu {
             } catch (IOException e) {
                 System.out.println("Erro analisando o input.");
             } catch (IllegalArgumentException e) {
-                    System.out.println("Utilizador nao encontrado\n");
+                System.out.println("Utilizador nao encontrado\n");
             }
-        }while(++count < 3);        
-        
+        } while (++count < 3);
+
         return false;
     }
+
     private void showParticipantsMenu() {
-    boolean exit = false;
-    while (!exit) {
-        System.out.println("╔════════════════════════════════╗");
-        System.out.println("║            Menu            ║");
-        System.out.println("╠════════════════════════════════╣");
-        System.out.println("║ 1. Minhas edições e proj   ║");
-        System.out.println("║ 2. Informação pessoal      ║");
-        System.out.println("║ 0. Back                    ║");
-        System.out.println("╚════════════════════════════════╝");
-        System.out.print("Seleciona uma opção: ");
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("╔════════════════════════════════╗");
+            System.out.println("║            Menu            ║");
+            System.out.println("╠════════════════════════════════╣");
+            System.out.println("║ 1. Minhas edições e proj   ║");
+            System.out.println("║ 2. Informação pessoal      ║");
+            System.out.println("║ 0. Back                    ║");
+            System.out.println("╚════════════════════════════════╝");
+            System.out.print("Seleciona uma opção: ");
 
-        try {
-            int option = Integer.parseInt(reader.readLine());
-
-            switch (option) {
-                case 1:
-                    showEditionsMenu();
-                    break;
-                case 2:
-                    showParticipantDetails(loggedInParticipant);
-                    break;
-                case 0:
-                    exit = true;
-                    break;
-                default:
-                    System.out.println("╔═══════════════════════════╗");
-                    System.out.println("║    Opção inválida     ║");
-                    System.out.println("╚═══════════════════════════╝");
-                    break;
-            }
-
-        } catch (NumberFormatException e) {       
-                System.out.println("╔═════════════════════════════╗");
-                System.out.println("║    Input inválido.      ║");
-                System.out.println("╚═════════════════════════════╝");
-        } catch (IOException e) {
-            System.out.println("Error reading input.");
-        }
-    }
-}
-    private void showEditionsMenu() {
-    boolean exit = false;
-    while (!exit) {
-        System.out.println("╔════════════════════════════════════╗");
-        System.out.println("║        Menu de Edições        ║");
-        System.out.println("╠════════════════════════════════════╣");
-        try {
-            Edition[] editions = cbl.getEditionsByParticipant(loggedInParticipant);
-
-            // List the editions
-            int i = 0;
-            for (i = 0; i < editions.length; i++) {
-                System.out.println("║ " + (i + 1) + ". " + editions[i].getName() + "("
-                        + editions[i].getStatus().toString() + ")"
-                );
-            }
-            System.out.println("║ " + 0 + ". Back");
-            System.out.print("║ Introduza o numero da edição: ");
             try {
-                int editionNumber = Integer.parseInt(reader.readLine());
+                int option = Integer.parseInt(reader.readLine());
 
-                // Check if it's valid
-                if (editionNumber == 0) {
-                    exit = true;
-                } else if (editionNumber >= 1 && editionNumber <= editions.length) {
-                    currentEdition = editions[editionNumber - 1];
-                    showProjectsMenu();
-
-                } else {
-                    System.out.println("╔═══════════════════════════╗");
-                    System.out.println("║    Opção inválida     ║");
-                    System.out.println("╚═══════════════════════════╝");
+                switch (option) {
+                    case 1:
+                        showEditionsMenu();
+                        break;
+                    case 2:
+                        showParticipantDetails(loggedInParticipant);
+                        break;
+                    case 0:
+                        exit = true;
+                        break;
+                    default:
+                        System.out.println("╔═══════════════════════════╗");
+                        System.out.println("║    Opção inválida     ║");
+                        System.out.println("╚═══════════════════════════╝");
+                        break;
                 }
+
             } catch (NumberFormatException e) {
                 System.out.println("╔═════════════════════════════╗");
                 System.out.println("║    Input inválido.      ║");
                 System.out.println("╚═════════════════════════════╝");
-
+            } catch (IOException e) {
+                System.out.println("Error reading input.");
             }
-        } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-            exit = true;
-        } catch (IOException e) {
-            System.out.println("╔═════════════════════════════╗");
-            System.out.println("║    Input inválido.      ║");
-            System.out.println("╚═════════════════════════════╝");
         }
-        System.out.println("╚════════════════════════════════════╝");
     }
-}
+
+    private void showEditionsMenu() {
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("╔════════════════════════════════════╗");
+            System.out.println("║        Menu de Edições        ║");
+            System.out.println("╠════════════════════════════════════╣");
+            try {
+                Edition[] editions = cbl.getEditionsByParticipant(loggedInParticipant);
+
+                // List the editions
+                int i = 0;
+                for (i = 0; i < editions.length; i++) {
+                    System.out.println("║ " + (i + 1) + ". " + editions[i].getName() + "("
+                            + editions[i].getStatus().toString() + ")"
+                    );
+                }
+                System.out.println("║ " + 0 + ". Back");
+                System.out.print("║ Introduza o numero da edição: ");
+                try {
+                    int editionNumber = Integer.parseInt(reader.readLine());
+
+                    // Check if it's valid
+                    if (editionNumber == 0) {
+                        exit = true;
+                    } else if (editionNumber >= 1 && editionNumber <= editions.length) {
+                        currentEdition = editions[editionNumber - 1];
+                        showProjectsMenu();
+
+                    } else {
+                        System.out.println("╔═══════════════════════════╗");
+                        System.out.println("║    Opção inválida     ║");
+                        System.out.println("╚═══════════════════════════╝");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("╔═════════════════════════════╗");
+                    System.out.println("║    Input inválido.      ║");
+                    System.out.println("╚═════════════════════════════╝");
+
+                }
+            } catch (NullPointerException e) {
+                System.out.println(e.getMessage());
+                exit = true;
+            } catch (IOException e) {
+                System.out.println("╔═════════════════════════════╗");
+                System.out.println("║    Input inválido.      ║");
+                System.out.println("╚═════════════════════════════╝");
+            }
+            System.out.println("╚════════════════════════════════════╝");
+        }
+    }
+
     private void showParticipantDetails(Participant participant) {
         boolean exit = false;
         while (!exit) {
@@ -509,8 +514,7 @@ public class Menu {
         System.out.println("╚══════════════════════════════════════╝");
     }
 
-
-    private void adminMenu(){
+    private void adminMenu() {
         System.out.println("\nOpções para admin\n");
         boolean exit = false;
         while (!exit) {
@@ -560,6 +564,7 @@ public class Menu {
         }
 
     }
+
     private void showAdminEditionsMenu() {
         boolean exit = false;
         while (!exit) {
@@ -572,7 +577,7 @@ public class Menu {
                 int i = 0;
                 if (cbl.getNumberOfEditions() != 0) {
                     System.out.println("║   ---- Lista de Edições -----    ║");
-                    
+
                     for (i = 0; i < editions.length; i++) {
                         System.out.println("║ " + (i + 1) + ". " + editions[i].getName() + " (" + editions[i].getStatus().toString() + ")" + "  ║");
                     }
@@ -620,6 +625,7 @@ public class Menu {
             }
         }
     }
+
     private void showAdminProjectsMenu() throws ParseException {
         boolean exit = false;
         while (!exit) {
@@ -699,6 +705,7 @@ public class Menu {
             }
         }
     }
+
     private void listProjectsByTag(String tag) {
         boolean exit = false;
         while (!exit) {
@@ -744,12 +751,14 @@ public class Menu {
             }
         }
     }
+
     private void showAddEditions() throws EditionAlreadyExist {
         System.out.println("╔════════════════════════════════════════╗");
         System.out.println("║ ===   Adicionar/Criar Edição  === ║");
         try {
-            System.out.print("║ Name: ");String name = reader.readLine();
-            
+            System.out.print("║ Name: ");
+            String name = reader.readLine();
+
             LocalDate start = null;
             while (start == null) {
                 System.out.print("║ Data Inicio (yyyy-mm-dd):  ");
@@ -780,6 +789,7 @@ public class Menu {
             System.out.println("Error reading input.");
         }
     }
+
     private void showUncompletedEditions() {
         System.out.println("╔══════════════════════════════════════╗");
         System.out.println("║=====   Edições incompletas =====║");
@@ -815,9 +825,9 @@ public class Menu {
 
                     }
                 } catch (NumberFormatException e) {
-                        System.out.println("╔════════════════════════════════════════════════════════╗");
-                        System.out.println("║ Input invalido. Por favor tente com um numero.  ║");
-                        System.out.println("╚════════════════════════════════════════════════════════╝");
+                    System.out.println("╔════════════════════════════════════════════════════════╗");
+                    System.out.println("║ Input invalido. Por favor tente com um numero.  ║");
+                    System.out.println("╚════════════════════════════════════════════════════════╝");
                 } catch (IOException e) {
                     System.out.println("Erro lendo input.");
                 }
@@ -826,6 +836,7 @@ public class Menu {
             }
         }
     }
+
     private void showAdminParticipantsMenu() {
         boolean exit = false;
         while (!exit) {
@@ -840,9 +851,9 @@ public class Menu {
                 System.out.println((i + 1) + ". " + participantes[i].getName());
             }
 
-            System.out.println("║"+(contador + 1) + ". Criar um participante" +"          ║");
-            System.out.println("║"+(contador + 2) + ". Excluir participante"+"           ║");
-            System.out.println("║"+0+ ". Voltar"+"                         ║");
+            System.out.println("║" + (contador + 1) + ". Criar um participante" + "          ║");
+            System.out.println("║" + (contador + 2) + ". Excluir participante" + "           ║");
+            System.out.println("║" + 0 + ". Voltar" + "                         ║");
             System.out.println("╚════════════════════════════════════════╝");
 
             try {
@@ -887,6 +898,7 @@ public class Menu {
             }
         }
     }
+
     private Participant[] listParticipants() {
 
         System.out.println(" ===== Todos Participantes registados ======= ");
@@ -923,6 +935,7 @@ public class Menu {
         }
         return participants;
     }
+
     private void showInstituitionsMenu() {
         boolean exit = false;
         while (!exit) {
@@ -958,6 +971,7 @@ public class Menu {
             }
         }
     }
+
     private void listInstituitions() {
         boolean exit = false;
         while (!exit) {
@@ -992,6 +1006,7 @@ public class Menu {
             }
         }
     }
+
     private void showInstituitionDetails(Instituition instituition) {
         boolean exit = false;
         while (!exit) {
@@ -1067,6 +1082,7 @@ public class Menu {
             }
         }
     }
+
     private void changeType(Instituition instituition) {
         boolean completo = false;
         while (!completo) {
@@ -1107,6 +1123,7 @@ public class Menu {
             }
         }
     }
+
     private void changeWebsite(Instituition instituition) {
         System.out.println("╔════════════════════════════════════════════╗");
         System.out.println("║ == Alterar informações do website == ");
@@ -1122,6 +1139,7 @@ public class Menu {
             System.out.println("Erro ao ler o input.");
         }
     }
+
     private void changeDescription(Instituition instituition) {
         System.out.println("╔════════════════════════════════════════════╗");
         System.out.println("║ == Alterar descrição da Instituição == ║");
@@ -1137,6 +1155,7 @@ public class Menu {
             System.out.println("Erro ao ler o input.");
         }
     }
+
     private void showRemoveInstituition(Instituition instituition) {
         boolean complete = false;
         try {
@@ -1181,6 +1200,7 @@ public class Menu {
             System.out.println(e.getMessage());
         }
     }
+
     private void showAddInstituition() {
         System.out.println("╔════════════════════════════════════════════╗");
         System.out.println("║ == Adicionar Instituição == ");
@@ -1211,6 +1231,7 @@ public class Menu {
             System.out.println("Erro ao ler o input.\n");
         }
     }
+
     private void showAdminProjectDetails() { //// nesta função que vamos fazer a evaluation
         boolean exit = false;
         while (!exit) {
@@ -1314,6 +1335,7 @@ public class Menu {
         }
         System.out.println("╚════════════════════════════════════════╝");
     }
+
     private void showAdminTaskDetails(Task task) {
         boolean exit = false;
         System.out.println("╔════════════════════════════════════════╗");
@@ -1350,7 +1372,7 @@ public class Menu {
                     break;
                 case 0:
                     exit = true;
-                    break;     
+                    break;
             }
         } catch (NumberFormatException e) {
             System.out.println("Invalid input. Please enter a number.\n\n");
@@ -1359,6 +1381,7 @@ public class Menu {
         }
         System.out.println("╚════════════════════════════════════════╝");
     }
+
     private void listSubmissions(Task task) {
         boolean exit = false;
         while (!exit) {
@@ -1395,6 +1418,7 @@ public class Menu {
             }
         }
     }
+
     private void showSubmissionDetails(Submission submission) {
         boolean exit = false;
 
@@ -1422,6 +1446,7 @@ public class Menu {
         }
         System.out.println("╚══════════════════════════════════════╝");
     }
+
     private void showProjectsMenu() {
         boolean exit = false;
         while (!exit) {
@@ -1457,6 +1482,7 @@ public class Menu {
         }
         System.out.println("╚══════════════════════════════════════════════════╝");
     }
+
     private void showProjectDetails() {
         boolean exit = false;
         while (!exit) {
@@ -1504,6 +1530,7 @@ public class Menu {
         }
         System.out.println("╚══════════════════════════════════╝");
     }
+
     private void showTaskDetails(Task task) {
         boolean isStudent = false, exit = false;
         if (loggedInParticipant instanceof Student) {
@@ -1562,58 +1589,61 @@ public class Menu {
         }
         System.out.println("╚══════════════════════════════╝");
     }
+
     private boolean submitWork(Task task) {
-    System.out.println("╔═══════════════════════════╗");
-    System.out.println("║  === Submit Work ===  ║");
-    System.out.println("║ Estudante: " + loggedInParticipant.getEmail());
-    try {
-        System.out.print("║ Introduza o texto: ");
-        String text = reader.readLine();
-
-        Submission newSubmission = new ImpSubmission((Student) loggedInParticipant, text);
-        System.out.println("║ Data da submissão: " + newSubmission.getDate().toString());
-
+        System.out.println("╔═══════════════════════════╗");
+        System.out.println("║  === Submit Work ===  ║");
+        System.out.println("║ Estudante: " + loggedInParticipant.getEmail());
         try {
-            task.addSubmission(newSubmission);
-        } catch (IllegalArgumentException e) {
-            System.out.println("║ " + e.getMessage());
-            return false;
-        }
-        return true;
+            System.out.print("║ Introduza o texto: ");
+            String text = reader.readLine();
 
-    } catch (IOException e) {
-        System.out.println("║ Error reading input.");
-        return false;
-    } finally {
-        System.out.println("╚═══════════════════════════╝");
-    }
-}
-    private void showProjectProgress() {
-                boolean exit = false;
+            Submission newSubmission = new ImpSubmission((Student) loggedInParticipant, text);
+            System.out.println("║ Data da submissão: " + newSubmission.getDate().toString());
 
-                System.out.println("╔═══════════════════════════════════╗");
-                System.out.println("║  == Progresso do Projeto ==  ║");
-                System.out.println(currentProject.toString());
-                System.out.println("\n");
-                System.out.println("║ 1. Back");
-                while (!exit) {
-                    try {
-                        System.out.print("║ Seleciona opção: ");
-                        int option = Integer.parseInt(reader.readLine());
-                        if (option == 1) {
-                            exit = true;
-                        } else {
-                            System.out.println("║ Invalid Selection");
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println("║ Invalid input. Please enter a number.");
-                    } catch (IOException ex) {
-                        System.out.println("║ Error reading input!");
-                    }
-                }
-                System.out.println("╚══════════════════════════════════════╝");
+            try {
+                task.addSubmission(newSubmission);
+            } catch (IllegalArgumentException e) {
+                System.out.println("║ " + e.getMessage());
+                return false;
             }
-    private Participant[] listaPP(){
+            return true;
+
+        } catch (IOException e) {
+            System.out.println("║ Error reading input.");
+            return false;
+        } finally {
+            System.out.println("╚═══════════════════════════╝");
+        }
+    }
+
+    private void showProjectProgress() {
+        boolean exit = false;
+
+        System.out.println("╔═══════════════════════════════════╗");
+        System.out.println("║  == Progresso do Projeto ==  ║");
+        System.out.println(currentProject.toString());
+        System.out.println("\n");
+        System.out.println("║ 1. Back");
+        while (!exit) {
+            try {
+                System.out.print("║ Seleciona opção: ");
+                int option = Integer.parseInt(reader.readLine());
+                if (option == 1) {
+                    exit = true;
+                } else {
+                    System.out.println("║ Invalid Selection");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("║ Invalid input. Please enter a number.");
+            } catch (IOException ex) {
+                System.out.println("║ Error reading input!");
+            }
+        }
+        System.out.println("╚══════════════════════════════════════╝");
+    }
+
+    private Participant[] listaPP() {
         System.out.println("╔══════════════════════════════════════════════════════╗");
         System.out.println("║   === Todos os participantes registados ===   ║");
         Participant[] participants = pm.getParticipants();
@@ -1652,6 +1682,7 @@ public class Menu {
         System.out.println("╚═══════════════════════════════════════════════╝");
         return participants;
     }
+
     private void showAddParticipant() throws IllegalNumberOfParticipantType, ParticipantAlreadyInProject {
 
         Participant[] participants = listParticipants();
@@ -1673,6 +1704,7 @@ public class Menu {
         }
 
     }
+
     private void showAddTask() throws IllegalNumberOfTasks, TaskAlreadyInProject {
         System.out.println("╔═════════════════════════════════════════╗");
         System.out.println("║        === Adionar Task ===        ║");
@@ -1714,7 +1746,8 @@ public class Menu {
         }
         System.out.println("╚════════════════════════════════════════════╝");
     }
-    private void showAddProject() throws ParseException {
+
+    private void showAddProject() {
         System.out.println("╔═════════════════════════════════════════════════════╗");
         System.out.println("║     ===== Adiciona um Projeto Novo =====     ║");
         try {
@@ -1734,12 +1767,13 @@ public class Menu {
             }
             currentEdition.addProject(name, description, tagsArray);
             System.out.println("Projeto adicionado com sucesso");
-            
+
         } catch (IOException | ParseException | IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage());         
         }
         System.out.println("╚═════════════════════════════════════════════════════╝");
     }
+
     private void showRemoveEditionMenu() throws EditionDontExist {
         boolean complete = false;
 
@@ -1792,17 +1826,15 @@ public class Menu {
         System.out.println("╚══════════════════════════════════╝");
     }
 
-
-    
     public static void main(String[] args) {
         // TODO code application logic here
         /*Menu menu = new Menu();
         menu.initialize();*/
-        
+
         ParticipantsManager pm = new ParticipantsManager();
         CBLinterface cbl = new ImpCBL();
         InstituitionsManager im = new InstituitionsManager();
-        
+
         if (pm.importData("files/users2.json") && im.importData("files/instituitions.json")) {
             System.out.println("╔════════════════════════════════════════════════╗");
             System.out.println("║    Sucesso importando utilizadores.      ║");
@@ -1819,7 +1851,7 @@ public class Menu {
             System.out.println("╚════════════════════════════════════════════════╝");
         }
 
-        Menu menu = new Menu((ImpCBL)cbl, pm, im);
+        Menu menu = new Menu((ImpCBL) cbl, pm, im);
         menu.initialize();
         //export data before close program
 
@@ -1837,9 +1869,7 @@ public class Menu {
             System.out.println("║      Sucesso importando utilizadores.    ║");
             System.out.println("╚════════════════════════════════════════════════╝");
         }
-        
+
     }
 
-    
-    
 }
