@@ -27,6 +27,8 @@ import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import ma02_resources.participants.Contact;
 import ma02_resources.participants.Facilitator;
 import ma02_resources.participants.Instituition;
@@ -104,6 +106,7 @@ public class Menu {
                         System.out.println(" ╚═════════════════╝");
                         if (login()) {
                             System.out.println("Login feito com sucesso.");
+                            showParticipantsMenu();
                         }
                         break;
                     case 0:
@@ -203,7 +206,9 @@ public class Menu {
         } 
     }
     private Instituition assignInstituition(Participant p){
-        System.out.println("=== Institutions Selection ===");
+        System.out.println(" ╔══════════════════════════════════╗");
+        System.out.println(" ║    Seleçaõ de Instituições   ║");
+        System.out.println(" ╠══════════════════════════════════╣");
         try {           
             Instituition[] instituitions = getInstituitionsOutput();
             int i = instituitions.length;
@@ -237,7 +242,7 @@ public class Menu {
         return null;
     }
     private Instituition[] getInstituitionsOutput() {
-        System.out.println("--- Instituições ---");
+        System.out.println(" ║       Instituições      ║");
         Instituition[] instituitions = this.im.getInstituitions();
 
         int i = 0;
@@ -306,7 +311,7 @@ public class Menu {
         int count = 0;
         do{
             try{
-                System.out.println("\nIntroduza o email associado ao seu utilizador: ");
+                System.out.print("\nIntroduza seu email: ");
                 String email = reader.readLine();
                 if(email.equals(USERNAME)){
                     System.out.print("\nPassword: ");
@@ -322,6 +327,7 @@ public class Menu {
                 }else{
                     loggedInParticipant = pm.getParticipant(email);
                     System.out.println("Login com sucesso. Bem-vindo, " + loggedInParticipant.getName() + "!\n\n");
+                    return true;
                 }
                 return true;
             } catch (IOException e) {
@@ -333,6 +339,177 @@ public class Menu {
         
         return false;
     }
+    private void showParticipantsMenu() {
+    boolean exit = false;
+    while (!exit) {
+        System.out.println("╔════════════════════════════════╗");
+        System.out.println("║            Menu            ║");
+        System.out.println("╠════════════════════════════════╣");
+        System.out.println("║ 1. Minhas edições e proj   ║");
+        System.out.println("║ 2. Informação pessoal      ║");
+        System.out.println("║ 0. Back                    ║");
+        System.out.println("╚════════════════════════════════╝");
+        System.out.print("Seleciona uma opção: ");
+
+        try {
+            int option = Integer.parseInt(reader.readLine());
+
+            switch (option) {
+                case 1:
+                    showEditionsMenu();
+                    break;
+                case 2:
+                    showParticipantDetails(loggedInParticipant);
+                    break;
+                case 0:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("╔═══════════════════════════╗");
+                    System.out.println("║    Opção inválida     ║");
+                    System.out.println("╚═══════════════════════════╝");
+                    break;
+            }
+
+        } catch (NumberFormatException e) {       
+                System.out.println("╔═════════════════════════════╗");
+                System.out.println("║    Input inválido.      ║");
+                System.out.println("╚═════════════════════════════╝");
+        } catch (IOException e) {
+            System.out.println("Error reading input.");
+        }
+    }
+}
+    private void showEditionsMenu() {
+    boolean exit = false;
+    while (!exit) {
+        System.out.println("╔════════════════════════════════════╗");
+        System.out.println("║        Menu de Edições        ║");
+        System.out.println("╠════════════════════════════════════╣");
+        try {
+            Edition[] editions = cbl.getEditionsByParticipant(loggedInParticipant);
+
+            // List the editions
+            int i = 0;
+            for (i = 0; i < editions.length; i++) {
+                System.out.println("║ " + (i + 1) + ". " + editions[i].getName() + "("
+                        + editions[i].getStatus().toString() + ")"
+                );
+            }
+            System.out.println("║ " + 0 + ". Back");
+            System.out.print("║ Introduza o numero da edição: ");
+            try {
+                int editionNumber = Integer.parseInt(reader.readLine());
+
+                // Check if it's valid
+                if (editionNumber == 0) {
+                    exit = true;
+                } else if (editionNumber >= 1 && editionNumber <= editions.length) {
+                    currentEdition = editions[editionNumber - 1];
+                    showProjectsMenu();
+
+                } else {
+                    System.out.println("╔═══════════════════════════╗");
+                    System.out.println("║    Opção inválida     ║");
+                    System.out.println("╚═══════════════════════════╝");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("╔═════════════════════════════╗");
+                System.out.println("║    Input inválido.      ║");
+                System.out.println("╚═════════════════════════════╝");
+
+            }
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+            exit = true;
+        } catch (IOException e) {
+            System.out.println("╔═════════════════════════════╗");
+            System.out.println("║    Input inválido.      ║");
+            System.out.println("╚═════════════════════════════╝");
+        }
+        System.out.println("╚════════════════════════════════════╝");
+    }
+}
+    private void showParticipantDetails(Participant participant) {
+        boolean exit = false;
+        while (!exit) {
+
+            try {
+
+                System.out.println("╔══════════════════════════════════════╗");
+                System.out.println("║        Participant Details        ║");
+                System.out.println("╠══════════════════════════════════════╣");
+                System.out.println("║ Nome: " + participant.getName());
+                System.out.println("║ Email: " + participant.getEmail());
+
+                if (participant instanceof Facilitator) {
+                    System.out.println("║ Area de Atuação: " + ((Facilitator) participant).getAreaOfExpertise());
+                } else if (participant instanceof Student) {
+                    System.out.println("║ Numero de Estudante: " + ((Student) participant).getNumber());
+                } else if (participant instanceof Partner) {
+                    System.out.print("║ Vat: " + ((Partner) participant).getVat());
+                    System.out.print("║ WebSite: " + ((Partner) participant).getWebsite());
+                }
+
+                System.out.println("║ Detalhes do contacto:");
+                System.out.println("║ Rua: " + participant.getContact().getStreet());
+                System.out.println("║ Cidade: " + participant.getContact().getCity());
+                System.out.println("║ Estado: " + participant.getContact().getState());
+                System.out.println("║ Codigo Postal: " + participant.getContact().getZipCode());
+                System.out.println("║ Pais: " + participant.getContact().getCountry());
+                System.out.println("║ Telefone: " + participant.getContact().getPhone());
+
+                System.out.println("║ Detalhes da Instituição:");
+                if (participant.getInstituition() != null) {
+                    System.out.println("║ Nome: " + participant.getInstituition().getName() + " (" + participant.getInstituition().getType().toString() + ")");
+                    System.out.println("║ Email: " + participant.getInstituition().getEmail());
+                    System.out.println("║ Website: " + participant.getInstituition().getWebsite());
+                } else {
+                    System.out.println("║ Sem instituições para o participante!");
+                }
+
+                System.out.println("║ --------------------------------");
+                System.out.println("║ 1. Muda a informação de contacto");
+                System.out.println("║ 2. Atribuir outra instituição");
+                System.out.println("║ 0. Back");
+                System.out.println("╚══════════════════════════════════════╝");
+
+                System.out.print(" Seleciona uma opção: ");
+                int option = Integer.parseInt(reader.readLine());
+
+                switch (option) {
+                    case 1:
+                        Contact newContact = assignContact();
+                        if (newContact != null) {
+                            participant.setContact(newContact);
+                            System.out.println("║ Contact alterado com sucesso\n");
+                        } else {
+                            System.out.println("║ Algo correu mal tente outra vez.\n");
+                        }
+                        break;
+                    case 2:
+                        assignInstituition(participant);
+                        break;
+                    case 0:
+                        exit = true;
+                        break;
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("╔═════════════════════════════╗");
+                System.out.println("║    Input inválido.      ║");
+                System.out.println("╚═════════════════════════════╝");
+
+            } catch (NullPointerException e) {
+                System.out.println(e.getMessage());
+            } catch (IOException e) {
+                System.out.println("║ Error reading input.");
+            }
+        }
+        System.out.println("╚══════════════════════════════════════╝");
+    }
+
+
     private void adminMenu(){
         System.out.println("\nOpções para admin\n");
         boolean exit = false;
@@ -413,7 +590,11 @@ public class Menu {
                         exit = true;
                     } else if (editions.length != 0 && editionNumber >= 1 && editionNumber <= editions.length) {
                         currentEdition = editions[editionNumber - 1];
-                        showAdminProjectsMenu();
+                        try {
+                            showAdminProjectsMenu();
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     } else if (editionNumber == i + 1) {
                         try {
                             showAddEditions();
@@ -483,7 +664,11 @@ public class Menu {
                     String answer = reader.readLine();
 
                     if (answer.equalsIgnoreCase("sim")) {
-                        showRemoveEditionMenu();
+                        try {
+                            showRemoveEditionMenu();
+                        } catch (EditionDontExist ex) {
+                            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         currentEdition = null;
                         exit = true;
                     } else {
@@ -618,7 +803,11 @@ public class Menu {
                         exit = true;
                     } else if (editionNumber >= 1 && editionNumber <= editions.length) {
                         currentEdition = editions[editionNumber - 1];
-                        showAdminProjectsMenu();
+                        try {
+                            showAdminProjectsMenu();
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     } else {
                         System.out.println("╔════════════════════════════════════════════════════════╗");
                         System.out.println("║ Input invalido. Por favor tente com um numero.  ║");
@@ -788,7 +977,7 @@ public class Menu {
                     if (institutionNumber >= 1 && institutionNumber <= instituitions.length) {
                         Instituition instituicaoSelecionada = instituitions[institutionNumber - 1];
                         showInstituitionDetails(instituicaoSelecionada);
-                    } else if (institutionNumber == i + 1) {
+                    } else if (institutionNumber == 0) {
                         exit = true;
                     } else {
                         System.out.println("║ Seleção inválida. Por favor, tente novamente. ║\n\n");
@@ -1525,7 +1714,6 @@ public class Menu {
         }
         System.out.println("╚════════════════════════════════════════════╝");
     }
-
     private void showAddProject() throws ParseException {
         System.out.println("╔═════════════════════════════════════════════════════╗");
         System.out.println("║     ===== Adiciona um Projeto Novo =====     ║");
@@ -1629,8 +1817,41 @@ public class Menu {
         CBLinterface cbl = new ImpCBL();
         InstituitionsManager im = new InstituitionsManager();
         
-        Menu start = new Menu((ImpCBL) cbl, pm, im);
-        start.initialize();
+        if (pm.importData("files/users.json") && im.importData("files/instituitions.json")) {
+            System.out.println("╔════════════════════════════════════════════════╗");
+            System.out.println("║    Sucesso importando utilizadores.      ║");
+            System.out.println("╚════════════════════════════════════════════════╝");
+        }
+        if (cbl.importDataJSON("files/cbl.json")) {
+
+            System.out.println("╔════════════════════════════════════════════════╗");
+            System.out.println("║      Sucesso importando informação.      ║");
+            System.out.println("╚════════════════════════════════════════════════╝");
+        } else {
+            System.out.println("╔════════════════════════════════════════════════╗");
+            System.out.println("║        Erro importando informação.       ║");
+            System.out.println("╚════════════════════════════════════════════════╝");
+        }
+
+        Menu menu = new Menu((ImpCBL)cbl, pm, im);
+        menu.initialize();
+        //export data before close program
+
+        if (cbl.exportJSON("files/cbl.json")) {
+            System.out.println("╔════════════════════════════════════════════════╗");
+            System.out.println("║      Sucesso exportando informação.      ║");
+            System.out.println("╚════════════════════════════════════════════════╝");
+        } else {
+            System.out.println("╔════════════════════════════════════════════════╗");
+            System.out.println("║        Erro importando informação.       ║");
+            System.out.println("╚════════════════════════════════════════════════╝");
+        }
+        if (pm.export("files/users.json") && im.export("files/instituitions.json")) {
+            System.out.println("╔════════════════════════════════════════════════╗");
+            System.out.println("║      Sucesso importando utilizadores.    ║");
+            System.out.println("╚════════════════════════════════════════════════╝");
+        }
+        
     }
 
     

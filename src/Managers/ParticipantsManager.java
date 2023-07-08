@@ -29,36 +29,18 @@ import Participant.ImpParticipant;
 
 public class ParticipantsManager {
 
-    /**
-     * Array que armazena participantes
-     */
     private static Participant[] participantsList;
-    /**
-     * Contador de participantes
-     */
     private static int participantsCounter;
 
-    
-    /**
-     * Método construtor para ParticipantsManager
-     */
     public ParticipantsManager() {
         participantsCounter = 0;
         participantsList = new Participant[10];
     }
 
-    /**
-     * Obtém o número de participantes existentes
-     * @return Número de participantes existentes
-     */
     public int getParticipantsCounter() {
         return participantsCounter;
     }
 
-    /**
-     * Adiciona espaço à lista de participantes caso esteja cheia
-     * 
-     */
     private void realloc() {
         Participant[] temp = new Participant[participantsList.length * 2];
         int i = 0;
@@ -68,11 +50,6 @@ public class ParticipantsManager {
         participantsList = temp;
     }
 
-    /**
-     * Este método verifica se um participante já existe na lista 
-     * @param p Participante a ser verificado
-     * @return true se existir, false caso contrário
-     */
     public boolean hasParticipant(Participant p) {
         for (Participant participant : participantsList) {
             if (participant != null && participant.equals(p)) {
@@ -82,23 +59,6 @@ public class ParticipantsManager {
         return false;
     }
 
-//    public int findParticipant(Participant p) {
-//        int i=0;
-//        for (Participant participant : participantsList) {
-//            if (participant.equals(p)) {
-//                return i;
-//            }
-//            i++;
-//        }
-//        return -1;
-//    }
-    
-    /**
-     * Essa função adiciona um participante à lista, verificando se o participante já existe e
-     * se o array está cheio 
-     * @param p Participante a ser adicionado
-     * @throws AlreadyExistsInArray se o participante já existir
-     */
     public void addParticipant(Participant p) throws AlreadyExistsInArray {
 
         if (hasParticipant(p)) {
@@ -110,11 +70,6 @@ public class ParticipantsManager {
         participantsList[participantsCounter++] = p;
     }
 
-    /**
-     * Essa função remove um participante da lista
-     * @param string Nome do participante a ser removido
-     * @return O participante removido
-     */
     public Participant removeParticipant(String string) {
         Participant deleted = new ImpParticipant(null, string, null, null) {};
         int pos = -1, i = 0;
@@ -137,12 +92,6 @@ public class ParticipantsManager {
         return deleted;
     }
 
-    /**
-     * Obtém um participante da lista pelo nome
-     * @param string Nome do participante a ser pesquisado
-     * @return O participante encontrado
-     * @throws IllegalArgumentException se o participante não for encontrado
-     */
     public Participant getParticipant(String string) throws IllegalArgumentException {
         Participant p = new ImpParticipant(null, string, null, null) {};
 
@@ -157,29 +106,6 @@ public class ParticipantsManager {
 
     }
 
-//    public Participant[] getParticipants() {
-//        int counter = 0;
-//        Participant temp[] = new Participant[participantsCounter];
-//
-//        for (int i = 0; i < participantsCounter; i++) {
-//            temp[counter++] = participantsList[i];
-//        }
-//        if (counter == participantsCounter) {
-//            return temp;
-//        }
-//
-//        Participant trimmedTemp[] = new Participant[counter];
-//        for (int i = 0; i < counter; i++) {
-//            trimmedTemp[i] = temp[i];
-//        }
-//        return trimmedTemp;
-//    }
-    
-    
-    /*
-     * Obtém o número de facilitadores
-     * @return Número de facilitadores
-     */
     public int getNumberOfFacilitators() {
         int numberOfFacilitators = 0;
         for (int i = 0; i < participantsCounter; i++) {
@@ -189,11 +115,7 @@ public class ParticipantsManager {
         }
         return numberOfFacilitators;
     }
-
-    /*
-     * Obtém o número de estudantes
-     * @return Número de estudantes
-     */
+    
     public int getNumberOfStudents() {
         int numberOfStudents = 0;
         for (int i = 0; i < participantsCounter; i++) {
@@ -203,11 +125,7 @@ public class ParticipantsManager {
         }
         return numberOfStudents;
     }
-
-    /*
-     * Obtém o número de parceiros
-     * @return Número de parceiros
-     */
+    
     public int getNumberOfPartners() {
         int numberOfPartners = 0;
         for (int i = 0; i < participantsCounter; i++) {
@@ -218,10 +136,6 @@ public class ParticipantsManager {
         return numberOfPartners;
     }
 
-    /**
-     * Obtém os dados de todos os participantes, ordenados por facilitadores, estudantes e parceiros 
-     * @return Çista com os dados
-     */
     public Participant[] getParticipants() {
         int counter = 0;
 
@@ -269,11 +183,6 @@ public class ParticipantsManager {
         return trimmedTemp;
     }
 
-    /**
-     * Obtém todos os estudantes
-     * @return Um array com todos os estudantes
-     * @throws NullPointerException se não forem encontrados estudantes
-     */
     public Student[] getStudents() {
         int counter = 0;
 
@@ -289,11 +198,6 @@ public class ParticipantsManager {
         return null;
     }
 
-    /**
-     * Exporta os dados dos participantes para um arquivo JSON
-     * @param filePath O caminho do arquivo de destino
-     * @return true se a exportação for bem sucedida, false caso contrário
-     */
     public boolean export(String filePath) {
         JSONObject jsonObject = new JSONObject();
 
@@ -318,12 +222,6 @@ public class ParticipantsManager {
         return true;
     }
 
-    /**
-     * Essa função importa dados de um arquivo JSON
-     * 
-     * @param filePath O caminho do arquivo JSON de origem
-     * @return true se a importação for bem sucedida, false caso contrário
-     */
     public boolean importData(String filePath) {
         JSONParser parser = new JSONParser();
 

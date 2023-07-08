@@ -23,35 +23,18 @@ import Participant.ImpInstituition;
 
 public class InstituitionsManager {
 
-    /**
-     * Array que armazena instituições
-     */
     private static Instituition[] instituitionsList;
-    /**
-     * Contador de instituições
-     */
     private static int instituitionsCounter;
-    
-    /**
-     * Método construtor de InstituitionsManager
-     */
+
     public InstituitionsManager() {
         instituitionsCounter = 0;
         instituitionsList = new Instituition[10];
     }
 
-    /**
-     * Obtém o número de instituições existentes
-     * @return Número de instituições existentes
-     */
     public int getInstituitionsCounter() {
         return instituitionsCounter;
     }
 
-    /**
-     * Adiciona mais espaço à lista de instituições caso esteja cheia
-     * 
-     */
     private void realloc() {
         Instituition[] temp = new Instituition[instituitionsList.length * 2];
         int i = 0;
@@ -61,11 +44,6 @@ public class InstituitionsManager {
         instituitionsList = temp;
     }
 
-    /**
-     * Verifica se uma instituição existe na lista 
-     * @param p Instituição a ser verificada
-     * @return true se existir, false caso contrário
-     */
     public boolean hasInstituition(Instituition p) {
         for (Instituition instituition : instituitionsList) {
             if (instituition != null && instituition.equals(p)) {
@@ -75,12 +53,6 @@ public class InstituitionsManager {
         return false;
     }
 
-    /**
-     * Este método adiciona uma instituição à lista, verificando se a instituição já existe
-     * e se o array está cheio 
-     * @param p Instituição a ser adicionada
-     * @throws InstituitionAlreadyExistException se a instituição já existir
-     */
     public void addInstituition(Instituition p) throws InstituitionAlreadyExistException {
 
         if (hasInstituition(p)) {
@@ -92,12 +64,6 @@ public class InstituitionsManager {
         instituitionsList[instituitionsCounter++] = p;
     }
 
-    
-    /**
-     * Essa função remove uma instituição da lista 
-     * @param string Nome da instituição a ser removida
-     * @return A instituição removida
-     */
     public Instituition removeInstituition(String string) {
         Instituition deleted = new ImpInstituition(string, null, null, null, null, null);
         int pos = -1, i = 0;
@@ -120,12 +86,6 @@ public class InstituitionsManager {
         return deleted;
     }
 
-    /**
-     * Obtém uma instituição da lista pelo nome
-     * @param string Nome a ser pesquisado
-     * @return A instituição encontrada
-     * @throws IllegalArgumentException se a instituição não for encontrada
-     */
     public Instituition getInstituition(String string) throws IllegalArgumentException {
         Instituition p = new ImpInstituition(string, null, null, null, null, null);
 
@@ -138,12 +98,7 @@ public class InstituitionsManager {
         }
         throw new IllegalArgumentException("No Instituition found!");
     }
-
-    /**
-     * Obtém todas as instituições da lista 
-     * @return Um array com todas as instituições
-     * @throws NullPointerException se não houver instituição na lista
-     */
+    
     public Instituition[] getInstituitions() throws NullPointerException {
         if (instituitionsCounter > 0){
             Instituition temp[] = new Instituition[instituitionsCounter];
@@ -159,12 +114,6 @@ public class InstituitionsManager {
 
     }
 
-    /**
-     * Exporta os dados das instituições para um arquivo JSON
-     * 
-     * @param filePath O caminho do arquivo JSON de destino
-     * @return true se a exportação for bem sucedida, false caso contrário
-     */
     public boolean export(String filePath) {
         JSONObject jsonObject = new JSONObject();
 
@@ -188,11 +137,6 @@ public class InstituitionsManager {
         return true;
     }
 
-    /**
-     * Importa dados de um arquivo JSON para a lista de instituições 
-     * @param filePath O caminho do arquivo JSON de origem
-     * @return true se a importação for bem sucedida, false caso contrário
-     */
     public boolean importData(String filePath) {
         JSONParser parser = new JSONParser();
 
