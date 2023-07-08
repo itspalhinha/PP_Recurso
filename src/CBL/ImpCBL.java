@@ -450,7 +450,7 @@ public class ImpCBL implements CBLinterface {
                                     writer.write(";");
                                 }
                                  try {
-                                    writer.write( evaluation.getHeteroevaluation()+ ";");
+                                    writer.write( evaluation.getHeteroevaluation()+ ";\n");
                                 } catch (NullPointerException ex){
                                     writer.write(";");
                                 }

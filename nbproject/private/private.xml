@@ -3,33 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/David%20Santos/Desktop/PP_Recurso/PP_Recurso/src/CBL/ImpCBL.java</file>
-            <file>file:/C:/Users/David%20Santos/Desktop/PP_Recurso/PP_Recurso/src/CBL/ImpEdition.java</file>
-            <file>file:/C:/Users/David%20Santos/Desktop/PP_Recurso/PP_Recurso/src/CBL/ImpTask.java</file>
-            <file>file:/C:/Users/David%20Santos/Desktop/PP_Recurso/PP_Recurso/src/CBL/ImpProject.java</file>
-            <file>file:/C:/Users/David%20Santos/Desktop/PP_Recurso/PP_Recurso/src/CBL/ImpSubmission.java</file>
-=======
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/CBL/ImpEdition.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/Participant/ImpContact.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/Participant/ImpFacilitator.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/Exceptions/AlreadyExistsInArray.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/Exceptions/EditionDontExist.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/CBL/CBLinterface.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/Exceptions/EditionAlreadyExist.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/Participant/ImpInstituition.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/CBL/ImpSubmission.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/CBL/ImpCBL.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/CBL/Evaluation.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/Managers/ParticipantsManager.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/Participant/ImpParticipant.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/Managers/InstituitionsManager.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/Participant/ImpStudent.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/Main/Menu.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/CBL/ImpProject.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/CBL/ImpTask.java</file>
-            <file>file:/C:/Users/rafas/Documents/NetBeansProjects/PP_Recurso/src/Participant/ImpPartner.java</file>
->>>>>>> 2f677ffa2206f346c2068e16e042a6270c2ac146
+            <file>file:/C:/Users/David%20Santos/Desktop/PP_Recurso/PP_Recurso/src/Managers/ParticipantsManager.java</file>
         </group>
     </open-files>
 </project-private>
