@@ -251,11 +251,59 @@ public class ImpCBL implements CBLinterface {
      */
     @Override
     public boolean exportJSON(String filePath) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("numberOfEditions", numOfEditions);
+
+        JSONArray editionsArray = new JSONArray();
+
+        for (int i = 0; i < numOfEditions; i++) {
+            try {
+                editionsArray.add(((ImpEdition) editions[i]).toJsonObj());
+            } catch (NullPointerException e) {
+            }
+        }
+
+        jsonObject.put("editions", editionsArray);
+
+        try ( FileWriter fileWriter = new FileWriter(filePath)) {
+            fileWriter.write(jsonObject.toJSONString());
+            fileWriter.close();
+            //System.out.println("Exported to JSON file: " + filePath);
+        } catch (IOException e) {
+            e.getMessage();
+            return false;
+        }
+        return true;
     }
 
     @Override
     public boolean importDataJSON(String filePath) {
+        JSONParser parser = new JSONParser();
+
+        try ( FileReader reader = new FileReader(filePath)) {
+            JSONObject jsonObject = (JSONObject) parser.parse(reader);
+
+            JSONArray editionsArray = (JSONArray) jsonObject.get("editions");
+
+            for (int i = 0; i < editionsArray.size(); i++) {
+                JSONObject editionJson = (JSONObject) editionsArray.get(i);
+                try {
+                    this.addEdition(ImpEdition.fromJsonObj(editionJson));
+                } catch (EditionAlreadyExist ex) {
+
+                }
+            }
+
+            return true;
+
+        } catch (FileNotFoundException ex) {
+            System.out.println("File not found");
+        } catch (IOException ex) {
+            System.out.println("IO exception");
+        } catch (ParseException ex) {
+            System.out.println("Parce exception");
+        }
         return false;
     }
 
