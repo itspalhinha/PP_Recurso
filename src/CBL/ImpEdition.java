@@ -53,11 +53,11 @@ public class ImpEdition implements Edition{
     /*
      * Número de projetos atualmente na edição
      */
-    private int numberOfprojects;
+    private int numberOfprojects = 1;
     /*
      * Template de projeto padrão
      */
-    private static final String defaultProjTemp = "src/Files/project_template.json";
+    private static final String defaultProjTemp = "files/project_template.json";
 
     /*
      * Construtor que cria uma instância de ImpEdition com nome, data de início e
@@ -153,6 +153,10 @@ public class ImpEdition implements Edition{
         return this.numberOfprojects;
     }
 
+    public void setNumberOfprojects(int numberOfprojects) {
+        this.numberOfprojects = numberOfprojects;
+    }
+    
     /**
      * Obtém a data de término da edição
      * @return Data de término da edição

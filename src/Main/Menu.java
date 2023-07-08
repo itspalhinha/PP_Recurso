@@ -1149,15 +1149,15 @@ public class Menu {
                     if (saveAnswer.equalsIgnoreCase("sim")) {
                         System.out.println("Nome do arquivo para salvar: ");
                         String name = reader.readLine();
-                        if (name.equalsIgnoreCase("cbl") || name.equalsIgnoreCase("instituitions")
+                        if (name.equalsIgnoreCase("cbl") || name.equalsIgnoreCase("instituitions2")
                                 || name.equalsIgnoreCase("project_template") || name.equalsIgnoreCase("users")) {
                             System.out.println("Nome inválido.");
                         } else {
                             String path = null;
                             if (name.contains(".json")) {
-                                path = "src/Files/" + name;
+                                path = "files/" + name;
                             } else {
-                                path = "src/Files/" + name + ".json";
+                                path = "files/" + name + ".json";
                             }
                             try {
                                 JSONObject jsonObject = new JSONObject();
@@ -1734,6 +1734,7 @@ public class Menu {
             }
             currentEdition.addProject(name, description, tagsArray);
             System.out.println("Projeto adicionado com sucesso");
+            
         } catch (IOException | ParseException | IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
@@ -1745,7 +1746,7 @@ public class Menu {
         try {
             Edition removedEdition = cbl.removeEdition(currentEdition.getName());
             System.out.println("╔═══════════════════════════════════════════════╗");
-            System.out.println("║      Edition removed successfully.      ║");
+            System.out.println("║       Edição removida com sucesso.      ║");
             while (!complete) {
                 try {
 
@@ -1761,9 +1762,9 @@ public class Menu {
                         } else {
                             String path = null;
                             if (name.contains(".json")) {
-                                path = "src/Files/" + name;
+                                path = "files/" + name;
                             } else {
-                                path = "src/Files/" + name + ".json";
+                                path = "files/" + name + ".json";
                             }
                             try {
                                 JSONObject jsonObject = new JSONObject();
@@ -1792,21 +1793,6 @@ public class Menu {
     }
 
 
-
-
-
-
-
-
-
-
-    
-
-
-
-    
-
-    
     
     public static void main(String[] args) {
         // TODO code application logic here
@@ -1817,12 +1803,12 @@ public class Menu {
         CBLinterface cbl = new ImpCBL();
         InstituitionsManager im = new InstituitionsManager();
         
-        if (pm.importData("files/users.json") && im.importData("files/instituitions.json")) {
+        if (pm.importData("files/users2.json") && im.importData("files/instituitions.json")) {
             System.out.println("╔════════════════════════════════════════════════╗");
             System.out.println("║    Sucesso importando utilizadores.      ║");
             System.out.println("╚════════════════════════════════════════════════╝");
         }
-        if (cbl.importDataJSON("files/cbl.json")) {
+        if (cbl.importDataJSON("files/cbl2.json")) {
 
             System.out.println("╔════════════════════════════════════════════════╗");
             System.out.println("║      Sucesso importando informação.      ║");
@@ -1837,7 +1823,7 @@ public class Menu {
         menu.initialize();
         //export data before close program
 
-        if (cbl.exportJSON("files/cbl.json")) {
+        if (cbl.exportJSON("files/cbl2.json")) {
             System.out.println("╔════════════════════════════════════════════════╗");
             System.out.println("║      Sucesso exportando informação.      ║");
             System.out.println("╚════════════════════════════════════════════════╝");
@@ -1846,7 +1832,7 @@ public class Menu {
             System.out.println("║        Erro importando informação.       ║");
             System.out.println("╚════════════════════════════════════════════════╝");
         }
-        if (pm.export("files/users.json") && im.export("files/instituitions.json")) {
+        if (pm.export("files/users2.json") && im.export("files/instituitions.json")) {
             System.out.println("╔════════════════════════════════════════════════╗");
             System.out.println("║      Sucesso importando utilizadores.    ║");
             System.out.println("╚════════════════════════════════════════════════╝");
