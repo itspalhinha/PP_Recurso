@@ -335,6 +335,16 @@ public class ImpProject implements Project {
         return temp;
     }
     
+    public Evaluation evaluationOf(Student student){
+        for (int i=0;i<numberOfEvaluations;i++){
+            if (evaluations[i].getStudent().equals(student)){
+                return evaluations[i];
+            }
+        }
+        
+        throw new NullPointerException();
+    }
+    
     /*
      * Essa função adiciona uma avaliação heterogênea para um estudante em relação a um 
      * facilitador específico
@@ -369,6 +379,9 @@ public class ImpProject implements Project {
         }
     }
 
+    
+    
+   
     /*
      * Esse método permite atribuir uma nota pelo próprio estudante
      *
@@ -468,6 +481,16 @@ public class ImpProject implements Project {
         throw new IllegalArgumentException("No Participant found!");
     }
 
+    public Participant[] getParticipants() {
+       
+        Participant[] temp = new Participant[numberOfParticipants];
+
+        for (int i = 0; i < numberOfParticipants; i++) {
+            
+                temp[i] = participants[i];
+            }
+        return temp;   
+    }
     /**
      * Obtém as tags associadas ao projeto
      * @return Um array contendo as tags do projeto

@@ -16,7 +16,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import ma02_resources.participants.Facilitator;
 import ma02_resources.participants.Participant;
+import ma02_resources.participants.Student;
 import ma02_resources.project.Edition;
 import ma02_resources.project.Project;
 import ma02_resources.project.Status;
@@ -247,33 +249,11 @@ public class ImpCBL implements CBLinterface {
      * @return true se a exportação for bem sucedida, false caso contrário
      * @throws UnsupportedOperationException se a operação não for suportada
      */
-    
-    /*
-     * Exporta os dados do sistema para um arquivo JSON
-     * @param filePath Caminho do arquivo JSON de destino
-     * @return true se a exportação for bem sucedida, false caso contrário
-     * @throws UnsupportedOperationException se a operação não for suportada
-     */
     @Override
     public boolean exportJSON(String filePath) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    /*
-    @Override
-public Edition getEdition(String name) {
-for (int i = 0; i < this.numOfEditions; i++) {
-if (editions[i].getName().equals(name)) {
-return editions[i];
-}
-}
-return null;
-}
-     */
-    /**
-     * Ativa uma edição do CBL com base no nome da edição
-     *
-     * @param name Nome da edição a ser ativada
-     */
+
     @Override
     public boolean importDataJSON(String filePath) {
         return false;
@@ -293,25 +273,10 @@ return null;
     }
 
     /*
-    @Override
-public void activateEdition(String name) {
-for (int i = 0; i < this.numOfEditions; i++) {
-if (editions[i].getName().equals(name)) {
-editions[i].activate();
-}
-}
-}
-<<<<<<< HEAD
-    */
-    
-
-    /*
      * Exporta os dados da classe atual para um arquivo CSV no caminho especificado
      * @param filePath Caminhodo arquivo CSV de destino
      * @return True se a exportação for bem sucedida, false caso contrário
      * @throws UnsupportedOperationException se a funcionalidade de exportação de dados não for suportada
-=======
->>>>>>> bc1febeaf9d4cd27672a30f84dc93822670965fd
      */
     @Override
     public boolean exportCSV(String filePath) {
@@ -360,6 +325,10 @@ editions[i].activate();
         return participantProjects;
     }
 
+    
+    
+    
+    
     public void exportToCSV(String filename) {
         try {
             FileWriter writer = new FileWriter(filename);
@@ -368,7 +337,8 @@ editions[i].activate();
             writer.write("Edition Name; Status; Start Date; End Date; ProjectTemplate; Number Of Projects;"
                     + " Project Name; Description; Tags; Number of Participants;Number of Facilitators;Number of Students; Number of Partners; Number of Tasks; "
                     + "Task Title; Task Description; Start date; End Date; Number of Submissions; "
-                    + "Submission Date; Student Name; Submission Text\n");
+                    + "Submission Date; Student email; Submission Text;"
+                    + "Participant Name; Email; Type; SelfEvaluation; HeteroEvaluation\n");
 
             // Write data for each edition, project, task, and submission
             for (int i = 0; i < numOfEditions; i++) {
@@ -414,6 +384,38 @@ editions[i].activate();
                         }
                         writer.write("\n ;;;;;;;;;;;;;;");
                     }
+
+                    for (int m = 0; m < project.getNumberOfParticipants(); m++) {
+                        Participant participant = ((ImpProject) project).getParticipants()[m];
+                        writer.write(participant.getName() + ";");
+                        writer.write(participant.getEmail() + ";");
+                        
+                        if (participant instanceof Facilitator) {
+                            writer.write("Facilitator" + ";");
+                        } else if (participant instanceof Student) {
+                            writer.write("Student" + ";");
+                            try {
+                                Evaluation evaluation = ((ImpProject) project).evaluationOf((Student) participant);
+                                try {
+                                    writer.write( evaluation.getSelfEvaluation()+ ";");
+                                } catch (NullPointerException ex){
+                                    writer.write(";");
+                                }
+                                 try {
+                                    writer.write( evaluation.getHeteroevaluation()+ ";");
+                                } catch (NullPointerException ex){
+                                    writer.write(";");
+                                }
+                            } catch (NullPointerException ignored) {
+
+                            }
+
+                        } else {
+                            writer.write("Partner" + ";");
+                        }
+                        writer.write("\n ;;;;;;;;;;;;;;;;;;;;;");
+                    }
+
                     writer.write("\n ;;;;;;");
                 }
                 //proxima linha
