@@ -532,6 +532,7 @@ public class Menu {
             System.out.println("║  2. Controlo Users/Participants ║");
             System.out.println("║  3. Controlo de Instituições    ║");
             System.out.println("║  4. Lista/Reports               ║");
+            System.out.println("║  5. Exportar ficheiro em CSV    ║");
             System.out.println("║  0. Sair                        ║");
             System.out.println("╚═══════════════════════════════════════╝");
             System.out.print("Seleciona uma opção: ");
@@ -551,6 +552,19 @@ public class Menu {
                         break;
                     case 4:
                         // showListingsMenu();
+                        break;
+                    case 5:
+                        System.out.print("Nome do ficheiro:");
+                        String nomeFicheiro = reader.readLine();
+                        if (cbl.exportToCSV(nomeFicheiro)) {
+                            System.out.println("╔════════════════════════════════════════════════╗");
+                            System.out.println("║      Sucesso exportando informação.      ║");
+                            System.out.println("╚════════════════════════════════════════════════╝");
+                        } else {
+                            System.out.println("╔════════════════════════════════════════════════╗");
+                            System.out.println("║        Erro importando informação.       ║");
+                            System.out.println("╚════════════════════════════════════════════════╝");
+                        }
                         break;
                     case 0:
                         exit = true;
@@ -2060,22 +2074,9 @@ public class Menu {
         }
 
         Menu menu = new Menu((ImpCBL) cbl, pm, im);
-        menu.initialize();
-        //export data before close program
-        Scanner scan = new Scanner(System.in);
+        menu.initialize();        
         
         
-        
-        System.out.println("╔════════════════════════════════════════════════╗");
-        System.out.println("║          Modelos de exportação          ║");
-        System.out.println("║=========================================║");
-        System.out.println("║ 1- Exportar dados em JSON               ║");
-        System.out.println("║ 2- Exportar dados em CSV                ║");
-        System.out.println("╚════════════════════════════════════════════════╝");
-        System.out.println("Escolha sua opção: ");
-        int exp = scan.nextInt();
-        switch(exp){
-            case 1: 
                 if (cbl.exportJSON("files/cbl2.json")) {
                     System.out.println("╔════════════════════════════════════════════════╗");
                     System.out.println("║      Sucesso exportando informação.      ║");
@@ -2090,20 +2091,7 @@ public class Menu {
                     System.out.println("║      Sucesso importando utilizadores.    ║");
                     System.out.println("╚════════════════════════════════════════════════╝");
                 }
-                break;
-            case 2: 
-                if (cbl.exportToCSV("csv")) {
-                    System.out.println("╔════════════════════════════════════════════════╗");
-                    System.out.println("║      Sucesso exportando informação.      ║");
-                    System.out.println("╚════════════════════════════════════════════════╝");
-                } else {
-                    System.out.println("╔════════════════════════════════════════════════╗");
-                    System.out.println("║        Erro importando informação.       ║");
-                    System.out.println("╚════════════════════════════════════════════════╝");
-                }
-                break;
-        }
-
+                
 
         
     }
