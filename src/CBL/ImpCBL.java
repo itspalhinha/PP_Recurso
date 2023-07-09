@@ -326,9 +326,7 @@ public class ImpCBL implements CBLinterface {
      * @return True se a exportação for bem sucedida, false caso contrário
      * @throws UnsupportedOperationException se a funcionalidade de exportação de dados não for suportada
      */
-    
-
-    /*
+ /*
      * Retorna um array contendo todas as edições disponíveis
      * @return Um array de objetos Edition contendo todas as edições disponíveis
      * @throws UnsupportedOperationException se a funcionalidade não for suportada
@@ -371,12 +369,9 @@ public class ImpCBL implements CBLinterface {
     }
 
     
-    
-    
-    @Override
     public boolean exportToCSV(String filename) {
         try {
-            // ... Existing code ...
+            
             FileWriter writer = new FileWriter(filename);
 
             // Write header
@@ -426,7 +421,7 @@ public class ImpCBL implements CBLinterface {
                             writer.write(submissions[l].getDate() + ";");
                             writer.write(submissions[l].getStudent().getEmail() + ";");
                             writer.write(submissions[l].getText());
-                            writer.write("\n ;;;;;;;;;;;;;;;;;;;");
+                            writer.write(" ;;;;;;;;;;;;;;;;;;;");
                         }
                         writer.write("\n ;;;;;;;;;;;;;;");
                     }
@@ -435,7 +430,7 @@ public class ImpCBL implements CBLinterface {
                         Participant participant = ((ImpProject) project).getParticipants()[m];
                         writer.write(participant.getName() + ";");
                         writer.write(participant.getEmail() + ";");
-                        
+
                         if (participant instanceof Facilitator) {
                             writer.write("Facilitator" + ";");
                         } else if (participant instanceof Student) {
@@ -443,13 +438,13 @@ public class ImpCBL implements CBLinterface {
                             try {
                                 Evaluation evaluation = ((ImpProject) project).evaluationOf((Student) participant);
                                 try {
-                                    writer.write( evaluation.getSelfEvaluation()+ ";");
-                                } catch (NullPointerException ex){
+                                    writer.write(evaluation.getSelfEvaluation() + ";");
+                                } catch (NullPointerException ex) {
                                     writer.write(";");
                                 }
-                                 try {
-                                    writer.write( evaluation.getHeteroevaluation()+ ";\n");
-                                } catch (NullPointerException ex){
+                                try {
+                                    writer.write(evaluation.getHeteroevaluation() + ";\n");
+                                } catch (NullPointerException ex) {
                                     writer.write(";");
                                 }
                             } catch (NullPointerException ignored) {
@@ -459,7 +454,7 @@ public class ImpCBL implements CBLinterface {
                         } else {
                             writer.write("Partner" + ";");
                         }
-                        writer.write("\n ;;;;;;;;;;;;;;;;;;;;;");
+                        writer.write("\n ;;;;;;;;;;;;;;;;;;;;;;");
                     }
 
                     writer.write("\n ;;;;;;");
@@ -469,15 +464,16 @@ public class ImpCBL implements CBLinterface {
             }
 
             writer.close();
-            System.out.println("CSV file has been exported successfully.");
-            
+
             return true;
         } catch (IOException e) {
-            System.out.println("An error occurred while exporting to CSV: " + e.getMessage());
+
             return false;
         }
-        
+
     }
+    
+
 
     @Override
     public Edition[] uncompletedEditions() {

@@ -435,6 +435,23 @@ public class ImpProject implements Project {
         }
     }
 
+    public void addEvaluation(Evaluation e) {
+        
+        boolean found = false;
+        int i = 0;
+        while (!found && i < numberOfEvaluations) {
+            if (evaluations[i].getStudent().equals(e.getStudent())) {
+                evaluations[i]=e;
+                found = true;
+            }
+            i++;
+        }
+
+        if (!found) {
+            evaluations[numberOfEvaluations++] = e;
+        }
+    }
+    
     /**
      * {@inheritDoc}
      *
@@ -704,6 +721,12 @@ public class ImpProject implements Project {
             tagsArray.add(tags[i]);
         }
         jsonObject.put("tags", tagsArray);
+        
+        JSONArray evaluationsArray = new JSONArray();
+        for (int i = 0; i < numberOfEvaluations; i++) {
+            evaluationsArray.add(evaluations[i]);
+        }
+        jsonObject.put("evaluations", evaluationsArray);
 
         return jsonObject;
     }
@@ -729,7 +752,7 @@ public class ImpProject implements Project {
             tags[i] = (String) tagsArray.get(i);
         }
 
-        ImpProject project = new ImpProject(name, description, maximumNumberOfFacilitators, maximumNumberOfStudents, maximumNumberOfPartners, maximumNumberOfTasks, tags);
+        Project project = new ImpProject(name, description, maximumNumberOfFacilitators, maximumNumberOfStudents, maximumNumberOfPartners, maximumNumberOfTasks, tags);
 
         JSONArray tasksArray = (JSONArray) jsonObject.get("tasks");
         for (int i = 0; i < tasksArray.size(); i++) {
@@ -751,6 +774,14 @@ public class ImpProject implements Project {
 
             }
         }
+        
+        JSONArray evaluatioinsArray = (JSONArray) jsonObject.get("evaluations");
+        for (int i = 0; i < evaluatioinsArray.size(); i++) {
+            JSONObject evaluationJson = (JSONObject) evaluatioinsArray.get(i);
+            Evaluation e = Evaluation.fromJsonObj(evaluationJson);
+            ((ImpProject)project).addEvaluation(e);
+        }
+        
 
         return project;
     }

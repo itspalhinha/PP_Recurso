@@ -2092,7 +2092,7 @@ public class Menu {
                 }
                 break;
             case 2: 
-                if (cbl.exportToCSV("csv")) {
+                if (cbl.exportToCSV("files/csv.csv")) {
                     System.out.println("╔════════════════════════════════════════════════╗");
                     System.out.println("║      Sucesso exportando informação.      ║");
                     System.out.println("╚════════════════════════════════════════════════╝");
