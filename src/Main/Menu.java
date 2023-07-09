@@ -5,8 +5,10 @@
 package Main;
 
 import CBL.CBLinterface;
+import CBL.Evaluation;
 import CBL.ImpCBL;
 import CBL.ImpEdition;
+import CBL.ImpProject;
 import CBL.ImpSubmission;
 import CBL.ImpTask;
 import Exceptions.AlreadyExistsInArray;
@@ -345,9 +347,7 @@ public class Menu {
     }
 
     private void showParticipantsMenu() {
-        
-        
-        
+
         boolean exit = false;
         while (!exit) {
             System.out.println("╔════════════════════════════════╗");
@@ -355,13 +355,6 @@ public class Menu {
             System.out.println("╠════════════════════════════════╣");
             System.out.println("║ 1. Minhas edições e proj   ║");
             System.out.println("║ 2. Informação pessoal      ║");
-            boolean isFacilitator = false;
-
-        // Check if the logged-in participant is of type "ImpFacilitator"
-            if (loggedInParticipant instanceof Facilitator) {
-                isFacilitator = true;
-                System.out.println("║ 3. Manage CBL              ║");
-            }
             System.out.println("║ 0. Back                    ║");
             System.out.println("╚════════════════════════════════╝");
             System.out.print("Seleciona uma opção: ");
@@ -376,18 +369,10 @@ public class Menu {
                     case 2:
                         showParticipantDetails(loggedInParticipant);
                         break;
-                    case 3:
-                    // Check if the logged-in participant is of type "ImpFacilitator"
-                        if (isFacilitator) {
-                            showAdminEditionsMenu();; // Add the method to handle "Manage CBL" option
-                        } else {
-                            System.out.println("╔══════════════════════════════════════════╗");
-                            System.out.println("║    Opção inválida. Você não é facilitador.    ║");
-                            System.out.println("╚══════════════════════════════════════════╝");
-                        }
-                    break;
+
                     case 0:
                         exit = true;
+                        loggedInParticipant = null;
                         break;
                     default:
                         System.out.println("╔═══════════════════════════╗");
@@ -1482,6 +1467,7 @@ public class Menu {
             for (i = 0; i < projects.length; i++) {
                 System.out.println("║ " + (i + 1) + ". " + projects[i].getName());
             }
+
             System.out.println("║ " + 0 + ". Back");
             System.out.print("║ Select an option: ");
             try {
@@ -1530,7 +1516,12 @@ public class Menu {
             for (i = 0; i < tasks.length; i++) {
                 System.out.println("║ " + (i + 1) + ". " + tasks[i].getTitle());
             }
-            System.out.println("║ \n║ " + 13 + ". Fazer Autoavaliação");
+            if (loggedInParticipant instanceof Facilitator) {
+                System.out.println("║ \n║" + (i + 1) + ". Avaliar Estudantes");
+            } else if (loggedInParticipant instanceof Student) {
+                System.out.println("║ \n║ " + (i + 1) + ". Fazer Autoavaliação");
+            }
+
             System.out.println("║ \n║ " + 0 + ". Back");
             System.out.print("║ Introduza o numero de tasks: ");
             try {
@@ -1542,7 +1533,9 @@ public class Menu {
                 } else if (taskNumber >= 1 && taskNumber <= tasks.length) {
                     Task selectedTask = tasks[taskNumber - 1];
                     showTaskDetails(selectedTask);
-                }else {
+                } else if (taskNumber == i + 1) {
+                    showEvaluationsMenu();
+                } else {
                     System.out.println("Invalid selection. Please try again.");
                 }
             } catch (NumberFormatException e) {
@@ -1550,23 +1543,158 @@ public class Menu {
             } catch (IOException e) {
                 System.out.println("Error reading input.");
             }
-            System.out.print("Fazer autoavaliação (sim/nao):");
-            try {
-                String auto = reader.readLine();
-                switch(auto){
-                    case "sim":
-                        System.out.print("Nota: ");
-                        int nota = Integer.parseInt(reader.readLine());
-                        break;
-                    default:
-                        break;
-                }
-                
-            } catch (IOException ex) {
-                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            System.out.print("Fazer autoavaliação (sim/nao):");
+//            try {
+//                String auto = reader.readLine();
+//                switch (auto) {
+//                    case "sim":
+//                        System.out.print("Nota: ");
+//                        int nota = Integer.parseInt(reader.readLine());
+//                        break;
+//                    default:
+//                        break;
+//                }
+//
+//            } catch (IOException ex) {
+//                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
         System.out.println("╚══════════════════════════════════╝");
+    }
+
+    private Student listStudentsOfProject() throws NullPointerException {
+        boolean exit = false;
+        while (!exit) {
+            Student[] students = ((ImpProject) currentProject).getStudents();
+            System.out.println("╔══════════════════════════════════╗");
+            System.out.println("║    ===== Estudantes do Projeto =====    ║");
+            System.out.println("║ Projeto: " + currentProject.getName());
+
+            int i = 0;
+            for (i = 0; i < students.length; i++) {
+                System.out.println("║ " + (i + 1) + ". " + students[i].getEmail());
+            }
+
+            System.out.println("║ \n║ " + 0 + ". Back");
+
+            System.out.print("║ Introduza o numero de estudante: ");
+            try {
+                int studentNumber = Integer.parseInt(reader.readLine());
+
+                // Verifique se o número é válido
+                if (studentNumber == 0) {
+                    exit = true;
+                } else if (studentNumber >= 1 && studentNumber <= students.length) {
+                    return students[studentNumber - 1];
+                } else {
+                    System.out.println("Invalid selection. Please try again.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number.");
+            } catch (IOException e) {
+                System.out.println("Error reading input.");
+            }
+            System.out.println("╚══════════════════════════════════╝");
+        }
+        return null;
+    }
+
+    private void showEvaluationsMenu() {
+
+        if (loggedInParticipant != null && loggedInParticipant instanceof Student) {
+            addEvaluationMenu((Student) loggedInParticipant);
+        } else {
+
+            try {
+                Student student = listStudentsOfProject();
+                addEvaluationMenu(student);
+            } catch (NullPointerException e) {
+                System.out.println("╔══════════════════════════════════╗");
+                System.out.println("║    ===== Sem Estudantes no Projeto =====    ║");
+                System.out.println("╚══════════════════════════════════╝");
+            }
+        }
+
+    }
+
+    private void addEvaluationMenu(Student student) {
+        boolean exit = false;
+        while (!exit) {
+            try {
+                Evaluation studentEvaluation;
+
+                System.out.println("╔══════════════════════════════════════╗");
+                System.out.println("║       Ficha do estudante     ║");
+                System.out.println("╠══════════════════════════════════════╣");
+                System.out.println("║ Nome: " + student.getName());
+                System.out.println("║ Email: " + student.getEmail());
+                try {
+                    studentEvaluation = ((ImpProject) currentProject).evaluationOf(student);
+                    try {
+                        System.out.println("║ Auto-Avaliação: " + studentEvaluation.getSelfEvaluation());
+                    } catch (NullPointerException a) {
+                        System.out.println("║ Auto-Avaliação: Sem avaliação ");
+                    }
+                    try {
+                        System.out.println("║ Hetero Avaliação: " + studentEvaluation.getHeteroevaluation());
+                        try {
+                            System.out.println("║  Avaliado por: " + studentEvaluation.getFacilitator());
+                        } catch (NullPointerException a) {
+                            System.out.println("║  Avaliado por: Admin");
+                        }
+                    } catch (NullPointerException a) {
+                        System.out.println("║ Hetero Avaliação: Sem avaliação ");
+                    }
+                } catch (NullPointerException ex) {
+                    studentEvaluation = null;
+                    System.out.println("║ Auto-Avaliação: Sem avaliação ");
+                    System.out.println("║ Hetero Avaliação: Sem avaliação ");
+                }
+                System.out.println("╠══════════════════════════════════════╣");
+                if (student.equals(loggedInParticipant)) {
+                    System.out.println("║ 1. Adicionar autoAvaliação");
+                } else {
+                    System.out.println("║ 1. Adicionar Hetero Avaliação");
+                }
+                System.out.println("║ \n║  0. Back");
+                System.out.println("╚═════════════════════════════════════╝");
+
+                int option = Integer.parseInt(reader.readLine());
+
+                switch (option) {
+                    case 1:
+                        float grade = Float.parseFloat(reader.readLine());
+                        try {
+
+                            if (student.equals(loggedInParticipant)) {
+                                ((ImpProject) currentProject).addSelfEvaluation(student, grade);
+                            } else {
+                                if (loggedInParticipant != null && loggedInParticipant instanceof Facilitator) {
+                                    ((ImpProject) currentProject).addHeteroEvaluation(student, (Facilitator) loggedInParticipant, grade);
+                                } else {
+                                    ((ImpProject) currentProject).addHeteroEvaluation(student, null, grade);
+                                }
+                            }
+
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
+                        break;
+                    case 0:
+                        exit = true;
+                    default:
+                        System.out.println("Invalid selection. Please try again.\n\n");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number.\n\n");
+
+            } catch (NullPointerException e) {
+                System.out.println(e.getMessage());
+            } catch (IOException e) {
+                System.out.println("Error reading input.");
+            }
+
+        }
     }
 
     private void showTaskDetails(Task task) {
@@ -1691,7 +1819,7 @@ public class Menu {
                 if (participants[counter] instanceof Facilitator) {
                     ImpFacilitator facilitator = (ImpFacilitator) participants[counter];
                     System.out.println("║ " + (counter + 1) + ". " + participants[counter].getName() + "(" + participants[counter].getEmail() + ") - Hetero Evaluation: " + facilitator.getEvaluation());
-                    if(facilitator.getEvaluation() == null){
+                    if (facilitator.getEvaluation() == null) {
                         System.out.println();
                         System.out.print("\tNota: ");
                         try {
@@ -1699,8 +1827,8 @@ public class Menu {
                         } catch (IOException ex) {
                             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        
-                    }else{
+
+                    } else {
                         System.out.println((counter + 1) + ". " + facilitator.getName() + "(" + facilitator.getEmail() + ") - Hetero Evaluation: " + facilitator.getEvaluation());
                         System.out.println();
                     }
@@ -1714,8 +1842,8 @@ public class Menu {
             for (int i = 0; i < currentProject.getNumberOfStudents(); i++) {
                 if (participants[counter] instanceof Student) {
                     ImpStudent student = (ImpStudent) participants[counter];
-                     System.out.println("║ " + (counter + 1) + ". " + participants[counter].getName() + "(" + participants[counter].getEmail() + ")- Hetero Evaluation: " + student.getEvaluation());
-                    if(student.getEvaluation() == null){
+                    System.out.println("║ " + (counter + 1) + ". " + participants[counter].getName() + "(" + participants[counter].getEmail() + ")- Hetero Evaluation: " + student.getEvaluation());
+                    if (student.getEvaluation() == null) {
                         System.out.print("\tNota: ");
                         try {
                             int notaStudent = Integer.parseInt(reader.readLine());
@@ -1723,10 +1851,10 @@ public class Menu {
                         } catch (IOException ex) {
                             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                    } else{
+                    } else {
                         System.out.println((counter + 1) + ". " + student.getName() + "(" + student.getEmail() + ") - Hetero Evaluation: " + student.getEvaluation());
                         System.out.println();
-                    }                  
+                    }
                     counter++;
                 }
             }
@@ -1738,7 +1866,7 @@ public class Menu {
                 if (participants[counter] instanceof Partner) {
                     ImpPartner partner = (ImpPartner) participants[counter];
                     System.out.println("║ " + (counter + 1) + ". " + participants[counter].getName() + "(" + participants[counter].getEmail() + ") - Hetero Evaluation: " + partner.getEvaluation());
-                    if(partner.getEvaluation()== null){
+                    if (partner.getEvaluation() == null) {
                         System.out.println();
                         System.out.print("\tNota: ");
                         try {
@@ -1746,11 +1874,11 @@ public class Menu {
                         } catch (IOException ex) {
                             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                    }else{
+                    } else {
                         System.out.println((counter + 1) + ". " + partner.getName() + "(" + partner.getEmail() + ") - Hetero Evaluation: " + partner.getEvaluation());
                         System.out.println();
                     }
-                    
+
                     counter++;
                 }
             }
@@ -1846,7 +1974,7 @@ public class Menu {
             System.out.println("Projeto adicionado com sucesso");
 
         } catch (IOException | ParseException | IllegalArgumentException e) {
-            System.out.println(e.getMessage());         
+            System.out.println(e.getMessage());
         }
         System.out.println("╚═════════════════════════════════════════════════════╝");
     }
