@@ -326,10 +326,7 @@ public class ImpCBL implements CBLinterface {
      * @return True se a exportação for bem sucedida, false caso contrário
      * @throws UnsupportedOperationException se a funcionalidade de exportação de dados não for suportada
      */
-    @Override
-    public boolean exportCSV(String filePath) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
     /*
      * Retorna um array contendo todas as edições disponíveis
@@ -376,9 +373,10 @@ public class ImpCBL implements CBLinterface {
     
     
     
-    
-    public void exportToCSV(String filename) {
+    @Override
+    public boolean exportToCSV(String filename) {
         try {
+            // ... Existing code ...
             FileWriter writer = new FileWriter(filename);
 
             // Write header
@@ -472,9 +470,13 @@ public class ImpCBL implements CBLinterface {
 
             writer.close();
             System.out.println("CSV file has been exported successfully.");
+            
+            return true;
         } catch (IOException e) {
             System.out.println("An error occurred while exporting to CSV: " + e.getMessage());
+            return false;
         }
+        
     }
 
     @Override

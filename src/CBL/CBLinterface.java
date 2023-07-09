@@ -91,7 +91,7 @@ public interface CBLinterface {
      * @param filePath caminho do ficheiro CSV
      * @return true se o export der certo e false se nao der certo
      */
-    public boolean exportCSV(String filePath);
+    public boolean exportToCSV(String filename);
     
     /**
      * Este método retorna um array de objetos Edition representando as edições disponíveis.

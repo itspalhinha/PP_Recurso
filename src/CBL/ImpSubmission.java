@@ -46,14 +46,14 @@ public class ImpSubmission implements Submission{
         this.student = student;
         this.text = text;
     }    
-    
+
     /*
     * Este é um dos métodos construtores para a classe Submission
     * @param student Estudante que efetuou a submissão
     * @param text Descrição da submissão
     */
     public ImpSubmission(Student student, String text) {
-        this.date = date;
+        this.date = LocalDateTime.now();
         this.student = student;
         this.text = text;
     }
