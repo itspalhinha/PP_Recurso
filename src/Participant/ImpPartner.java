@@ -9,13 +9,15 @@
  */
 package Participant;
 
+import CBLStructure.HeteroEv;
 import ma02_resources.participants.Contact;
 import ma02_resources.participants.Instituition;
+import ma02_resources.participants.Participant;
 import ma02_resources.participants.Partner;
 import org.json.simple.JSONObject;
 
 
-public class ImpPartner extends ImpParticipant implements Partner{
+public class ImpPartner extends ImpParticipant implements Partner, HeteroEv{
     
     /*
      * Define o número VAT do parceiro
@@ -25,6 +27,10 @@ public class ImpPartner extends ImpParticipant implements Partner{
      * Define o website do parceiro
      */
     private String webSite;
+    
+    private Participant participant;
+    private String evaluation;
+    private float nota;
 
     /*
      * Método construtor para Partner
@@ -97,7 +103,21 @@ public class ImpPartner extends ImpParticipant implements Partner{
     csvBuilder.append(webSite).append("\n");
 
     return csvBuilder.toString();
+    
 }
+    
+    public Participant getParticipant() {
+        return participant;
+    }
+
+    public String getEvaluation() {
+        return evaluation;
+    }
+
+    @Override
+    public void setHeteroEv(float nota) {
+        this.nota = nota;
+    }
 
     
 }

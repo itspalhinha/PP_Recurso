@@ -110,7 +110,7 @@ public abstract class ImpParticipant implements Participant{
      */
     public JSONObject toJsonObj() {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("typeOfParticiant", this.getClass());
+        jsonObject.put("typeOfParticiant", this.getClass().getSimpleName());
         jsonObject.put("name", name);
         jsonObject.put("email", email);
         jsonObject.put("contact", ((ImpContact) contact).toJsonObj());
@@ -141,11 +141,11 @@ public abstract class ImpParticipant implements Participant{
         if (type.equals("ImpStudent")) {
             return new ImpStudent(name, email, contact, instituition);
 
-        } else if (type.equals("FacilitatorImp")) {
+        } else if (type.equals("ImpFacilitator")) {
             String areaOfExpertise = (String) jsonObject.get("areaOfExpertise");
             return new ImpFacilitator(areaOfExpertise, name, email, contact, instituition);
 
-        } else if (type.equals("PartnerImp")) {
+        } else if (type.equals("ImpPartner")) {
             String vat = (String) jsonObject.get("vat");
             String website = (String) jsonObject.get("website");
             return new ImpPartner(vat, website, name, email, contact, instituition);

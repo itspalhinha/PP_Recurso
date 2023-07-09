@@ -296,7 +296,7 @@ public class Menu {
             System.out.println("\nIntroduza sua area de atuação: ");
             String areaAtuacao = reader.readLine();
             Facilitator newFacilitator = new ImpFacilitator(areaAtuacao, p.getName(), p.getEmail(), p.getContact(), p.getInstituition());
-            pm.addParticipant(p);
+            pm.addParticipant(newFacilitator);
             System.out.println("\nFacilitador registado!");
             return true;
         } catch (IOException ex) {
@@ -343,6 +343,9 @@ public class Menu {
     }
 
     private void showParticipantsMenu() {
+        
+        
+        
         boolean exit = false;
         while (!exit) {
             System.out.println("╔════════════════════════════════╗");
@@ -350,6 +353,13 @@ public class Menu {
             System.out.println("╠════════════════════════════════╣");
             System.out.println("║ 1. Minhas edições e proj   ║");
             System.out.println("║ 2. Informação pessoal      ║");
+            boolean isFacilitator = false;
+
+        // Check if the logged-in participant is of type "ImpFacilitator"
+            if (loggedInParticipant instanceof Facilitator) {
+                isFacilitator = true;
+                System.out.println("║ 3. Manage CBL              ║");
+            }
             System.out.println("║ 0. Back                    ║");
             System.out.println("╚════════════════════════════════╝");
             System.out.print("Seleciona uma opção: ");
@@ -364,6 +374,16 @@ public class Menu {
                     case 2:
                         showParticipantDetails(loggedInParticipant);
                         break;
+                    case 3:
+                    // Check if the logged-in participant is of type "ImpFacilitator"
+                        if (isFacilitator) {
+                            showAdminEditionsMenu();; // Add the method to handle "Manage CBL" option
+                        } else {
+                            System.out.println("╔══════════════════════════════════════════╗");
+                            System.out.println("║    Opção inválida. Você não é facilitador.    ║");
+                            System.out.println("╚══════════════════════════════════════════╝");
+                        }
+                    break;
                     case 0:
                         exit = true;
                         break;
@@ -1508,6 +1528,7 @@ public class Menu {
             for (i = 0; i < tasks.length; i++) {
                 System.out.println("║ " + (i + 1) + ". " + tasks[i].getTitle());
             }
+            System.out.println("║ \n║ " + 13 + ". Fazer Autoavaliação");
             System.out.println("║ \n║ " + 0 + ". Back");
             System.out.print("║ Introduza o numero de tasks: ");
             try {
@@ -1519,13 +1540,28 @@ public class Menu {
                 } else if (taskNumber >= 1 && taskNumber <= tasks.length) {
                     Task selectedTask = tasks[taskNumber - 1];
                     showTaskDetails(selectedTask);
-                } else {
+                }else {
                     System.out.println("Invalid selection. Please try again.");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a number.");
             } catch (IOException e) {
                 System.out.println("Error reading input.");
+            }
+            System.out.print("Fazer autoavaliação (sim/nao):");
+            try {
+                String auto = reader.readLine();
+                switch(auto){
+                    case "sim":
+                        System.out.print("Nota: ");
+                        int nota = Integer.parseInt(reader.readLine());
+                        break;
+                    default:
+                        break;
+                }
+                
+            } catch (IOException ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         System.out.println("╚══════════════════════════════════╝");
@@ -1648,32 +1684,72 @@ public class Menu {
         System.out.println("║   === Todos os participantes registados ===   ║");
         Participant[] participants = pm.getParticipants();
         int counter = 0;
-
-        if (pm.getNumberOfFacilitators() > 0) {
+        if (currentProject.getNumberOfFacilitators() > 0) {
             System.out.println("║ Facilitadores: ");
-            for (int i = 0; i < pm.getNumberOfFacilitators(); i++) {
+            for (int i = 0; i < currentProject.getNumberOfFacilitators(); i++) {
                 if (participants[counter] instanceof Facilitator) {
-                    System.out.println("║ " + (counter + 1) + ". " + participants[counter].getName() + "(" + participants[counter].getEmail() + ")");
+                    ImpFacilitator facilitator = (ImpFacilitator) participants[counter];
+                    System.out.println("║ " + (counter + 1) + ". " + participants[counter].getName() + "(" + participants[counter].getEmail() + ") - Hetero Evaluation: " + facilitator.getEvaluation());
+                    if(facilitator.getEvaluation() == null){
+                        System.out.println();
+                        System.out.print("\tNota: ");
+                        try {
+                            int notaStudent = Integer.parseInt(reader.readLine());
+                        } catch (IOException ex) {
+                            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                    }else{
+                        System.out.println((counter + 1) + ". " + facilitator.getName() + "(" + facilitator.getEmail() + ") - Hetero Evaluation: " + facilitator.getEvaluation());
+                        System.out.println();
+                    }
                     counter++;
                 }
             }
         }
 
-        if (pm.getNumberOfStudents() > 0) {
+        if (currentProject.getNumberOfStudents() > 0) {
             System.out.println("║ Estudantes: ");
-            for (int i = 0; i < pm.getNumberOfStudents(); i++) {
+            for (int i = 0; i < currentProject.getNumberOfStudents(); i++) {
                 if (participants[counter] instanceof Student) {
-                    System.out.println("║ " + (counter + 1) + ". " + participants[counter].getName() + "(" + participants[counter].getEmail() + ")");
+                    ImpStudent student = (ImpStudent) participants[counter];
+                     System.out.println("║ " + (counter + 1) + ". " + participants[counter].getName() + "(" + participants[counter].getEmail() + ")- Hetero Evaluation: " + student.getEvaluation());
+                    if(student.getEvaluation() == null){
+                        System.out.print("\tNota: ");
+                        try {
+                            int notaStudent = Integer.parseInt(reader.readLine());
+                            student.setHeteroEv(notaStudent);
+                        } catch (IOException ex) {
+                            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } else{
+                        System.out.println((counter + 1) + ". " + student.getName() + "(" + student.getEmail() + ") - Hetero Evaluation: " + student.getEvaluation());
+                        System.out.println();
+                    }                  
                     counter++;
                 }
             }
         }
 
-        if (pm.getNumberOfPartners() > 0) {
+        if (currentProject.getNumberOfPartners() > 0) {
             System.out.println("║ Parceiros: ");
-            for (int i = 0; i < pm.getNumberOfPartners(); i++) {
+            for (int i = 0; i < currentProject.getNumberOfPartners(); i++) {
                 if (participants[counter] instanceof Partner) {
-                    System.out.println("║ " + (counter + 1) + ". " + participants[counter].getName() + "(" + participants[counter].getEmail() + ")");
+                    ImpPartner partner = (ImpPartner) participants[counter];
+                    System.out.println("║ " + (counter + 1) + ". " + participants[counter].getName() + "(" + participants[counter].getEmail() + ") - Hetero Evaluation: " + partner.getEvaluation());
+                    if(partner.getEvaluation()== null){
+                        System.out.println();
+                        System.out.print("\tNota: ");
+                        try {
+                            int notaStudent = Integer.parseInt(reader.readLine());
+                        } catch (IOException ex) {
+                            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }else{
+                        System.out.println((counter + 1) + ". " + partner.getName() + "(" + partner.getEmail() + ") - Hetero Evaluation: " + partner.getEvaluation());
+                        System.out.println();
+                    }
+                    
                     counter++;
                 }
             }
@@ -1835,7 +1911,7 @@ public class Menu {
         CBLinterface cbl = new ImpCBL();
         InstituitionsManager im = new InstituitionsManager();
 
-        if (pm.importData("files/users2.json") && im.importData("files/instituitions.json")) {
+        if (pm.importData("src/Files/users3.json") && im.importData("src/Files/instituitions.json")) {
             System.out.println("╔════════════════════════════════════════════════╗");
             System.out.println("║    Sucesso importando utilizadores.      ║");
             System.out.println("╚════════════════════════════════════════════════╝");
@@ -1864,7 +1940,7 @@ public class Menu {
             System.out.println("║        Erro importando informação.       ║");
             System.out.println("╚════════════════════════════════════════════════╝");
         }
-        if (pm.export("files/users2.json") && im.export("files/instituitions.json")) {
+        if (pm.export("src/Files/users3.json") && im.export("src/Files/instituitions.json")) {
             System.out.println("╔════════════════════════════════════════════════╗");
             System.out.println("║      Sucesso importando utilizadores.    ║");
             System.out.println("╚════════════════════════════════════════════════╝");

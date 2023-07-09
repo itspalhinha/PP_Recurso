@@ -1,0 +1,32 @@
+{
+    "participantsCounter": 2,
+    "participants": [{
+            "number": 1,
+            "typeOfParticipant": "ImpStudent",
+            "contact": {
+                "zipCode": "4610-266",
+                "country": "Portugal",
+                "city": "Felgueiras",
+                "phone": "932298253",
+                "street": "Montinho",
+                "state": "Porto"
+            },
+            "name": "Filipe Silva",
+            "instituition": {
+                "website": "moodle.ipp.pt",
+                "contact": {
+                    "zipCode": "4444-444",
+                    "country": "Portugal",
+                    "city": "Felgueiras",
+                    "phone": "921300455",
+                    "street": "Rua da Estg",
+                    "state": "Porto"
+                },
+                "name": "ESTG",
+                "description": "Escola Superior",
+                "type": "University",
+                "email": "estg@estg.ipp.pt"
+            },
+            "email": "fs@estg.ipp.pt"
+        }]
+}

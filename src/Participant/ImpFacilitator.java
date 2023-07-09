@@ -10,13 +10,15 @@
 package Participant;
 
 
+import CBLStructure.HeteroEv;
 import ma02_resources.participants.Contact;
 import ma02_resources.participants.Facilitator;
 import ma02_resources.participants.Instituition;
+import ma02_resources.participants.Participant;
 import org.json.simple.JSONObject;
 
 
-public class ImpFacilitator extends ImpParticipant implements Facilitator{
+public class ImpFacilitator extends ImpParticipant implements Facilitator, HeteroEv{
 
     /*
      * Área de especialização do Facilitador
@@ -24,6 +26,9 @@ public class ImpFacilitator extends ImpParticipant implements Facilitator{
     private String areaOfExpertise;
     private int i;
     private String testing;
+    private Participant participant;
+    private String evaluation;
+    private float nota;
 
     /*
      * Este é o construtor para Facilitador
@@ -61,6 +66,7 @@ public class ImpFacilitator extends ImpParticipant implements Facilitator{
      * Converte o objeto Participant em uma representação JSON
      * @return Objeto JSON que representa o participante
      */
+    @Override
     public JSONObject toJsonObj() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("typeOfParticipant", this.getClass().getSimpleName());
@@ -92,6 +98,19 @@ public class ImpFacilitator extends ImpParticipant implements Facilitator{
         csvBuilder.append(areaOfExpertise).append("\n");
 
         return csvBuilder.toString();
+    }
+    
+    public Participant getParticipant() {
+        return participant;
+    }
+
+    public String getEvaluation() {
+        return evaluation;
+    }
+
+    @Override
+    public void setHeteroEv(float nota) {
+        this.nota = nota;
     }
 
     

@@ -10,13 +10,15 @@
 package Participant;
 
 
+import CBLStructure.HeteroEv;
 import ma02_resources.participants.Contact;
 import ma02_resources.participants.Instituition;
+import ma02_resources.participants.Participant;
 import ma02_resources.participants.Student;
 import org.json.simple.JSONObject;
 
 
-public class ImpStudent extends ImpParticipant implements Student{
+public class ImpStudent extends ImpParticipant implements Student, HeteroEv{
     
     /*
      * Variável que aumenta o número de estudantes
@@ -26,6 +28,9 @@ public class ImpStudent extends ImpParticipant implements Student{
      * Variável que define o número de estudantes
      */
     private int number;
+    private Participant participant;
+    private String evaluation;
+    private float nota;
 
     /*
      * Este é um método construtor para Student
@@ -86,6 +91,19 @@ public class ImpStudent extends ImpParticipant implements Student{
     @Override
     public int getNumber() {
         return this.number;
+    }
+    
+    public Participant getParticipant() {
+        return participant;
+    }
+
+    public String getEvaluation() {
+        return evaluation;
+    }
+
+    @Override
+    public void setHeteroEv(float nota) {
+        this.nota = nota;
     }
     
 }
