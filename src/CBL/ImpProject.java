@@ -24,7 +24,6 @@ import ma02_resources.project.exceptions.TaskAlreadyInProject;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-
 public class ImpProject implements Project {
 
     /*
@@ -102,16 +101,21 @@ public class ImpProject implements Project {
     private int numberOfEvaluations;
 
     /**
-     * Método construtor da classe ImpProject, usado para criar um objeto de projeto com base
-     * no Template de Projeto. Todas as informações não encontradas no template do projeto são
-     * obtidas a partir dos parâmetros deste método.
-
+     * Método construtor da classe ImpProject, usado para criar um objeto de
+     * projeto com base no Template de Projeto. Todas as informações não
+     * encontradas no template do projeto são obtidas a partir dos parâmetros
+     * deste método.
+     *
      * @param name Nome do projeto
      * @param description Descrição do projeto
-     * @param maximumNumberOfFacilitators Número máximo de facilitadores permitidos no projeto
-     * @param maximumNumberOfStudents Número máximo de estudantes permitidos no projeto
-     * @param maximumNumberOfPartners Número máximo de parceiros permitidos no projeto
-     * @param maximumNumberOfTasks Número máximo de tarefas permitidas no projeto
+     * @param maximumNumberOfFacilitators Número máximo de facilitadores
+     * permitidos no projeto
+     * @param maximumNumberOfStudents Número máximo de estudantes permitidos no
+     * projeto
+     * @param maximumNumberOfPartners Número máximo de parceiros permitidos no
+     * projeto
+     * @param maximumNumberOfTasks Número máximo de tarefas permitidas no
+     * projeto
      * @param tags Tags associadas ao projeto
      */
     public ImpProject(String name, String description, int maximumNumberOfFacilitators, int maximumNumberOfStudents, int maximumNumberOfPartners, int maximumNumberOfTasks, String[] tags) {
@@ -137,6 +141,7 @@ public class ImpProject implements Project {
 
     /**
      * Obtém o número de avaliações
+     *
      * @return Número de avaliações
      */
     public int getNumberOfEvaluations() {
@@ -145,6 +150,7 @@ public class ImpProject implements Project {
 
     /**
      * Obtém o nome do projeto
+     *
      * @return Nome do projeto
      */
     @Override
@@ -154,6 +160,7 @@ public class ImpProject implements Project {
 
     /**
      * Obtém a descrição do projeto
+     *
      * @return Descrição do projeto
      */
     @Override
@@ -163,6 +170,7 @@ public class ImpProject implements Project {
 
     /**
      * Obtém o número de participantes do projeto
+     *
      * @return Número de participantes do projeto
      */
     @Override
@@ -172,6 +180,7 @@ public class ImpProject implements Project {
 
     /**
      * Obtém o número de estudantes do projeto
+     *
      * @return Número de estudantes do projeto
      */
     @Override
@@ -181,6 +190,7 @@ public class ImpProject implements Project {
 
     /**
      * Obtém o número de parceiros do projeto
+     *
      * @return Número de parceiros do projeto
      */
     @Override
@@ -190,6 +200,7 @@ public class ImpProject implements Project {
 
     /**
      * Obtém o número de facilitadores do projeto
+     *
      * @return Número de facilitadores do projeto
      */
     @Override
@@ -199,6 +210,7 @@ public class ImpProject implements Project {
 
     /**
      * Obtém o número de tarefas do projeto
+     *
      * @return Número de taredas do projeto
      */
     @Override
@@ -208,6 +220,7 @@ public class ImpProject implements Project {
 
     /**
      * Obtém o número máximo de tarefas permitidas no projeto
+     *
      * @return Número máximo de tarefas permitidas no projeto
      */
     @Override
@@ -217,6 +230,7 @@ public class ImpProject implements Project {
 
     /**
      * Obtém o número máximo de participantes permitidos no projeto
+     *
      * @return Número máximo de participantes permitidos no projeto
      */
     @Override
@@ -226,6 +240,7 @@ public class ImpProject implements Project {
 
     /**
      * Obtém o número máximo de estudantes permitidos no projeto
+     *
      * @return Número máximo de estudantes permitidos no projeto
      */
     @Override
@@ -235,6 +250,7 @@ public class ImpProject implements Project {
 
     /**
      * Obtém o número máximo de parceiros permitidos no projeto
+     *
      * @return Número máximo de parceiros permitidos no projeto
      */
     @Override
@@ -244,6 +260,7 @@ public class ImpProject implements Project {
 
     /**
      * Obtém o número máximo de facilitadores permitidos no projoeto
+     *
      * @return Número máximo de facilitadores permitidos no projeto
      */
     @Override
@@ -266,13 +283,16 @@ public class ImpProject implements Project {
     }
 
     /**
-     * {@inheritDoc}
-     * Essa função inclui um participante no projeto, verificando se o participante já existe
-     * e se a lista de participantes já atingiu sua capacidade máxima
+     * {@inheritDoc} Essa função inclui um participante no projeto, verificando
+     * se o participante já existe e se a lista de participantes já atingiu sua
+     * capacidade máxima
+     *
      * @param p Participante a ser adicionado
-     * @throws IllegalNumberOfParticipantType se a lista estiver em sua capacidade máxima
-     * @throws ParticipantAlreadyInProject se o participante já estiver no projeto
-     * 
+     * @throws IllegalNumberOfParticipantType se a lista estiver em sua
+     * capacidade máxima
+     * @throws ParticipantAlreadyInProject se o participante já estiver no
+     * projeto
+     *
      */
     @Override
     public void addParticipant(Participant p) throws IllegalNumberOfParticipantType, ParticipantAlreadyInProject {
@@ -308,7 +328,7 @@ public class ImpProject implements Project {
     /*
      * Esse método verifica a lista de participantes e cria uma lista somente com estudantes
      */
-    private Student[] getStudents() {
+    public Student[] getStudents() {
         Student[] temp = new Student[numberOfStudents];
         int counter = 0;
         for (int i = 0; i < numberOfParticipants; i++) {
@@ -319,32 +339,32 @@ public class ImpProject implements Project {
         }
         return temp;
     }
-    
+
     /*
      * Essa função verifica uma lista de participantes e cria uma lista somente com facilitadores
      * @return Um array de facilitadores contendo apenas facilitadores
      */
-    private Facilitator[] getFacilitator(){
+    private Facilitator[] getFacilitator() {
         Facilitator[] temp = new Facilitator[numberOfFacilitators];
         int counter = 0;
-        for(int i = 0; i < numberOfParticipants; i++){
-            if(participants[i] instanceof Facilitator){
+        for (int i = 0; i < numberOfParticipants; i++) {
+            if (participants[i] instanceof Facilitator) {
                 temp[counter++] = (Facilitator) participants[i];
             }
         }
         return temp;
     }
-    
-    public Evaluation evaluationOf(Student student){
-        for (int i=0;i<numberOfEvaluations;i++){
-            if (evaluations[i].getStudent().equals(student)){
+
+    public Evaluation evaluationOf(Student student) {
+        for (int i = 0; i < numberOfEvaluations; i++) {
+            if (evaluations[i].getStudent().equals(student)) {
                 return evaluations[i];
             }
         }
-        
+
         throw new NullPointerException();
     }
-    
+
     /*
      * Essa função adiciona uma avaliação heterogênea para um estudante em relação a um 
      * facilitador específico
@@ -354,34 +374,34 @@ public class ImpProject implements Project {
      * @throws IllegalArgumentException se a nota não for válida ou se o facilitador ou o estudante 
      * não estiverem no projeto
      */
-    public void addHeteroEvaluation(Student student, Facilitator facilitator, float heteroEvaluation) throws IllegalArgumentException{
-        if(heteroEvaluation < 0f || heteroEvaluation > 20f){
+    public void addHeteroEvaluation(Student student, Facilitator facilitator, float heteroEvaluation) throws IllegalArgumentException {
+        if (heteroEvaluation < 0f || heteroEvaluation > 20f) {
             throw new IllegalArgumentException("Grade not valid");
         }
-        if(!hasParticipant(facilitator)){
-            throw new IllegalArgumentException("Facilitator doesnt exist in the project");
+
+        if (facilitator != null) {
+            if (!hasParticipant(facilitator)) {
+                throw new IllegalArgumentException("Facilitator doesnt exist in the project");
+            }
         }
-        if(!hasParticipant(student)){
+        if (!hasParticipant(student)) {
             throw new IllegalArgumentException("Student doesnt exist in the project");
         }
-        
+
         boolean found = false;
         int i = 0;
-        while (!found && i < numberOfEvaluations){
-            if(evaluations[i].getStudent().equals(student)){
+        while (!found && i < numberOfEvaluations) {
+            if (evaluations[i].getStudent().equals(student)) {
                 evaluations[i].setHeteroevaluation(heteroEvaluation);
                 found = true;
             }
             i++;
         }
-        if(!found){
+        if (!found) {
             evaluations[numberOfEvaluations++] = new Evaluation(student, heteroEvaluation, facilitator);
         }
     }
 
-    
-    
-   
     /*
      * Esse método permite atribuir uma nota pelo próprio estudante
      *
@@ -391,16 +411,15 @@ public class ImpProject implements Project {
      * no projeto
      */
 
-    public void addSelfEvaluation(Student student, float selfEvaluation) throws IllegalArgumentException{
-        if (selfEvaluation < 0f || selfEvaluation > 20f){
+    public void addSelfEvaluation(Student student, float selfEvaluation) throws IllegalArgumentException {
+        if (selfEvaluation < 0f || selfEvaluation > 20f) {
             throw new IllegalArgumentException("Grade not valid!");
         }
-        
-        if (!hasParticipant(student)){
+
+        if (!hasParticipant(student)) {
             throw new IllegalArgumentException("Student not in Project!");
         }
-        
-        
+
         boolean found = false;
         int i = 0;
         while (!found && i < numberOfEvaluations) {
@@ -410,9 +429,9 @@ public class ImpProject implements Project {
             }
             i++;
         }
-        
-        if (!found){
-            evaluations[numberOfEvaluations++] = new Evaluation(selfEvaluation,student);
+
+        if (!found) {
+            evaluations[numberOfEvaluations++] = new Evaluation(selfEvaluation, student);
         }
     }
 
@@ -420,6 +439,7 @@ public class ImpProject implements Project {
      * {@inheritDoc}
      *
      * Essa função remove um participante do projeto com base no seu email
+     *
      * @param string Participante a ser removido
      * @throws IllegalArgumentException se o participante não for encontrado
      */
@@ -466,6 +486,7 @@ public class ImpProject implements Project {
 
     /**
      * Obtém o participante com o email especificado
+     *
      * @param string Email do participante a ser obtido
      * @return Participante com o email fornecido
      * @throws IllegalArgumentException se o participante não for encontrado
@@ -482,17 +503,19 @@ public class ImpProject implements Project {
     }
 
     public Participant[] getParticipants() {
-       
+
         Participant[] temp = new Participant[numberOfParticipants];
 
         for (int i = 0; i < numberOfParticipants; i++) {
-            
-                temp[i] = participants[i];
-            }
-        return temp;   
+
+            temp[i] = participants[i];
+        }
+        return temp;
     }
+
     /**
      * Obtém as tags associadas ao projeto
+     *
      * @return Um array contendo as tags do projeto
      */
     @Override
@@ -502,6 +525,7 @@ public class ImpProject implements Project {
 
     /**
      * Verifica se o projeto possui determinada tag
+     *
      * @param string Tag a ser verificada
      * @return true se a tag estiver presente, false caso contrário
      *
@@ -566,10 +590,12 @@ public class ImpProject implements Project {
     }
 
     /**
-     * Essa função adiciona uma tarefa à lista de tarefas, verificando se a tarefa já existe e se
-     * o número máximo de tarefas já foi atingido
+     * Essa função adiciona uma tarefa à lista de tarefas, verificando se a
+     * tarefa já existe e se o número máximo de tarefas já foi atingido
+     *
      * @param task Tarefa a ser adicionada
-     * @throws IllegalNumberOfTasks se o número máximo de tarefas for atingido no projeto
+     * @throws IllegalNumberOfTasks se o número máximo de tarefas for atingido
+     * no projeto
      * @throws TaskAlreadyInProject se a tarefa já estiver no projeto
      */
     @Override
@@ -587,6 +613,7 @@ public class ImpProject implements Project {
 
     /**
      * Obtém a tarefa com o título especificado
+     *
      * @param Tarefa com o título fornecido
      * @return Tarefa com o título fornecido
      * @throws IllegalArgumentException se a tarefa não for encontrada
@@ -605,6 +632,7 @@ public class ImpProject implements Project {
 
     /**
      * Obtém todas as tarefas do projeto
+     *
      * @return Um array contendo todas as tarefas do projeto
      */
     @Override
@@ -619,6 +647,7 @@ public class ImpProject implements Project {
 
     /**
      * Veficia se o projeto está concluído
+     *
      * @return true se o projeto estiver concluído, false caso contrário
      */
     @Override
@@ -634,9 +663,10 @@ public class ImpProject implements Project {
         }
         return true;
     }
-    
+
     /**
      * Este método exporta a informação sobre o projeto em um ficheiro JSON
+     *
      * @return Objeto JSON do projeto
      */
     public JSONObject toJsonObj() {
@@ -724,7 +754,7 @@ public class ImpProject implements Project {
 
         return project;
     }
-    
+
     /*
      * Verifica se o objeto atual é igual ao objeto fornecido
      * @param obj Objeto a ser comparado
