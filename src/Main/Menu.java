@@ -31,6 +31,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ma02_resources.participants.Contact;
@@ -2033,7 +2034,7 @@ public class Menu {
         System.out.println("╚══════════════════════════════════╝");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
         /*Menu menu = new Menu();
         menu.initialize();*/
@@ -2061,22 +2062,50 @@ public class Menu {
         Menu menu = new Menu((ImpCBL) cbl, pm, im);
         menu.initialize();
         //export data before close program
-
-        if (cbl.exportJSON("files/cbl2.json")) {
-            System.out.println("╔════════════════════════════════════════════════╗");
-            System.out.println("║      Sucesso exportando informação.      ║");
-            System.out.println("╚════════════════════════════════════════════════╝");
-        } else {
-            System.out.println("╔════════════════════════════════════════════════╗");
-            System.out.println("║        Erro importando informação.       ║");
-            System.out.println("╚════════════════════════════════════════════════╝");
+        Scanner scan = new Scanner(System.in);
+        
+        
+        
+        System.out.println("╔════════════════════════════════════════════════╗");
+        System.out.println("║          Modelos de exportação          ║");
+        System.out.println("║=========================================║");
+        System.out.println("║ 1- Exportar dados em JSON               ║");
+        System.out.println("║ 2- Exportar dados em CSV                ║");
+        System.out.println("╚════════════════════════════════════════════════╝");
+        System.out.println("Escolha sua opção: ");
+        int exp = scan.nextInt();
+        switch(exp){
+            case 1: 
+                if (cbl.exportJSON("files/cbl2.json")) {
+                    System.out.println("╔════════════════════════════════════════════════╗");
+                    System.out.println("║      Sucesso exportando informação.      ║");
+                    System.out.println("╚════════════════════════════════════════════════╝");
+                } else {
+                    System.out.println("╔════════════════════════════════════════════════╗");
+                    System.out.println("║        Erro importando informação.       ║");
+                    System.out.println("╚════════════════════════════════════════════════╝");
+                }
+                if (pm.export("src/Files/users3.json") && im.export("src/Files/instituitions.json")) {
+                    System.out.println("╔════════════════════════════════════════════════╗");
+                    System.out.println("║      Sucesso importando utilizadores.    ║");
+                    System.out.println("╚════════════════════════════════════════════════╝");
+                }
+                break;
+            case 2: 
+                if (cbl.exportToCSV("csv")) {
+                    System.out.println("╔════════════════════════════════════════════════╗");
+                    System.out.println("║      Sucesso exportando informação.      ║");
+                    System.out.println("╚════════════════════════════════════════════════╝");
+                } else {
+                    System.out.println("╔════════════════════════════════════════════════╗");
+                    System.out.println("║        Erro importando informação.       ║");
+                    System.out.println("╚════════════════════════════════════════════════╝");
+                }
+                break;
         }
-        if (pm.export("src/Files/users3.json") && im.export("src/Files/instituitions.json")) {
-            System.out.println("╔════════════════════════════════════════════════╗");
-            System.out.println("║      Sucesso importando utilizadores.    ║");
-            System.out.println("╚════════════════════════════════════════════════╝");
-        }
 
+
+        
     }
 
 }
