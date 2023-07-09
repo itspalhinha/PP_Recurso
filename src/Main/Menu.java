@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -1626,32 +1628,31 @@ public class Menu {
         System.out.println("╚══════════════════════════════╝");
     }
 
+    
     private boolean submitWork(Task task) {
-        System.out.println("╔═══════════════════════════╗");
-        System.out.println("║  === Submit Work ===  ║");
-        System.out.println("║ Estudante: " + loggedInParticipant.getEmail());
+        System.out.println("=== Submit Work ===");
+        System.out.println("Student: " + loggedInParticipant.getEmail());
         try {
-            System.out.print("║ Introduza o texto: ");
+            System.out.print("Enter the text: ");
             String text = reader.readLine();
 
             Submission newSubmission = new ImpSubmission((Student) loggedInParticipant, text);
-            System.out.println("║ Data da submissão: " + newSubmission.getDate().toString());
+            System.out.println("Date of Submission: " + newSubmission.getDate().toString());
 
             try {
                 task.addSubmission(newSubmission);
             } catch (IllegalArgumentException e) {
-                System.out.println("║ " + e.getMessage());
+                System.out.println(e.getMessage());
                 return false;
             }
             return true;
 
         } catch (IOException e) {
-            System.out.println("║ Error reading input.");
+            System.out.println("Error reading input.");
             return false;
-        } finally {
-            System.out.println("╚═══════════════════════════╝");
         }
     }
+
 
     private void showProjectProgress() {
         boolean exit = false;

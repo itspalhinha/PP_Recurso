@@ -59,13 +59,15 @@ public class ImpTask implements Task{
      * @para duration Duração da tarefa
      */
     public ImpTask(String title, String description, LocalDate start, LocalDate end, int duration) {
-
         this.start = start;
         this.end = end;
         this.duration = duration;
         this.title = title;
         this.description = description;
+        this.submission = new Submission[10];
+        this.numberOfSubmissions = 0;
     }
+
     
     
     /**
@@ -167,17 +169,17 @@ public class ImpTask implements Task{
      */
     @Override
     public void addSubmission(Submission sbmsn) {
-        if(sbmsn == null){
-            throw new IllegalArgumentException("Null value for submission");
+        if (sbmsn == null) {
+            throw new IllegalArgumentException("Null submission!");
         }
-        if(numberOfSubmissions == this.submission.length){
+        if (this.numberOfSubmissions == submission.length) {
             realloc();
-            this.submission[numberOfSubmissions] = sbmsn;
-            numberOfSubmissions++;
-        }else{
-            this.submission[numberOfSubmissions] = sbmsn;
-            numberOfSubmissions++;
         }
+
+        if (!existsSubmission(sbmsn)) {
+            submission[numberOfSubmissions++] = sbmsn;
+        }
+
     }
 
     /**
