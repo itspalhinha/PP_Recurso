@@ -1288,7 +1288,7 @@ public class Menu {
             System.out.println((i + 3) + ". List participants");
             System.out.println((i + 4) + ". Add participants (" + (currentProject.getNumberOfParticipants() == currentProject.getMaximumNumberOfParticipants() ? "Not Available" : "Available") + ")");
             System.out.println((i + 5) + ". Add Task (" + (currentProject.getNumberOfTasks() == currentProject.getMaximumNumberOfTasks() ? "Not Available" : "Available") + ")");
-            // System.out.println(". Remove Task");
+            System.out.println((i + 6) + ". Avaliar Estudantes");
             System.out.println("\n" + 0 + ". Back");
             System.out.print("Select an option: ");
             try {
@@ -1340,7 +1340,8 @@ public class Menu {
                     } else {
                         System.out.println("Maximum amount of Tasks reached!\n");
                     }
-
+                }else if(taskNumber == (i + 6)){
+                    showEvaluationsMenu();
                 } else if (taskNumber >= 1 && taskNumber <= tasks.length) {
                     Task selectedTask = tasks[taskNumber - 1];
                     showAdminTaskDetails(selectedTask);
