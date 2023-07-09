@@ -532,6 +532,7 @@ public class Menu {
             System.out.println("║  2. Controlo Users/Participants ║");
             System.out.println("║  3. Controlo de Instituições    ║");
             System.out.println("║  4. Lista/Reports               ║");
+            System.out.println("║  5. Exportar ficheiro em CSV    ║");
             System.out.println("║  0. Sair                        ║");
             System.out.println("╚═══════════════════════════════════════╝");
             System.out.print("Seleciona uma opção: ");
@@ -551,6 +552,19 @@ public class Menu {
                         break;
                     case 4:
                         // showListingsMenu();
+                        break;
+                    case 5:
+                        System.out.print("Nome do ficheiro:");
+                        String nomeFicheiro = reader.readLine();
+                        if (cbl.exportToCSV(nomeFicheiro)) {
+                            System.out.println("╔════════════════════════════════════════════════╗");
+                            System.out.println("║      Sucesso exportando informação.      ║");
+                            System.out.println("╚════════════════════════════════════════════════╝");
+                        } else {
+                            System.out.println("╔════════════════════════════════════════════════╗");
+                            System.out.println("║        Erro importando informação.       ║");
+                            System.out.println("╚════════════════════════════════════════════════╝");
+                        }
                         break;
                     case 0:
                         exit = true;
@@ -1274,7 +1288,7 @@ public class Menu {
             System.out.println((i + 3) + ". List participants");
             System.out.println((i + 4) + ". Add participants (" + (currentProject.getNumberOfParticipants() == currentProject.getMaximumNumberOfParticipants() ? "Not Available" : "Available") + ")");
             System.out.println((i + 5) + ". Add Task (" + (currentProject.getNumberOfTasks() == currentProject.getMaximumNumberOfTasks() ? "Not Available" : "Available") + ")");
-            // System.out.println(". Remove Task");
+            System.out.println((i + 6) + ". Avaliar Estudantes");
             System.out.println("\n" + 0 + ". Back");
             System.out.print("Select an option: ");
             try {
@@ -1326,7 +1340,8 @@ public class Menu {
                     } else {
                         System.out.println("Maximum amount of Tasks reached!\n");
                     }
-
+                } else if (taskNumber == (i + 6)) {
+                    showEvaluationsMenu();
                 } else if (taskNumber >= 1 && taskNumber <= tasks.length) {
                     Task selectedTask = tasks[taskNumber - 1];
                     showAdminTaskDetails(selectedTask);
@@ -1759,7 +1774,6 @@ public class Menu {
         System.out.println("╚══════════════════════════════╝");
     }
 
-    
     private boolean submitWork(Task task) {
         System.out.println("=== Submit Work ===");
         System.out.println("Student: " + loggedInParticipant.getEmail());
@@ -1783,7 +1797,6 @@ public class Menu {
             return false;
         }
     }
-
 
     private void showProjectProgress() {
         boolean exit = false;
@@ -2061,51 +2074,22 @@ public class Menu {
 
         Menu menu = new Menu((ImpCBL) cbl, pm, im);
         menu.initialize();
-        //export data before close program
-        Scanner scan = new Scanner(System.in);
-        
-        
-        
-        System.out.println("╔════════════════════════════════════════════════╗");
-        System.out.println("║          Modelos de exportação          ║");
-        System.out.println("║=========================================║");
-        System.out.println("║ 1- Exportar dados em JSON               ║");
-        System.out.println("║ 2- Exportar dados em CSV                ║");
-        System.out.println("╚════════════════════════════════════════════════╝");
-        System.out.println("Escolha sua opção: ");
-        int exp = scan.nextInt();
-        switch(exp){
-            case 1: 
-                if (cbl.exportJSON("files/cbl2.json")) {
-                    System.out.println("╔════════════════════════════════════════════════╗");
-                    System.out.println("║      Sucesso exportando informação.      ║");
-                    System.out.println("╚════════════════════════════════════════════════╝");
-                } else {
-                    System.out.println("╔════════════════════════════════════════════════╗");
-                    System.out.println("║        Erro importando informação.       ║");
-                    System.out.println("╚════════════════════════════════════════════════╝");
-                }
-                if (pm.export("src/Files/users3.json") && im.export("src/Files/instituitions.json")) {
-                    System.out.println("╔════════════════════════════════════════════════╗");
-                    System.out.println("║      Sucesso importando utilizadores.    ║");
-                    System.out.println("╚════════════════════════════════════════════════╝");
-                }
-                break;
-            case 2: 
-                if (cbl.exportToCSV("files/csv.csv")) {
-                    System.out.println("╔════════════════════════════════════════════════╗");
-                    System.out.println("║      Sucesso exportando informação.      ║");
-                    System.out.println("╚════════════════════════════════════════════════╝");
-                } else {
-                    System.out.println("╔════════════════════════════════════════════════╗");
-                    System.out.println("║        Erro importando informação.       ║");
-                    System.out.println("╚════════════════════════════════════════════════╝");
-                }
-                break;
+
+        if (cbl.exportJSON("files/cbl2.json")) {
+            System.out.println("╔════════════════════════════════════════════════╗");
+            System.out.println("║      Sucesso exportando informação.      ║");
+            System.out.println("╚════════════════════════════════════════════════╝");
+        } else {
+            System.out.println("╔════════════════════════════════════════════════╗");
+            System.out.println("║        Erro importando informação.       ║");
+            System.out.println("╚════════════════════════════════════════════════╝");
+        }
+        if (pm.export("src/Files/users3.json") && im.export("src/Files/instituitions.json")) {
+            System.out.println("╔════════════════════════════════════════════════╗");
+            System.out.println("║      Sucesso importando utilizadores.    ║");
+            System.out.println("╚════════════════════════════════════════════════╝");
         }
 
-
-        
     }
 
 }
