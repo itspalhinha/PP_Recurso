@@ -1659,10 +1659,12 @@ public class Menu {
                 System.out.println("║ \n║  0. Back");
                 System.out.println("╚═════════════════════════════════════╝");
 
+                System.out.print("Introduza sua opção: ");
                 int option = Integer.parseInt(reader.readLine());
 
                 switch (option) {
                     case 1:
+                        System.out.print("A sua nota: ");
                         float grade = Float.parseFloat(reader.readLine());
                         try {
 
